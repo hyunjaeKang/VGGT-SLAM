@@ -56,6 +56,14 @@ def decompose_camera(P, no_inverse=False):
 
     # Left 3x3 part
     M = P[:, :3]
+    determinant = np.linalg.det(M)
+    if not np.isfinite(P).all() or determinant == 0:
+        raise ValueError("Camera projection matrix must be finite and nonsingular")
+    # P and -P project to the same pixels. Choose the sign that permits
+    # positive intrinsics and a proper (right-handed) camera rotation.
+    if determinant < 0:
+        P = -P
+        M = P[:, :3]
 
     # RQ decomposition
     K, R = scipy.linalg.rq(M)
@@ -82,7 +90,9 @@ def decompose_camera(P, no_inverse=False):
     
     return K, R, t, scale
 
-def compute_image_embeddings(model, preprocess, image_paths, batch_size=64, device="cuda"):
+def compute_image_embeddings(model, preprocess, image_paths, batch_size=64, device=None):
+    if device is None:
+        device = next(model.parameters()).device
     all_embs = []
 
     # Load all images into memory (PIL -> tensor)
@@ -105,7 +115,9 @@ def compute_image_embeddings(model, preprocess, image_paths, batch_size=64, devi
     # Combine into one (N, D) array
     return torch.cat(all_embs, dim=0).numpy()
 
-def compute_text_embeddings(clip_model, tokenizer, text, device="cuda"):
+def compute_text_embeddings(clip_model, tokenizer, text, device=None):
+    if device is None:
+        device = next(clip_model.parameters()).device
     with torch.no_grad():
         text_tokens = tokenizer([text]).to(device)
         text_emb = clip_model.encode_text(text_tokens)

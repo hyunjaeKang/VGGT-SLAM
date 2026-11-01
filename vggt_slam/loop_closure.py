@@ -7,9 +7,8 @@ from typing import NamedTuple
 import torchvision.transforms as T
 import os
 
-from salad.eval import load_model # load salad
-
-device = 'cuda'
+from salad.vpr_model import VPRModel
+from vggt_slam.runtime import select_device
 
 tensor_transform = T.ToPILImage()
 denormalize = T.Normalize(mean=[-1, -1, -1], std=[2, 2, 2])
@@ -50,24 +49,34 @@ class LoopMatchQueue:
         
 
 class ImageRetrieval:
-    def __init__(self, input_size=224):
+    def __init__(self, input_size=224, device="auto"):
 
-        ckpt_pth = os.path.join(torch.hub.get_dir(), "checkpoints/dino_salad.ckpt")
-        self.model = load_model(ckpt_pth)
-        self.model.eval()
+        self.device = select_device(str(device))
+        self.model = VPRModel(
+            backbone_arch="dinov2_vitb14",
+            backbone_config={"num_trainable_blocks": 4, "return_token": True, "norm_layer": True},
+            agg_arch="SALAD",
+            agg_config={"num_channels": 768, "num_clusters": 64, "cluster_dim": 128, "token_dim": 256},
+        )
+        state = torch.hub.load_state_dict_from_url(
+            "https://github.com/serizba/salad/releases/download/v1.0.0/dino_salad.ckpt",
+            map_location="cpu",
+        )
+        self.model.load_state_dict(state)
+        self.model.eval().to(self.device)
         self.transform = input_transform((input_size, input_size))
 
     def get_single_embeding(self, cv_img):
         with torch.no_grad():
             pil_img = self.transform(tensor_transform(cv_img))
-            return self.model(pil_img.to(device))
+            return self.model(pil_img.unsqueeze(0).to(self.device))
 
     def get_batch_descriptors(self, imgs):
         # Expecting imgs to be a batch of images (B, C, H, W)
         with torch.no_grad():
-            pil_imgs = [tensor_transform(img) for img in imgs]  # Convert each tensor to PIL Image
+            pil_imgs = [tensor_transform(img.cpu()) for img in imgs]
             imgs = torch.stack([self.transform(img) for img in pil_imgs])  # Apply transform and stack
-            return self.model(imgs.to(device))
+            return self.model(imgs.to(self.device))
     
     def get_all_submap_embeddings(self, submap):
         # Frames is np array of shape (S, 3, H, W)
@@ -75,6 +84,8 @@ class ImageRetrieval:
         return self.get_batch_descriptors(frames)
 
     def find_loop_closures(self, map, submap, max_similarity_thres = 0.80, max_loop_closures = 0):
+        if max_loop_closures <= 0:
+            return []
         matches_queue = LoopMatchQueue(max_size=max_loop_closures)
         query_id = 0
         for query_vector in submap.get_all_retrieval_vectors():

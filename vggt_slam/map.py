@@ -5,6 +5,7 @@ import open3d as o3d
 from scipy.spatial.transform import Rotation as R
 import matplotlib.pyplot as plt
 from vggt_slam.slam_utils import decompose_camera, cosine_similarity
+from vggt_slam.pcd_io import write_cloud_chunks
 
 class GraphMap:
     def __init__(self):
@@ -40,7 +41,7 @@ class GraphMap:
         return self.get_submap(self.get_largest_key(ignore_loop_closure_submaps))
 
     def retrieve_best_semantic_frame(self, query_text_vector):
-        overall_best_score = 0.0
+        overall_best_score = -np.inf
         overall_best_submap_id = 0
         overall_best_frame_index = 0
         # search for best image to target image
@@ -50,9 +51,11 @@ class GraphMap:
             if submap.get_lc_status():
                 continue
             submap_embeddings = submap.get_all_semantic_vectors()
+            if len(submap_embeddings) == 0:
+                continue
             scores = []
             for index, embedding in enumerate(submap_embeddings):
-                score = cosine_similarity(embedding, query_text_vector)
+                score = float(np.asarray(cosine_similarity(embedding, query_text_vector)).item())
                 scores.append(score)
             
             best_score_id = np.argmax(scores)
@@ -63,6 +66,8 @@ class GraphMap:
                 overall_best_submap_id = submap_key
                 overall_best_frame_index = best_score_id
 
+        if not np.isfinite(overall_best_score):
+            raise ValueError("No semantic embeddings are available in the map")
         return overall_best_score, overall_best_submap_id, overall_best_frame_index
     
     def retrieve_best_score_frame(self, query_vector, current_submap_id, ignore_last_submap=True):
@@ -83,16 +88,12 @@ class GraphMap:
                 if submap.get_lc_status():
                     continue
                 submap_embeddings = submap.get_all_retrieval_vectors()
-                scores = []
-                for index, embedding in enumerate(submap_embeddings):
-                    score = torch.linalg.norm(embedding-query_vector)
-                    # score = embedding @ query_vector.t()
-                    scores.append(score.item())
-
-                # for now assume we can only have at most one loop closure per submap
-                
-                best_score_id = np.argmin(scores)
-                best_score = scores[best_score_id]
+                if len(submap_embeddings) == 0:
+                    continue
+                scores = torch.linalg.vector_norm(submap_embeddings - query_vector, dim=1)
+                best_score, best_score_id = torch.min(scores, dim=0)
+                best_score = best_score.item()
+                best_score_id = best_score_id.item()
 
                 if best_score < overall_best_score:
                     overall_best_score = best_score
@@ -139,6 +140,7 @@ class GraphMap:
                 assert len(self.rectifying_H_mats) == len(all_poses), "Number of rectifying mats and number of poses do not match"
                 print("Using rectifying homographies when writing poses to file.")
             count = 0
+            written_frame_ids = set()
             for submap_index, submap in enumerate(self.ordered_submaps_by_key()):
                 if submap.get_lc_status():
                     continue
@@ -146,9 +148,11 @@ class GraphMap:
                 print(frame_ids)
                 for frame_index, frame_id in enumerate(frame_ids):
                     pose = all_poses[count]
-                    K, rotation_matrix, t, scale = decompose_camera(pose)
-                    # print("Decomposed K:\n", K)
                     count += 1
+                    if frame_id in written_frame_ids:
+                        continue
+                    written_frame_ids.add(frame_id)
+                    K, rotation_matrix, t, scale = decompose_camera(pose)
                     x, y, z = t
                     if kitti_format:
                         pose_matrix = np.eye(4)
@@ -162,17 +166,16 @@ class GraphMap:
                     f.write(" ".join(f"{v:.8f}" for v in output) + "\n")    
 
     def write_points_to_file(self, graph, file_name):
-        pcd_all = []
-        colors_all = []
-        for submap in self.ordered_submaps_by_key():
-            pcd = submap.get_points_in_world_frame(graph)
-            pcd = pcd.reshape(-1, 3)
-            pcd_all.append(pcd)
-            colors_all.append(submap.get_points_colors())
-        pcd_all = np.concatenate(pcd_all, axis=0)
-        colors_all = np.concatenate(colors_all, axis=0)
-        if colors_all.max() > 1.0:
-            colors_all = colors_all / 255.0
-        pcd_all = o3d.geometry.PointCloud(o3d.utility.Vector3dVector(pcd_all))
-        pcd_all.colors = o3d.utility.Vector3dVector(colors_all)
-        o3d.io.write_point_cloud(file_name, pcd_all)
+        def frame_chunks():
+            for submap in self.ordered_submaps_by_key():
+                for index, points in enumerate(submap.pointclouds):
+                    mask = submap.get_conf_masks_frame(index) > submap.get_conf_threshold()
+                    points = points[mask]
+                    colors = submap.colors[index][mask]
+                    homography = graph.get_homography(submap.get_id() + index)
+                    numerator = points @ homography[:3, :3].T + homography[:3, 3]
+                    denominator = points @ homography[3, :3] + homography[3, 3]
+                    with np.errstate(divide="ignore", invalid="ignore"):
+                        yield numerator / denominator[:, None], colors
+        count = write_cloud_chunks(file_name, frame_chunks())
+        print(f"Saved {count:,} points to {file_name}")

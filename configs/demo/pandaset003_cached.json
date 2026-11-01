@@ -1,0 +1,11 @@
+{
+  "run_id": "pandaset003_existing_20261030",
+  "source_mode": "cached_playback",
+  "dataset": "PandaSet 003 front camera, existing loop-on run",
+  "pose_first_column": "frame_id",
+  "existing_assets": {
+    "point_cloud": "logs/pandaset003_poses_points.pcd",
+    "poses": "logs/pandaset003_poses.txt",
+    "evaluation": "logs/pandaset003_evaluation/trajectory_metrics.json"
+  }
+}

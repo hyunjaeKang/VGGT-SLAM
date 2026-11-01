@@ -20,8 +20,12 @@ from vggt_slam.submap import Submap
 from vggt_slam.graph import PoseGraph
 from vggt_slam.scale_solver import estimate_scale_pairwise
 from vggt_slam.viewer import Viewer
+from vggt_slam.runtime import select_device
 
 DEBUG = False
+
+def _demo_loop_id(match):
+    return f"{match.query_submap_id}_{match.query_submap_frame}_{match.detected_submap_id}_{match.detected_submap_frame}"
 
 def debug_visualize(pcd1_points, pcd2_points):
     pcd1 = o3d.geometry.PointCloud()
@@ -39,19 +43,22 @@ class Solver:
         init_conf_threshold: float,  # represents percentage (e.g., 50 means filter lowest 50%)
         lc_thres: float = 0.80,
         vis_voxel_size: float = None,
-        vis_imgs: bool = False):
+        vis_imgs: bool = False,
+        device="auto",
+        enable_viewer=True):
 
         self.init_conf_threshold = init_conf_threshold
         self.vis_voxel_size = vis_voxel_size
         self.vis_imgs = vis_imgs
+        self.device = select_device(str(device))
 
-        self.viewer = Viewer()
+        self.viewer = Viewer() if enable_viewer else None
 
         self.flow_tracker = FrameTracker()
         self.map = GraphMap()
         self.graph = PoseGraph()
 
-        self.image_retrieval = ImageRetrieval()
+        self.image_retrieval = ImageRetrieval(device=self.device)
         self.current_working_submap = None
 
         self.lc_thres = lc_thres
@@ -130,7 +137,7 @@ class Solver:
 
             current_conf = current_submap.get_conf_masks_frame(frame_id_curr)
             prior_conf = prior_submap.get_conf_masks_frame(frame_id_prev)
-            good_mask = (prior_conf > prior_submap.get_conf_threshold()) * (current_conf > prior_submap.get_conf_threshold())
+            good_mask = (prior_conf > prior_submap.get_conf_threshold()) & (current_conf > current_submap.get_conf_threshold())
             good_mask = good_mask.reshape(-1)
 
             if np.sum(good_mask) < 100:
@@ -139,7 +146,7 @@ class Solver:
                 if np.sum(good_mask) < 100: # Handle the case where loop closure frames do not have enough points. 
                     good_mask = (prior_conf > 0).reshape(-1)
 
-            P_temp = np.linalg.inv(prior_submap.proj_mats[-1]) @ current_submap.proj_mats[0]
+            P_temp = np.linalg.inv(prior_submap.proj_mats[frame_id_prev]) @ current_submap.proj_mats[frame_id_curr]
             t1 = (P_temp[0:3,0:3] @ current_submap.get_frame_pointcloud(frame_id_curr).reshape(-1, 3)[good_mask].T).T
             t2 = prior_submap.get_frame_pointcloud(frame_id_prev).reshape(-1, 3)[good_mask]
             scale_factor_est_output = estimate_scale_pairwise(t1, t2)
@@ -152,7 +159,7 @@ class Solver:
                 debug_visualize(scale_factor*t1, t2)
 
             # Compute the first camera matrix of the new submap in world frame.
-            H_overlap_prior_overlap_current = np.linalg.inv(prior_submap.proj_mats[-1]) @ current_submap.proj_mats[0] @ H_scale
+            H_overlap_prior_overlap_current = P_temp @ H_scale
             H_w_submap = self.graph.get_homography(overlapping_node_id_prev) @ H_overlap_prior_overlap_current
 
             # Add first node of the new submap to the graph.
@@ -161,6 +168,17 @@ class Solver:
 
             # Add between factor for intra submaps constraint.
             self.graph.add_between_factor(overlapping_node_id_prev, submap_id_curr + frame_id_curr, H_overlap_prior_overlap_current, self.graph.intra_submap_noise)
+            recorder = getattr(self, "demo_recorder", None)
+            if recorder is not None:
+                kind = "loop_constraint_added" if is_loop_closure else (
+                    "loop_auxiliary_edge_added" if current_submap.get_lc_status() or prior_submap.get_lc_status()
+                    else "overlap_edge_added")
+                recorder.event(kind, submap_id=int(submap_id_curr), payload={
+                    "from_node": int(overlapping_node_id_prev), "to_node": int(submap_id_curr + frame_id_curr),
+                    "from_submap": int(submap_id_prev), "to_submap": int(submap_id_curr),
+                    "from_frame_index": int(frame_id_prev), "to_frame_index": int(frame_id_curr),
+                    "scale_factor": float(scale_factor), "relative_homography": H_overlap_prior_overlap_current.tolist(),
+                    "meaning": "actual SL4 between factor", "match_id": getattr(self, "_demo_active_loop", None)})
 
             if DEBUG:
                 print("Adding first homography of submap: \n", submap_id_curr + frame_id_curr, H_w_submap / H_w_submap[-1,-1])
@@ -285,8 +303,14 @@ class Solver:
             lc_submap.set_conf_masks(conf_lc)
             self.map.add_submap(lc_submap)
 
-            self.add_edge(lc_submap_num, 0, loop.query_submap_id, loop.query_submap_frame, is_loop_closure=False)
-            self.add_edge(loop.detected_submap_id, loop.detected_submap_frame, lc_submap_num, 1, is_loop_closure=True)
+            if getattr(self, "demo_recorder", None) is not None:
+                self._demo_active_loop = _demo_loop_id(loop)
+            try:
+                self.add_edge(lc_submap_num, 0, loop.query_submap_id, loop.query_submap_frame, is_loop_closure=False)
+                self.add_edge(loop.detected_submap_id, loop.detected_submap_frame, lc_submap_num, 1, is_loop_closure=True)
+            finally:
+                if hasattr(self, "_demo_active_loop"):
+                    del self._demo_active_loop
 
     def sample_pixel_coordinates(self, H, W, n):
         # Sample n random row indices (y-coordinates)
@@ -298,15 +322,13 @@ class Solver:
         return pixel_coords
 
     def run_predictions(self, image_names, model, max_loops, clip_model, clip_preprocess):
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        if not image_names:
+            raise ValueError("At least one image is required for a submap")
         t1 = time.time()
         with self.vggt_timer:
-            images = load_and_preprocess_images(image_names).to(device)
+            images = load_and_preprocess_images(image_names).to(self.device)
         print(f"Loaded and preprocessed {len(image_names)} images in {time.time() - t1:.2f} seconds")
         print(f"Preprocessed images shape: {images.shape}")
-
-        # print("Running inference...")
-        dtype = torch.bfloat16 if torch.cuda.get_device_capability()[0] >= 8 else torch.float16
 
         # First submap so set new pcd num to 0
         if self.map.get_largest_key() is None:
@@ -341,6 +363,19 @@ class Solver:
         predictions_lc = None
         with self.loop_closure_timer:
             detected_loops = self.image_retrieval.find_loop_closures(self.map, new_submap, max_loop_closures=max_loops, max_similarity_thres=self.lc_thres)
+        recorder = getattr(self, "demo_recorder", None)
+        if recorder is not None:
+            for candidate in detected_loops:
+                recorder.loop_candidate(_demo_loop_id(candidate),
+                    new_submap.get_img_names_at_index(candidate.query_submap_frame),
+                    self.map.get_submap(candidate.detected_submap_id).get_img_names_at_index(candidate.detected_submap_frame),
+                    submap_id=int(candidate.query_submap_id), payload={
+                    "query_frame_index": int(candidate.query_submap_frame),
+                    "candidate_submap_id": int(candidate.detected_submap_id),
+                    "candidate_frame_index": int(candidate.detected_submap_frame),
+                    "retrieval_distance": float(candidate.similarity_score),
+                    "distance_type": "L2 descriptor distance; lower is better",
+                    "distance_threshold": float(self.lc_thres)})
         loop_closure_frame_names = []
         if len(detected_loops) > 0:
             print(colored("detected_loops", "yellow"), detected_loops)
@@ -371,6 +406,16 @@ class Solver:
         
         if predictions_lc is not None:
             image_match_ratio = predictions_lc["image_match_ratio"]
+            if recorder is not None:
+                ratio = float(image_match_ratio)
+                recorder.event("loop_validation", submap_id=int(detected_loops[0].query_submap_id), payload={
+                    "match_id": _demo_loop_id(detected_loops[0]),
+                    "query_frame_index": int(detected_loops[0].query_submap_frame),
+                    "candidate_submap_id": int(detected_loops[0].detected_submap_id),
+                    "candidate_frame_index": int(detected_loops[0].detected_submap_frame),
+                    "image_match_ratio": ratio if np.isfinite(ratio) else None, "threshold": 0.95,
+                    "accepted": not bool(image_match_ratio < 0.95),
+                    "ratio_finite": bool(np.isfinite(ratio))})
             if image_match_ratio < 0.95:
                 print(colored("Loop closure image match ratio too low, skipping loop closure", "red"))
                 predictions_lc = None # We set to None to ignore the loop closure

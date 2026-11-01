@@ -1,0 +1,11 @@
+{
+  "run_id": "kitti360_existing_20261030",
+  "source_mode": "cached_playback",
+  "dataset": "KITTI-360 0000 existing full reconstruction; global alignment failure",
+  "pose_first_column": "frame_id",
+  "existing_assets": {
+    "point_cloud": "logs/kitti360_0000_poses_points.pcd",
+    "poses": "logs/kitti360_0000_poses.txt",
+    "evaluation": "logs/kitti360_0000_evaluation/trajectory_metrics.json"
+  }
+}

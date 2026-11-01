@@ -34,6 +34,9 @@ class FrameTracker:
             criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, 0.01)
         )
 
+        if next_pts is None or status is None:
+            self.initialize_keyframe(image)
+            return True
         status = status.flatten()
         good_kf = self.kf_pts[status == 1]
         good_next = next_pts[status == 1]
@@ -43,7 +46,7 @@ class FrameTracker:
             return True
 
         # Measure displacement from keyframe to current frame
-        displacement = np.linalg.norm(good_next - good_kf, axis=1)
+        displacement = np.linalg.norm((good_next - good_kf).reshape(-1, 2), axis=1)
         mean_disparity = np.mean(displacement)
 
         if visualize:

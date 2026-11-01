@@ -16,7 +16,10 @@ def estimate_scale_pairwise(X, Y, DEBUG=False):
     assert X.shape == Y.shape
     x_dists = np.linalg.norm(X, axis=1)
     y_dists = np.linalg.norm(Y, axis=1)
-    scales = y_dists / x_dists
+    valid = np.isfinite(x_dists) & np.isfinite(y_dists) & (x_dists > 1e-8) & (y_dists > 1e-8)
+    if not np.any(valid):
+        raise ValueError("No finite, nonzero correspondences available to estimate scale")
+    scales = y_dists[valid] / x_dists[valid]
     scale = np.median(scales)
 
     if DEBUG:

@@ -1,7 +1,11 @@
 import os
 import time
 import threading
+import queue
 import argparse
+from pathlib import Path
+
+os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
 
 import cv2
 import numpy as np
@@ -13,6 +17,7 @@ from vggt_slam.solver import Solver
 from vggt_slam.cameras import BACKENDS
 
 from vggt.models.vggt import VGGT
+from vggt_slam.runtime import select_device, model_dtype, validate_args
 
 # --- Thread Safety Primitives ---
 solver_lock = threading.Lock()  # Ensures only one solver thread runs at a time
@@ -21,10 +26,11 @@ data_lock = threading.Lock()    # Protects shared SLAM state (solver)
 parser = argparse.ArgumentParser(description="VGGT-SLAM RealSense live demo")
 parser.add_argument("--keyframe_folder", type=str, default="keyframes", help="Folder to save captured keyframes")
 parser.add_argument("--camera", type=str, default="realsense", choices=list(BACKENDS.keys()), help="Camera backend (default: realsense)")
+parser.add_argument("--device", choices=("auto", "cuda", "mps", "cpu"), default="auto", help="Inference device (auto: CUDA, then Apple MPS, then CPU)")
 parser.add_argument("--vis_map", action="store_true", help="Visualize point cloud in viser as it is being built, otherwise only show the final map")
 parser.add_argument("--vis_imgs", action="store_true", help="Show camera images in the viser frustums. By default only the frustums are shown (faster visualization)")
 parser.add_argument("--vis_voxel_size", type=float, default=None, help="Voxel size for downsampling the point cloud in the viewer (e.g. 0.05 for 5 cm). Default: no downsampling")
-parser.add_argument("--vis_flow", action="store_true", help="Visualize optical flow from RAFT for keyframe selection")
+parser.add_argument("--vis_flow", action="store_true", help="Visualize Lucas-Kanade optical flow for keyframe selection")
 parser.add_argument("--run_os", action="store_true", help="Enable open-set semantic search with Perception Encoder CLIP and SAM3")
 parser.add_argument("--submap_size", type=int, default=16, help="Number of new frames per submap, does not include overlapping frames or loop closure frames")
 parser.add_argument("--overlapping_window_size", type=int, default=1, help="ONLY DEFAULT OF 1 SUPPORTED RIGHT NOW. Number of overlapping frames, which are used in SL(4) estimation")
@@ -75,7 +81,7 @@ def restart_camera(camera, stop_event=None, retry_delay: float = 2.0):
     return None
 
 
-def threaded_process_submap(image_names_subset, solver, model, args, clip_model, clip_preprocess):
+def threaded_process_submap(image_names_subset, solver, model, args, clip_model, clip_preprocess, errors=None):
     """Background thread: run VGGT inference + graph optimisation for one submap."""
     try:
         print(f"[SLAM] Processing submap ({len(image_names_subset)} frames)...")
@@ -92,9 +98,9 @@ def threaded_process_submap(image_names_subset, solver, model, args, clip_model,
                     solver.update_latest_submap_vis()
         print("[SLAM] Submap done.")
     except Exception as e:
-        import traceback
-        print(f"[SLAM ERROR] {e}")
-        traceback.print_exc()
+        if errors is None:
+            raise
+        errors.put(e)
     finally:
         if solver_lock.locked():
             solver_lock.release()
@@ -146,8 +152,9 @@ def run_semantic_query_loop(args, solver, clip_model, clip_tokenizer, processor)
 
 def main():
     args = parser.parse_args()
+    validate_args(parser, args)
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = select_device(args.device)
     print(f"Using device: {device}")
 
     # When --run_os is set, SAM3/decord loads its own libxcb which poisons
@@ -160,6 +167,7 @@ def main():
         lc_thres=args.lc_thres,
         vis_voxel_size=args.vis_voxel_size,
         vis_imgs=args.vis_imgs,
+        device=device,
     )
 
     print("Initializing and loading VGGT model...")
@@ -174,7 +182,7 @@ def main():
         processor = Sam3Processor(sam3_model, confidence_threshold=0.50)
 
         clip_model = pe.CLIP.from_config("PE-Core-L14-336", pretrained=True)  # Downloads from HF
-        clip_model = clip_model.cuda()
+        clip_model = clip_model.to(device)
         clip_tokenizer = transforms.get_text_tokenizer(clip_model.context_length)
         clip_preprocess = transforms.get_image_transform(clip_model.image_size)
     else:
@@ -183,11 +191,10 @@ def main():
 
     model = VGGT()
     _URL = "https://huggingface.co/facebook/VGGT-1B/resolve/main/model.pt"
-    model.load_state_dict(torch.hub.load_state_dict_from_url(_URL))
+    model.load_state_dict(torch.hub.load_state_dict_from_url(_URL, map_location="cpu"))
 
     model.eval()
-    model = model.to(torch.bfloat16)  # use half precision
-    model = model.to(device)
+    model = model.to(device=device, dtype=model_dtype(device))
     print("All models loaded. Starting SLAM loop.")
 
     # Register the viser object-query panel so the user can search for objects
@@ -222,9 +229,12 @@ def main():
     submap_count = 0
     last_status_frame = 0  # for console status throttle when display is off
     stop_event = threading.Event()
+    errors = queue.Queue()
 
     try:
         while True:
+            if not errors.empty():
+                raise RuntimeError("SLAM submap processing failed") from errors.get()
             if stop_event.is_set():
                 break
 
@@ -252,15 +262,16 @@ def main():
                     print(f"[Main] Launching submap {submap_count} (frame {frame_count})...")
                     t = threading.Thread(
                         target=threaded_process_submap,
-                        args=(list(image_names_subset), solver, model, args, clip_model, clip_preprocess),
+                        args=(list(image_names_subset), solver, model, args, clip_model, clip_preprocess, errors),
                         daemon=True,
                     )
                     t.start()
                     image_names_subset = image_names_subset[-args.overlapping_window_size:]
                 else:
                     # SLAM still busy; cap the backlog so we don't grow unbounded.
-                    if len(image_names_subset) > target_size * 2:
-                        image_names_subset = image_names_subset[-target_size:]
+                    # Keep the shared frame that anchors this submap to its predecessor.
+                    if len(image_names_subset) > target_size:
+                        image_names_subset = image_names_subset[:1] + image_names_subset[-(target_size - 1):]
 
             kf = len(image_names_subset)
             slam_busy = solver_lock.locked()
@@ -293,6 +304,15 @@ def main():
     # Wait for any in-flight submap to finish before final visualization/logging.
     with solver_lock:
         pass
+    if not errors.empty():
+        raise RuntimeError("SLAM submap processing failed") from errors.get()
+
+    # Flush remaining new keyframes when capture ends, including short sessions.
+    if image_names_subset and (submap_count == 0 or len(image_names_subset) > args.overlapping_window_size):
+        solver_lock.acquire()
+        threaded_process_submap(image_names_subset, solver, model, args, clip_model, clip_preprocess, errors)
+        if not errors.empty():
+            raise RuntimeError("SLAM submap processing failed") from errors.get()
 
     print("Total number of submaps in map", solver.map.get_num_submaps())
     print("Total number of loop closures in map", solver.graph.get_num_loops())
@@ -301,13 +321,15 @@ def main():
         # just show the map after all submaps have been processed
         solver.update_all_submap_vis()
 
-    if args.run_os:
-        run_semantic_query_loop(args, solver, clip_model, clip_tokenizer, processor)
-
-    if args.log_results:
+    if args.log_results and solver.map.get_num_submaps() > 0:
+        os.makedirs(os.path.dirname(os.path.abspath(args.log_path)), exist_ok=True)
         solver.map.write_poses_to_file(args.log_path, solver.graph, kitti_format=False)
         if not args.skip_dense_log:
-            solver.map.write_points_to_file(solver.graph, args.log_path.replace(".txt", "_points.pcd"))
+            log_path = Path(args.log_path)
+            solver.map.write_points_to_file(solver.graph, str(log_path.with_name(log_path.stem + "_points.pcd")))
+
+    if args.run_os and solver.map.get_num_submaps() > 0:
+        run_semantic_query_loop(args, solver, clip_model, clip_tokenizer, processor)
 
 
 if __name__ == "__main__":
