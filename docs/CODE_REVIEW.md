@@ -1,5 +1,7 @@
 # VGGT-SLAM 2.0 코드 검토 및 실행 기록
 
+> 아래는 2026-10-30 당시의 기록이다. 이후 데모 변경분과 실제 SAM3/TUM 검증의 최종 검토는 [DEMO_ACCEPTANCE_REVIEW.md](DEMO_ACCEPTANCE_REVIEW.md)를 참고한다.
+
 검토일: 2026-10-30. 저장소의 Python 모듈 16개, 설치 스크립트, README 및 TUM 평가 스크립트를 검토했다. 기존 사용자 변경인 `.gitignore`, `.claude/`, `.ignore`, `AGENTS.md`는 보존했다. 소스 위치와 호출 관계는 graft로 확인했다.
 
 ## 구조와 실행 흐름

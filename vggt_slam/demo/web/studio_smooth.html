@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VGGT · Map Studio · Smooth V2</title>
+<style>
+:root{color-scheme:dark;--sidebar:390px;--viewer-height:60vh}*{box-sizing:border-box}body{margin:0;background:#080e1b;color:#e2e8f0;font:14px/1.45 system-ui,sans-serif;overflow:hidden}#viewer{position:absolute;inset:0;width:100%;height:100vh;border:0}#camera-view{position:absolute;left:0;top:0;width:calc(100% - var(--sidebar));height:calc(var(--viewer-height) - 5px);object-fit:contain;background:#0f172a;pointer-events:none}header{position:absolute;left:18px;top:14px;display:flex;gap:8px;align-items:center;padding:8px 12px;background:#0b1425e8;border:1px solid #334155;border-radius:12px;backdrop-filter:blur(10px);flex-wrap:wrap;max-width:calc(100% - var(--sidebar) - 24px)}header strong{color:#67e8f9;font-size:13px}button{font:inherit;border:1px solid #334155;background:#1e293b;color:#e2e8f0;border-radius:7px;padding:6px 10px;cursor:pointer}button:hover{border-color:#22d3ee}button.primary{background:#0e7490;border-color:#0891b2;color:white}.views{position:absolute;top:calc(var(--viewer-height) + 5px);bottom:0;left:0;width:calc(100% - var(--sidebar));padding:12px;display:grid;grid-template-columns:minmax(0,var(--rgb-fr,1.65fr)) 12px minmax(0,var(--bev-fr,1fr));gap:0}.card{min-height:0;min-width:0;background:#101b2d;border:1px solid #26364d;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}.caption{padding:9px 12px;display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #26364d}.caption strong{font-size:12px;letter-spacing:.06em;color:#67e8f9}.caption span{font-size:12px;color:#94a3b8}.card img{width:100%;height:calc(100% - 39px);object-fit:contain;min-height:0;background:#0f172a}.pill{display:inline-block;padding:4px 8px;border-radius:6px;background:#164e63;color:#a5f3fc;font-size:12px}#loading{position:absolute;top:45%;left:20px;color:#94a3b8}#mode{font-size:12px;color:#cbd5e1}#frame-info{font-size:12px;color:#94a3b8}#camera-view[hidden]{display:none}@media(max-width:850px){:root{--sidebar:320px}header{left:8px;top:8px;gap:4px;padding:6px}header strong{display:none}.views{padding:6px}button{font-size:12px;padding:5px}}
+.splitter{position:relative;z-index:5;touch-action:none;user-select:none;border-radius:5px;background:#101b2d;outline:none}.splitter::after{content:"";position:absolute;background:#64748b;border-radius:4px}.splitter:hover,.splitter:focus-visible{background:#164e63}.splitter:hover::after,.splitter:focus-visible::after{background:#67e8f9}#height-split{position:absolute;left:0;top:calc(var(--viewer-height) - 5px);width:calc(100% - var(--sidebar));height:10px;cursor:row-resize}#height-split::after{width:64px;height:3px;left:calc(50% - 32px);top:3px}#width-split{cursor:col-resize}#width-split::after{width:3px;height:48px;left:4px;top:calc(50% - 24px)}body.resizing{user-select:none}body.resizing iframe{pointer-events:none}
+.view-tools{display:flex;gap:5px;flex-wrap:wrap;padding:5px 8px;flex-shrink:0}.view-tools button{font-size:11px;padding:4px 7px}.card img{flex:1;height:0}.caption{flex-shrink:0}button[aria-pressed="true"]{background:#155e75;border-color:#22d3ee}#panel-toggle{position:fixed;right:12px;top:8px;z-index:20;font-size:12px}
+#bev{touch-action:none;cursor:grab}#sidebar-split{position:absolute;top:0;bottom:0;width:8px;z-index:8;cursor:col-resize;background:#26364d88}.play-tools{display:flex;gap:4px;align-items:center}.play-tools input[type=range]{width:130px}.play-tools input[type=number]{width:58px;background:#172033;color:white;border:1px solid #475569}
+</style></head><body>
+<iframe id="viewer" title="3D 지도와 컨트롤"></iframe><img id="camera-view" alt="재생 중 RGB 카메라에서 투영한 3D 지도"><div id="loading">지도 연결 중…</div>
+<button id="panel-toggle" aria-expanded="true">패널 숨기기</button><header><a href="http://localhost:8100" style="color:#67e8f9">버전 선택</a><a href="http://localhost:8101" style="color:#cbd5e1">Classic V1</a><strong>3D MAP</strong><span id="mode">RGB 카메라 시점</span><button id="reset" class="primary">View Reset · 현재 주행 프레임</button><button id="free">자유 3D 탐색</button><button id="mask-3d" aria-pressed="true">3D Mask ON</button><button id="layout-reset" title="3D·RGB·BEV 크기만 기본값으로 복원">뷰 크기 초기화</button><div class="play-tools"><button id="play">▶ 재생</button><button id="pause">Ⅱ 일시정지</button><button id="previous-frame">◀</button><input id="frame-range" type="range" min="0" max="1" value="0" aria-label="프레임 이동"><input id="frame-number" type="number" min="0" value="0" aria-label="지도 키프레임 번호" title="지도 키프레임 번호 · 0부터"><button id="next-frame">▶</button></div><span class="pill" id="status">정지</span><span id="frame-info"></span></header>
+<div id="sidebar-split" role="separator" aria-label="오른쪽 패널 너비" aria-orientation="vertical" tabindex="0"></div><div id="height-split" class="splitter" role="separator" aria-label="3D와 RGB·BEV 높이 조절" aria-orientation="horizontal" tabindex="0" title="위아래로 드래그 · 방향키로 조절 · 더블클릭으로 기본 높이"></div>
+<section class="views"><article class="card"><div class="caption"><strong>RGB</strong><span id="rgb-label">현재 프레임</span></div><div class="view-tools"><button id="box-rgb" aria-pressed="false">RGB Box OFF</button><button id="mask-rgb" aria-pressed="true">RGB Mask ON</button></div><video id="native-rgb" muted playsinline preload="auto" style="display:none;width:100%;flex:1;min-height:0;object-fit:contain;background:#0f172a"></video><img id="rgb" alt="현재 재생 프레임 RGB"></article><div id="width-split" class="splitter" role="separator" aria-label="RGB와 BEV 너비 조절" aria-orientation="vertical" tabindex="0" title="좌우로 드래그 · 방향키로 조절 · 더블클릭으로 기본 너비"></div><article class="card"><div class="caption"><strong id="bev-title">BEV MAP</strong><span id="bev-label">현재까지의 지도</span></div><div class="view-tools"><button id="zoom-in">Zoom In +</button><button id="zoom-out">Zoom Out −</button><button id="zoom-reset">Zoom Reset</button><button id="mask-bev" aria-pressed="false">Mask OFF</button><button id="box-bev" aria-pressed="false">Box OFF</button><button id="road-overlay" aria-pressed="true">Road ON</button><button id="trajectory" aria-pressed="true">주행 기록 ON</button></div><img id="bev" alt="동기화된 BEV 지도"></article></section>
+
+<script>
+const $=id=>document.getElementById(id);let version=0,connected=false,aspect=518/294,imageUrls=[];
+function sceneViewport(){
+  const doc=$('viewer').contentDocument;if(!doc)return null;
+  for(const canvas of doc.querySelectorAll('canvas')){
+    for(let node=canvas;node&&node.parentElement;node=node.parentElement){
+      const parent=node.parentElement, style=doc.defaultView.getComputedStyle(parent);
+      if(style.display==='flex'&&style.flexDirection==='row'&&parent.children.length>1){node.dataset.mainViewport='true';return node}
+    }
+  }return null;
+}
+const storageKey='vggt-studio-layout-v1', defaultWidth=1.65/2.65;
+let preference={top:null,rgb:defaultWidth};
+try{const saved=JSON.parse(localStorage.getItem(storageKey));if(saved&&Number.isFinite(saved.top)&&saved.top>0&&saved.top<1)preference.top=saved.top;if(saved&&Number.isFinite(saved.rgb)&&saved.rgb>0&&saved.rgb<1)preference.rgb=saved.rgb}catch(e){}
+const clamp=(v,lo,hi)=>Math.min(hi,Math.max(lo,v));
+function saveLayout(){const css=getComputedStyle(document.documentElement);if(preference.top!==null)preference.top=parseFloat(css.getPropertyValue('--viewer-height'))/innerHeight;preference.rgb=parseFloat(css.getPropertyValue('--rgb-fr'));try{localStorage.setItem(storageKey,JSON.stringify(preference))}catch(e){}}
+let viewportTimer=null,lastViewport='',pendingViewport='';
+function reportViewport(){const r=$('camera-view').getBoundingClientRect();if(r.width<64||r.height<64)return;const data={width:Math.round(r.width/16)*16,height:Math.round(r.height/16)*16,dpr:devicePixelRatio||1};const key=JSON.stringify(data);if(key===lastViewport||key===pendingViewport)return;pendingViewport=key;clearTimeout(viewportTimer);viewportTimer=setTimeout(async()=>{try{const r=await fetch('/api/viewport',{method:'POST',headers:{'Content-Type':'application/json'},body:key});if(r.ok)lastViewport=key}catch(e){console.debug(e)}finally{pendingViewport=''}},350)}
+let panelHidden=false,viewportRestore=null,sidebarWidth=null;try{sidebarWidth=Number(localStorage.getItem('vggt-sidebar-width'))||null}catch(e){}const sidebarStyles=new Map();
+$('panel-toggle').onclick=()=>{panelHidden=!panelHidden;$('panel-toggle').textContent=panelHidden?'패널 보이기':'패널 숨기기';$('panel-toggle').setAttribute('aria-expanded',String(!panelHidden));layout();const d=$('viewer').contentWindow;d?.dispatchEvent(new Event('resize'))};
+function layout(){
+  const viewport=sceneViewport();
+  if(viewport){for(const sibling of viewport.parentElement.children){if(sibling===viewport)continue;if(!sidebarStyles.has(sibling))sidebarStyles.set(sibling,sibling.style.display);sibling.style.display=panelHidden?'none':sidebarStyles.get(sibling)}if(panelHidden){if(viewportRestore===null)viewportRestore={width:viewport.style.width,flex:viewport.style.flex};viewport.style.width='100%';viewport.style.flex='1 1 0%'}else if(viewportRestore!==null){viewport.style.width=viewportRestore.width;viewport.style.flex=viewportRestore.flex;viewportRestore=null}}
+  if(viewport&&!panelHidden&&sidebarWidth){const width=clamp(sidebarWidth,280,Math.max(280,innerWidth-360));viewport.style.width='calc(100% - '+width+'px)';viewport.style.flex='0 0 calc(100% - '+width+'px)';viewport.style.minWidth='0';for(const sibling of viewport.parentElement.children){if(sibling===viewport||parseFloat(getComputedStyle(sibling).width)<100)continue;sibling.style.width=width+'px';sibling.style.minWidth=width+'px';sibling.style.maxWidth=width+'px';sibling.style.flexShrink='0'}}
+  const sidebar=panelHidden?0:viewport?Math.max(0,innerWidth-viewport.getBoundingClientRect().width):(innerWidth>850?390:320);
+  $('sidebar-split').hidden=panelHidden;$('sidebar-split').style.left=(innerWidth-sidebar-4)+'px';
+  const minimum=Math.min(180,innerHeight*.35);
+  const height=clamp(preference.top===null?(innerWidth-sidebar)/aspect+5:innerHeight*preference.top,minimum+5,innerHeight-minimum-5);
+  const padding=innerWidth>850?12:6;
+  const available=Math.max(1,innerWidth-sidebar-2*padding-12);
+  const minFraction=Math.min(.4,120/available);
+  const rgb=clamp(preference.rgb,minFraction,1-minFraction);
+  document.documentElement.style.setProperty('--rgb-fr',rgb+'fr');
+  document.documentElement.style.setProperty('--bev-fr',(1-rgb)+'fr');
+  $('height-split').setAttribute('aria-valuenow',Math.round(height/innerHeight*100));
+  $('height-split').setAttribute('aria-valuetext','3D 높이 '+Math.round(height-5)+' 픽셀');
+  $('width-split').setAttribute('aria-valuenow',Math.round(rgb*100));
+  $('width-split').setAttribute('aria-valuetext','RGB 너비 '+Math.round(rgb*100)+'%');
+  document.documentElement.style.setProperty('--sidebar',sidebar+'px');
+  document.documentElement.style.setProperty('--viewer-height',height+'px');
+  reportViewport();
+  if(viewport){viewport.style.position='relative';if(viewport.style.height!==(height-5)+'px')viewport.style.height=(height-5)+'px';}
+}
+function bindSplitter(id,axis){
+  const handle=$(id);let dragging=false;
+  function change(event){
+    if(axis==='top')preference.top=event.clientY/innerHeight;
+    else{const views=document.querySelector('.views'),r=views.getBoundingClientRect(),padding=parseFloat(getComputedStyle(views).paddingLeft);preference.rgb=(event.clientX-r.left-padding-6)/Math.max(1,r.width-2*padding-12)}
+    layout();
+  }
+  handle.addEventListener('pointerdown',event=>{if(event.button!==0)return;event.preventDefault();dragging=true;handle.setPointerCapture(event.pointerId);document.body.classList.add('resizing');change(event)});
+  document.addEventListener('pointermove',event=>{if(dragging)change(event)});
+  function finish(){if(!dragging)return;dragging=false;document.body.classList.remove('resizing');const height=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--viewer-height'));preference.top=preference.top===null?null:height/innerHeight;preference.rgb=clamp(preference.rgb,.01,.99);saveLayout()}
+  document.addEventListener('pointerup',finish);document.addEventListener('pointercancel',finish);window.addEventListener('blur',finish);
+  handle.addEventListener('dblclick',()=>{preference[axis]=axis==='top'?null:defaultWidth;layout();saveLayout()});
+  handle.addEventListener('keydown',event=>{const increase=axis==='top'?'ArrowDown':'ArrowRight',decrease=axis==='top'?'ArrowUp':'ArrowLeft';if(![increase,decrease,'Home'].includes(event.key))return;event.preventDefault();if(event.key==='Home')preference[axis]=axis==='top'?null:defaultWidth;else if(axis==='top'){const h=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--viewer-height'));preference.top=(h+(event.key===increase?20:-20))/innerHeight}else preference.rgb+=(event.key===increase ? .03 : -.03);layout();saveLayout()});
+}
+bindSplitter('height-split','top');bindSplitter('width-split','rgb');
+$('layout-reset').onclick=()=>{preference={top:null,rgb:defaultWidth};try{localStorage.removeItem(storageKey)}catch(e){}layout()};
+let sidebarDragging=false;
+$('sidebar-split').onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();sidebarDragging=true;document.body.classList.add('resizing');$('sidebar-split').setPointerCapture(e.pointerId)};
+document.addEventListener('pointermove',e=>{if(sidebarDragging){sidebarWidth=clamp(innerWidth-e.clientX,280,Math.max(280,innerWidth-360));layout()}});
+document.addEventListener('pointerup',()=>{if(sidebarDragging){sidebarDragging=false;document.body.classList.remove('resizing');try{localStorage.setItem('vggt-sidebar-width',sidebarWidth)}catch(e){}}});
+$('sidebar-split').onkeydown=e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();sidebarWidth=clamp((sidebarWidth||390)+(e.key==='ArrowLeft'?20:-20),280,Math.max(280,innerWidth-360));layout();try{localStorage.setItem('vggt-sidebar-width',sidebarWidth)}catch(e){}};
+let bevLocal={zoom:1,pan:[0,0]},bevPending=null,bevSending=false,bevTimer=null,bevDrag=null;
+async function sendBev(){if(bevSending||!bevPending)return;bevSending=true;const value=bevPending;bevPending=null;try{await action('bev_view',value)}catch(e){console.error(e)}finally{bevSending=false;if(bevPending)sendBev()}}
+function queueBev(){bevPending={zoom:bevLocal.zoom,pan:[...bevLocal.pan]};clearTimeout(bevTimer);bevTimer=setTimeout(sendBev,80)}
+function bevRect(){const r=$('bev').getBoundingClientRect(),side=Math.min(r.width,r.height);return {x:r.x+(r.width-side)/2,y:r.y+(r.height-side)/2,side}}
+$('bev').addEventListener('wheel',e=>{e.preventDefault();const r=bevRect(),old=bevLocal.zoom,next=clamp(old+(e.deltaY<0?.25:-.25),.5,8);const x=(e.clientX-r.x)/r.side-.5,y=.5-(e.clientY-r.y)/r.side;bevLocal.pan[0]=clamp(bevLocal.pan[0]+x*(1/old-1/next)*480/431,-10,10);bevLocal.pan[1]=clamp(bevLocal.pan[1]+y*(1/old-1/next)*480/431,-10,10);bevLocal.zoom=next;queueBev()},{passive:false});
+$('bev').onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();bevDrag={x:e.clientX,y:e.clientY,pan:[...bevLocal.pan],side:bevRect().side};$('bev').setPointerCapture(e.pointerId);$('bev').style.cursor='grabbing'};
+$('bev').onpointermove=e=>{if(!bevDrag)return;const factor=480/431/bevDrag.side/bevLocal.zoom;bevLocal.pan=[clamp(bevDrag.pan[0]-(e.clientX-bevDrag.x)*factor,-10,10),clamp(bevDrag.pan[1]+(e.clientY-bevDrag.y)*factor,-10,10)];queueBev()};
+$('bev').onpointerup=$('bev').onpointercancel=()=>{bevDrag=null;$('bev').style.cursor='grab';sendBev()};
+$('frame-range').onchange=e=>action('frame',{frame:Number(e.target.value)}).catch(console.error);
+$('frame-number').onchange=e=>action('frame',{frame:Number(e.target.value)}).catch(console.error);
+$('viewer').addEventListener('load',layout);
+addEventListener('resize',layout);layout();async function action(name,payload={}){let r=await fetch('/api/action',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:name,...payload})});if(!r.ok)throw Error('action failed')};$('reset').onclick=()=>action('reset').catch(console.error);$('free').onclick=()=>action('free').catch(console.error);for(const [id,name] of Object.entries({'zoom-in':'zoom_in','zoom-out':'zoom_out','zoom-reset':'zoom_reset','road-overlay':'road_overlay','trajectory':'trajectory','mask-3d':'mask_3d','mask-rgb':'mask_rgb','box-rgb':'box_rgb','mask-bev':'mask_bev','box-bev':'box_bev','play':'play','pause':'pause','previous-frame':'previous_frame','next-frame':'next_frame'}))$(id).onclick=()=>action(name).catch(console.error);
+async function poll(){try{const data=await(await fetch('/api/frame',{cache:'no-store'})).json();if(data.viser_port&&!connected){$('viewer').src='/viser/?websocket='+encodeURIComponent('ws://'+location.hostname+':'+data.viser_port);connected=true}if(data.version&&data.version!==version){let v=data.version;const names=['rgb','bev','camera'];const blobs=await Promise.all(names.map(async name=>{const r=await fetch('/'+name+'.jpg?v='+v,{cache:'no-store'});if(!r.ok)throw Error('snapshot expired');return r.blob()}));const urls=blobs.map(b=>URL.createObjectURL(b));try{await Promise.all(urls.map(src=>new Promise((resolve,reject)=>{const i=new Image();i.onload=resolve;i.onerror=reject;i.src=src})));if(v<version){urls.forEach(URL.revokeObjectURL);return}version=v;names.forEach((n,i)=>$(n==='camera'?'camera-view':n).src=urls[i]);imageUrls.forEach(URL.revokeObjectURL);imageUrls=urls}catch(e){urls.forEach(URL.revokeObjectURL);throw e}aspect=data.aspect||aspect;layout();$('camera-view').hidden=data.playing||!data.follow_rgb||!data.camera_available;$('mode').textContent=data.follow_rgb?'RGB 카메라 시점':'자유 3D 시점';$('rgb-label').textContent='FRAME '+data.source_frame_id+' · '+data.timestamp_label;$('bev-title').textContent=data.bev_mode==='Road connectivity'?'BEV + ROAD':'BEV MAP';$('bev-label').textContent=data.connectivity?data.bev_plane+' · '+data.connectivity.occupied_cells+' cells · '+data.connectivity.edges+' links':data.bev_plane+' · '+data.point_count.toLocaleString()+' points';$('frame-info').textContent='프레임 '+(data.frame_index+1)+' / '+data.frame_count+' · '+data.source_frame_id;for(const [id,on,label] of [['mask-3d',data.mask_3d,'3D Mask'],['mask-rgb',data.mask_rgb,'RGB Mask'],['box-rgb',data.box_rgb,'RGB Box'],['mask-bev',data.mask_bev,'Mask'],['box-bev',data.box_bev,'Box'],['road-overlay',!!data.connectivity,'Road'],['trajectory',data.bev_trajectory,'주행 기록']]){$(id).setAttribute('aria-pressed',String(!!on));$(id).textContent=label+(on?' ON':' OFF')}if(!bevSending&&!bevPending&&!bevDrag)bevLocal={zoom:data.bev_zoom||1,pan:data.bev_pan||[0,0]};for(const id of ['frame-range','frame-number']){const input=$(id);input.max=Math.max(0,data.frame_count-1);if(document.activeElement!==input)input.value=data.frame_index}$('play').textContent=data.playing?'Ⅱ 정지':'▶ 재생';$('zoom-reset').textContent='Zoom Reset · '+(data.bev_zoom||1)+'×';$('status').textContent=data.playing?'▶ 재생 중':'⏸ 정지';$('loading').hidden=true}}
+catch(e){console.debug('waiting for synchronized frame',e)}finally{layout();setTimeout(poll,250)}}poll();
+</script><script>
+let smoothRun=null,smoothPlaying=false,mediaGeneration=null,mediaSeeking=false,lastSmoothStatus=null;
+const native=document.getElementById('native-rgb');
+async function smoothPoll(){try{const d=await(await fetch('/api/smooth',{cache:'no-store'})).json();
+ if(d.media&&smoothRun!==d.run){native.pause();native.src=d.media;smoothRun=d.run;mediaGeneration=null}
+ lastSmoothStatus=d;
+ if(d.media){const visible=d.playing||!d.selected_query;native.style.display=visible?'block':'none';document.getElementById('rgb').style.display=visible?'none':'';
+ if(native.readyState&&mediaGeneration!==d.generation){native.pause();mediaGeneration=d.generation;const target=Math.min(d.time,Math.max(0,native.duration-.01));mediaSeeking=Math.abs(native.currentTime-target)>.03||native.ended;if(mediaSeeking)native.currentTime=target;}
+ if(!mediaSeeking&&!native.seeking){if(d.playing){if(native.paused)native.play().catch(console.debug)}else{native.pause();if(native.readyState&&Math.abs(native.currentTime-d.time)>.15){mediaSeeking=true;native.currentTime=d.time}}}
+ if(visible)document.getElementById('rgb-label').textContent='영상 '+native.currentTime.toFixed(2)+' s · 지도 '+d.rendered_time.toFixed(2)+' s';}
+ if(d.playing&&d.follow_rgb){document.getElementById('camera-view').hidden=true;document.getElementById('mode').textContent='Smooth V2 · 보간 카메라'}
+ else if(d.follow_rgb)document.getElementById('camera-view').hidden=false;
+ smoothPlaying=d.playing;
+ document.getElementById('status').textContent=d.playing?(d.selected_query?'▶ 영상 재생 · RGB 분할/박스는 정지 시':'▶ 영상 재생 · 지도는 독립 갱신'):'⏸ 정지 · 고화질';
+}catch(e){console.debug(e)}finally{setTimeout(smoothPoll,100)}}
+native.addEventListener('seeked',()=>{mediaSeeking=false});
+native.addEventListener('timeupdate',()=>{if(smoothPlaying&&!native.paused&&!native.seeking&&!mediaSeeking&&lastSmoothStatus&&mediaGeneration===lastSmoothStatus.generation)action('video_clock',{seconds:native.currentTime,generation:mediaGeneration,run:smoothRun}).catch(console.debug)});
+native.addEventListener('ended',()=>{if(smoothPlaying&&!mediaSeeking&&!native.seeking&&native.currentTime>=native.duration-.2)action('pause',{generation:mediaGeneration}).catch(console.debug)});smoothPoll();
+</script></body></html>

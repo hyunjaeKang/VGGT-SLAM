@@ -152,9 +152,9 @@ def compute_obb_from_points(points: np.ndarray):
         extent      : (3,) lengths of OBB along its principal axes
         rotation    : (3,3) rotation matrix (columns = principal axes)
     """
-    assert points.ndim == 2 and points.shape[1] == 3, "Input must be Nx3 points"
-
-    # Remove NaN/inf if any
+    points = np.asarray(points, dtype=np.float64)
+    if points.ndim != 2 or points.shape[1] != 3:
+        raise ValueError("Input must be Nx3 points")
     points = points[np.isfinite(points).all(axis=1)]
     if len(points) == 0:
         raise ValueError("Point cloud is empty or invalid")
@@ -164,12 +164,16 @@ def compute_obb_from_points(points: np.ndarray):
 
     # 2. PCA on centered points
     centered = points - centroid
-    cov = np.cov(centered, rowvar=False)
+    cov = centered.T @ centered / max(len(points) - 1, 1)
 
     # Eigen decomposition (sorted by eigenvalue descending)
     eigvals, eigvecs = np.linalg.eigh(cov)
     order = np.argsort(eigvals)[::-1]
     eigvecs = eigvecs[:, order]
+
+    # PCA axes may be left-handed; viser expects a proper rotation.
+    if np.linalg.det(eigvecs) < 0:
+        eigvecs[:, -1] *= -1
 
     rotation = eigvecs  # columns = principal axes (R)
 
@@ -180,6 +184,7 @@ def compute_obb_from_points(points: np.ndarray):
     min_corner = points_local.min(axis=0)
     max_corner = points_local.max(axis=0)
     extent = max_corner - min_corner
+    extent = np.maximum(extent, max(float(np.ptp(points, axis=0).max()) * 1e-6, 1e-6))
 
     # 5. Compute box center (local), then world
     center_local = 0.5 * (min_corner + max_corner)

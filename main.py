@@ -156,8 +156,8 @@ def run_pipeline(args, recorder=None):
         import core.vision_encoder.pe as pe
         import core.vision_encoder.transforms as transforms
 
-        sam3_model = build_sam3_image_model()
-        processor = Sam3Processor(sam3_model, confidence_threshold=0.50)
+        sam3_model = build_sam3_image_model(device=str(device))
+        processor = Sam3Processor(sam3_model, device=str(device), confidence_threshold=0.50)
 
         clip_model = pe.CLIP.from_config("PE-Core-L14-336", pretrained=True)  # Downloads from HF
         clip_model = clip_model.to(device)
@@ -309,16 +309,21 @@ def run_pipeline(args, recorder=None):
             masked_img = utils.overlay_masks(best_img, masks)
             masked_img.show()
 
-            for i in range(masks.shape[0]):
-                mask = masks[i].cpu().numpy()
-                obb_center, obb_extent, obb_rotation = utils.compute_obb_from_points(found_submap.get_points_in_mask(overall_best_frame_index, mask, solver.graph))
-                solver.viewer.visualize_obb(
-                    center=obb_center,
-                    extent=obb_extent,
-                    rotation=obb_rotation,
-                    color=(255, 0, 0),
-                    line_width=8.0,
-                )
+            from vggt_slam.demo.object_query import boxes_from_masks, save_query_evidence
+            mask_arrays = masks.detach().cpu().numpy()
+            score_arrays = scores.detach().cpu().numpy()
+            detections = boxes_from_masks(found_submap, overall_best_frame_index, solver.graph,
+                                          mask_arrays, scores=score_arrays)
+            for detection in detections:
+                if detection["valid"]:
+                    solver.viewer.visualize_obb(center=np.asarray(detection["center"]),
+                                                extent=np.asarray(detection["extent"]),
+                                                rotation=np.asarray(detection["rotation"]),
+                                                color=(255, 0, 0), line_width=8.0)
+            save_query_evidence(query, overall_best_score, overall_best_submap_id,
+                                overall_best_frame_index, best_img, detections,
+                                run_dir=recorder.run_dir if recorder is not None else None,
+                                recorder=recorder)
 
     if args.keep_alive:
         print("Viewer ready at http://localhost:8080 — press Ctrl+C to stop.")

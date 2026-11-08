@@ -246,8 +246,16 @@ class Submap:
 
     
     def get_points_in_mask(self, frame_index, mask, graph):
-        points = self.get_points_list_in_world_frame(graph)[0][frame_index]
-        points_flat = points.reshape(-1, 3)
-        mask_flat = mask.reshape(-1)
-        points_in_mask = points_flat[mask_flat]
-        return points_in_mask
+        points, _, confidence_masks = self.get_points_list_in_world_frame(graph)
+        points = np.asarray(points[frame_index])
+        mask = np.asarray(mask).squeeze().astype(bool)
+        if mask.ndim != 2:
+            raise ValueError("segmentation mask must be 2D")
+        if mask.shape != points.shape[:2]:
+            from PIL import Image
+
+            mask = np.asarray(Image.fromarray(mask.astype(np.uint8)).resize(
+                (points.shape[1], points.shape[0]), resample=Image.Resampling.NEAREST)).astype(bool)
+        valid = mask & np.asarray(confidence_masks[frame_index], dtype=bool)
+        valid &= np.isfinite(points).all(axis=2)
+        return points[valid]

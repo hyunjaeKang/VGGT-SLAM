@@ -45,14 +45,15 @@ class Solver:
         vis_voxel_size: float = None,
         vis_imgs: bool = False,
         device="auto",
-        enable_viewer=True):
+        enable_viewer=True,
+        viewer_port=8080):
 
         self.init_conf_threshold = init_conf_threshold
         self.vis_voxel_size = vis_voxel_size
         self.vis_imgs = vis_imgs
         self.device = select_device(str(device))
 
-        self.viewer = Viewer() if enable_viewer else None
+        self.viewer = Viewer(port=viewer_port) if enable_viewer else None
 
         self.flow_tracker = FrameTracker()
         self.map = GraphMap()
@@ -83,6 +84,7 @@ class Solver:
             point_size=point_size,
             point_shape="circle",
         )
+        self.viewer.bev.set_cloud(name, points_in_world_frame, points_colors)
 
     def set_submap_point_cloud(self, submap):
         # Add the point cloud to the visualization.

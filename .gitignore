@@ -140,6 +140,8 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.venv-open-set/
+.venv-eval/
 env/
 venv/
 ENV/

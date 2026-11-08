@@ -1,0 +1,29 @@
+{
+  "version": "classic-v1",
+  "files": {
+    "demo.py": "6600001c18959a267e6034073b782a25496beaf388bf3012cda4214c936f8fb2",
+    "vggt_slam/demo/__init__.py": "0b58019f2e3f50fbb9277325349c60641a4f515bc0908b5e50a249a6f080f3ac",
+    "vggt_slam/demo/bev.py": "254c74a52078d4bf386b73cfa5e44b69221dc2ee8661a29f8ccaed04ea054649",
+    "vggt_slam/demo/cache.py": "3f9467e890b6eeb21f69ea6ce94fbd0680de0a97a0e9aaad910d578bc2d85ef4",
+    "vggt_slam/demo/camera_view.py": "d80c0caa57e0d0252a0c6b72cc09340aedad7698a6735ae75170bafa0a6aec73",
+    "vggt_slam/demo/dense_display.py": "7c0b4a8c317c32b770d76bb303beb9c725fd4aa207951e2a13fcf85072689d7e",
+    "vggt_slam/demo/graph_recording.py": "feb730e57fd3d47c0ff9727b63aa39663750f8bfad2fe30190806e5112027541",
+    "vggt_slam/demo/image_mapping.py": "53f9d5fb9bd594cd0b2fb3a3a7ad6bc47e4facbfffbfbd06e91d1de11dec6626",
+    "vggt_slam/demo/main_panel.py": "50503d2d638de550dcefc4e5c4ae407d27238862d7e0904dab7b00d1d30485cf",
+    "vggt_slam/demo/object_query.py": "4c74f0e383b6355f7df13341136744f3b4129aa6df0dbaf4eeb5b538cbd044b6",
+    "vggt_slam/demo/prepare.py": "084b2ed79f71407c5f040f99976ce2fc9b1b227857a9c9454a157b20ac2fde38",
+    "vggt_slam/demo/query_display.py": "52fd515a9e94104ef7002e34864fc8db39cb23e172741644bc49d64bb95a99a5",
+    "vggt_slam/demo/recording.py": "5188440a857e7ce09b55b486cb1dd372db4d5feeb3dc05f1b7fa9537e74747c7",
+    "vggt_slam/demo/road.py": "5ad1a45fce26dc52b7455110d83d34bb29c2a950c4ef939d1e3558d36fed9aba",
+    "vggt_slam/demo/search_assets.py": "33589a587b4e443eda727e183676ebb2e021f8d81e6f04398e44a349119045a8",
+    "vggt_slam/demo/search_audit.py": "2ac406898ff8b07a94d5b965dc1711677bf13d14711350420356448aa378cf50",
+    "vggt_slam/demo/search_cache.py": "f727d94316b77b542ce9942b259ba374db66e116c2c33f1aceb912721f11aa9a",
+    "vggt_slam/demo/search_policy.py": "43550b0cdff2fb41e9420173a97e8dbabf68a0a3d25b3029b96de69e6c78b8c4",
+    "vggt_slam/demo/sky.py": "b9c64247476539153d9693ee6c68125927197517ca80c752b561254031ade1af",
+    "vggt_slam/demo/status.py": "87805e38729faa10b1994d567f7eb76a870d317349d38ed5b8167ca899c8175a",
+    "vggt_slam/demo/video_controls.py": "f5c1fee9cfa08393709d07295552a343b3a6b7d93b835e7634058a8794314f8e",
+    "vggt_slam/demo/video_run.py": "e8beeb110e8410d0a8a782ab704d100aed1040e4545ff27c3fda8b0205f73b39",
+    "vggt_slam/demo/viewer.py": "d6acaeb4c7bb78a4e77ba2d34393ba075064dc604617b254cc8ef21261cff32f",
+    "vggt_slam/demo/web/studio.html": "9027283c7373c3d2e289cb3b16c92aa88a9887d5810e05df7125e8f00d456436"
+  }
+}

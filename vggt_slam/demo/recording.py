@@ -1,5 +1,6 @@
 """Record CPU inference outputs for later inspection, without retaining tensors."""
 import json
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -19,18 +20,20 @@ class Recorder:
         # A fresh recorder must not overwrite or append to another session.
         self._stream = self.events.open("x", encoding="utf-8")
         self._seq = 0
+        self._lock = threading.Lock()
 
     def close(self):
         self._stream.close()
 
     def event(self, event_type, *, source_frame_id=None, submap_id=None, asset_paths=None, payload=None):
-        event = {"schema_version": 1, "seq": self._seq, "run_id": self.run_id,
-                 "event_type": event_type, "wall_time": datetime.now(timezone.utc).isoformat(),
-                 "source_frame_id": source_frame_id, "submap_id": submap_id,
-                 "asset_paths": asset_paths or {}, "payload": payload or {}}
-        self._stream.write(json.dumps(event, allow_nan=False) + "\n")
-        self._stream.flush()
-        self._seq += 1
+        with self._lock:
+            event = {"schema_version": 1, "seq": self._seq, "run_id": self.run_id,
+                     "event_type": event_type, "wall_time": datetime.now(timezone.utc).isoformat(),
+                     "source_frame_id": source_frame_id, "submap_id": submap_id,
+                     "asset_paths": asset_paths or {}, "payload": payload or {}}
+            self._stream.write(json.dumps(event, allow_nan=False) + "\n")
+            self._stream.flush()
+            self._seq += 1
 
     def loop_candidate(self, match_id, query_path, candidate_path, submap_id, payload):
         folder = self.run_dir / "loops" / match_id
@@ -92,6 +95,8 @@ class Recorder:
                     "depth_visualization_range": bounds, "resolution_hw": list(values.shape),
                     "source_path": source.get("source"), "source_timestamp": source.get("timestamp"),
                     "source_timestamp_type": source.get("timestamp_type", "unavailable"),
+                    "source_timestamp_reason": source.get("timestamp_reason"),
+                    "source_raw_pts_seconds": source.get("raw_pts_seconds"),
                     "source_to_preprocessed_mapping": mappings[i]}
             write_json_atomic(frame_dir / "metadata.json", meta)
             self.event("frame_selected", source_frame_id=str(frame_id), submap_id=int(submap_id),

@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import viser
 import viser.transforms as viser_tf
+from vggt_slam.demo.bev import LiveBEV
 
 
 class Viewer:
@@ -12,6 +13,7 @@ class Viewer:
 
         self.server = viser.ViserServer(host="0.0.0.0", port=port)
         self.server.gui.configure_theme(titlebar_content=None, control_layout="collapsible")
+        self.bev = LiveBEV(self.server)
 
         # --- GUI Elements ---
         self.gui_show_frames = self.server.gui.add_checkbox("Show Cameras", initial_value=True)
@@ -29,6 +31,7 @@ class Viewer:
         self.random_colors = np.random.randint(0, 256, size=(num_rand_colors, 3), dtype=np.uint8)
         self.submap_id_to_color = dict()
         self.obj_id = 0
+        self.object_box_handles = []
 
     def visualize_frames(self, extrinsics: np.ndarray, images_: np.ndarray, submap_id: int) -> None:
         """
@@ -91,6 +94,8 @@ class Viewer:
             )
             frustum.visible = self.gui_show_frames.value
             self.submap_frustums[submap_id].append(frustum)
+
+        self.bev.set_poses(submap_id, np.asarray(extrinsics)[:, :3, 3])
 
     def _on_update_show_frames(self, _) -> None:
         """Toggle visibility of all camera frames and frustums across all submaps."""
@@ -165,13 +170,20 @@ class Viewer:
 
         name = f"obb_{self.obj_id}"
         self.obj_id += 1
-        self.server.scene.add_line_segments(
+        handle = self.server.scene.add_line_segments(
             name=name,
             points=segments,
             colors=color,       # single color for all segments
             line_width=line_width,
             visible=True
         )
+        self.object_box_handles.append(handle)
+        return handle
+
+    def clear_object_boxes(self):
+        for handle in self.object_box_handles:
+            handle.remove()
+        self.object_box_handles.clear()
 
     def add_object_query_gui(self, solver, clip_model, clip_tokenizer, processor, data_lock) -> None:
         """Add an object query panel to the viser sidebar.
@@ -184,11 +196,20 @@ class Viewer:
         import torch
         from torchvision.transforms.functional import to_pil_image
         import vggt_slam.slam_utils as utils
+        from vggt_slam.demo.object_query import boxes_from_masks, save_query_evidence
 
         with self.server.gui.add_folder("Object Query"):
             gui_query = self.server.gui.add_text("Query", initial_value="")
             gui_status = self.server.gui.add_markdown("*Enter a query and press Search.*")
             btn_search = self.server.gui.add_button("Search", color="green")
+            btn_clear = self.server.gui.add_button("Clear boxes")
+
+        def clear_query(_):
+            with data_lock:
+                self.clear_object_boxes()
+                gui_status.content = "*3D query boxes cleared.*"
+
+        btn_clear.on_click(clear_query)
 
         @btn_search.on_click
         def _on_search(_) -> None:
@@ -200,8 +221,13 @@ class Viewer:
                 gui_status.content = "*No map data yet. Capture some frames first.*"
                 return
             gui_status.content = f"*Searching for '{query}'…*"
+            btn_search.disabled = True
             try:
                 with data_lock:
+                    stopping = getattr(solver, "query_stop_event", None)
+                    if stopping is not None and stopping.is_set():
+                        gui_status.content = "*Capture stopped; no new queries accepted.*"
+                        return
                     text_emb = utils.compute_text_embeddings(clip_model, clip_tokenizer, query)
                     best_score, best_submap_id, best_frame_index = \
                         solver.map.retrieve_best_semantic_frame(text_emb)
@@ -212,30 +238,36 @@ class Viewer:
                         pil_img = to_pil_image(best_img)
                         inference_state = processor.set_image(pil_img)
                         output = processor.set_text_prompt(state=inference_state, prompt=query)
-                        masks = output["masks"]
+                        masks = output["masks"].detach().cpu().numpy()
+                        scores = output.get("scores")
+                        scores = scores.detach().cpu().numpy() if scores is not None else None
 
-                    n = masks.shape[0]
-                    for i in range(n):
-                        mask = masks[i].cpu().numpy()
-                        obb_center, obb_extent, obb_rotation = utils.compute_obb_from_points(
-                            found_submap.get_points_in_mask(best_frame_index, mask, solver.graph)
-                        )
-                        self.visualize_obb(
-                            center=obb_center,
-                            extent=obb_extent,
-                            rotation=obb_rotation,
-                            color=(255, 0, 0),
-                            line_width=8.0,
-                        )
+                    detections = boxes_from_masks(found_submap, best_frame_index, solver.graph,
+                                                  masks, scores=scores)
+                    self.clear_object_boxes()
+                    for detection in detections:
+                        if detection["valid"]:
+                            self.visualize_obb(center=np.asarray(detection["center"]),
+                                               extent=np.asarray(detection["extent"]),
+                                               rotation=np.asarray(detection["rotation"]),
+                                               color=(255, 0, 0), line_width=8.0)
+                    recorder = getattr(solver, "demo_recorder", None)
+                    save_query_evidence(query, best_score, best_submap_id, best_frame_index,
+                                        pil_img, detections,
+                                        run_dir=recorder.run_dir if recorder is not None else None,
+                                        recorder=recorder)
 
-                if n == 0:
+                valid_count = sum(detection["valid"] for detection in detections)
+                if valid_count == 0:
                     gui_status.content = f"*No instances found for '{query}'.*"
                 else:
-                    gui_status.content = f"**Found {n} instance(s)** for *'{query}'*"
+                    gui_status.content = f"**Found {valid_count} 3D instance(s)** for *'{query}'*; mask and box evidence saved."
             except Exception as e:
                 import traceback
                 traceback.print_exc()
                 gui_status.content = f"*Error: {e}*"
+            finally:
+                btn_search.disabled = False
 
     def run_walkthrough(self, fps: float = 20.0):
             """
