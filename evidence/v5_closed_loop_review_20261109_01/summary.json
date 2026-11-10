@@ -1,0 +1,19 @@
+{
+  "run": "video_20261109T190043_925571000",
+  "job": "live_20261109T110040_ad530df7",
+  "state": "completed",
+  "source_frames": 1348,
+  "submaps": 169,
+  "elapsed_seconds": 426.9107775409939,
+  "point_count": 46298495,
+  "candidates": 92,
+  "accepted_constraints": 84,
+  "accepted_gap_le30": 78,
+  "accepted_gap_gt1000": 6,
+  "source_fps": 10,
+  "current_sim3_fitted_ate_rmse_m": 113.8958606911363,
+  "prior_v2_sim3_fitted_ate_rmse_m": 9.948557764999993,
+  "frame_id_mapping": "estimated pose ID 1..1348 -> original KITTI ID 508..1855 (+507); source video ID 0..1347 +508",
+  "interpretation": "Loop retrieval/constraints ran; globally consistent reconstruction was not achieved. Close-time constraints are not independent revisits. Causal attribution among dense input, submap size, resolution and projective optimization requires controlled reruns.",
+  "preserved_originals": true
+}

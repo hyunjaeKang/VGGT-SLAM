@@ -1,0 +1,108 @@
+{
+  "observed_at_utc": "2026-11-08T20:31:32.781252+00:00",
+  "git_head": "9a0e7ba355082141bc78bc825b72126bbbda0b1e",
+  "branch": "vggt_slam_map",
+  "origin": "git@github.com:hyunjaeKang/VGGT-SLAM.git",
+  "jobs": [
+    {
+      "id": "live_20261108T092540_da3e45b7",
+      "filename": "pandaset33.mp4",
+      "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T172544_144963000",
+      "state": "completed",
+      "updated_at": 1794158831.249266,
+      "decoded_frames": 6,
+      "map_frames": 7,
+      "steps": 3,
+      "road_frames": 0,
+      "search_ready": true,
+      "elapsed_seconds": 90.5033450126648,
+      "options": {
+        "submap_size": 3,
+        "max_frames": 6,
+        "min_disparity": 0.0,
+        "max_loops": 0
+      }
+    },
+    {
+      "id": "live_20261108T093304_c6cbb885",
+      "filename": "clip.mp4",
+      "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T173307_231634000",
+      "state": "completed",
+      "updated_at": 1794160848.5902321,
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "search_ready": true,
+      "elapsed_seconds": 104.96366786956787,
+      "options": {
+        "submap_size": 3,
+        "max_frames": 6,
+        "min_disparity": 0.0,
+        "max_loops": 0
+      }
+    },
+    {
+      "id": "live_20261108T101000_7836a2fd",
+      "filename": "duke_status.mov",
+      "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T181003_605025000",
+      "state": "completed",
+      "updated_at": 1794162231.989398,
+      "decoded_frames": 305,
+      "map_frames": 95,
+      "steps": 12,
+      "road_frames": 95,
+      "search_ready": true,
+      "elapsed_seconds": 831.526300907135,
+      "options": {
+        "submap_size": 8,
+        "max_frames": 0,
+        "min_disparity": 10.0,
+        "max_loops": 1
+      }
+    },
+    {
+      "id": "live_20261108T104656_694854fa",
+      "filename": "input.mov",
+      "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T184700_282397000",
+      "state": "completed",
+      "updated_at": 1794163711.047822,
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "search_ready": true,
+      "elapsed_seconds": 94.07060980796814,
+      "options": {
+        "submap_size": 3,
+        "max_frames": 6,
+        "min_disparity": 0.0,
+        "max_loops": 0
+      }
+    },
+    {
+      "id": "live_20261108T115826_4ffce9d7",
+      "filename": "clip.mp4",
+      "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T195829_755817000",
+      "state": "inference",
+      "updated_at": 1794169892.653974,
+      "decoded_frames": 1938,
+      "map_frames": 1497,
+      "steps": 187,
+      "road_frames": 172,
+      "search_ready": false,
+      "elapsed_seconds": null,
+      "options": {
+        "submap_size": 8,
+        "max_frames": 0,
+        "min_disparity": 10.0,
+        "max_loops": 1
+      }
+    }
+  ],
+  "notes": [
+    "read-only snapshot; progress may continue",
+    "MPS outside sandbox confirmed true; inside sandbox doctor falsely reports false",
+    "last full code tests before this documentation session:149 passed/30.25s; not rerun here"
+  ]
+}

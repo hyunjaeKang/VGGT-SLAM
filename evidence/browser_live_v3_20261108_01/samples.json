@@ -1,0 +1,134 @@
+[
+  {
+    "state": "loading",
+    "decoded_frames": 0,
+    "map_frames": 0,
+    "steps": 0,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "at": 1794159185.548463
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 6,
+    "map_frames": 4,
+    "steps": 1,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "at": 1794159202.635891
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 6,
+    "map_frames": 4,
+    "steps": 1,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159203.6406
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159206.477449
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159208.3190231
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 1,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159228.305723
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 2,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159236.4999108
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 3,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159247.0523882
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 4,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159256.489579
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 5,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159276.16733
+  },
+  {
+    "state": "finalizing",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 6,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794159285.449023
+  },
+  {
+    "state": "completed",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 6,
+    "search_ready": true,
+    "viewer_ready": true,
+    "viewer_revision": 2,
+    "at": 1794159290.945256
+  }
+]

@@ -1,3 +1,6 @@
+<!-- session-context: 2026-11-08 -->
+> **현재 상태 안내 (2026-11-08):** 이 문서의 과거 실험·수치·코드 리뷰는 당시 범위의 기록입니다. 최신 구현·버전·검증은 [CURRENT_STATUS.md](CURRENT_STATUS.md), 다음 세션의 실행 순서는 [SESSION_HANDOFF.md](SESSION_HANDOFF.md), 지도 생성 중 객체 탐색 설계는 [HTML 계획서](../26.11.09.VGGT_SLAM.Plan.html)를 먼저 확인하세요. V4는 아직 미구현입니다.
+
 # VGGT-SLAM 2.0 코드 검토 및 실행 기록
 
 > 아래는 2026-10-30 당시의 기록이다. 이후 데모 변경분과 실제 SAM3/TUM 검증의 최종 검토는 [DEMO_ACCEPTANCE_REVIEW.md](DEMO_ACCEPTANCE_REVIEW.md)를 참고한다.
@@ -104,3 +107,9 @@ git diff --check
 새로운 회귀 테스트는 TUM 평가에서 evo 실행 실패, RMSE 누락 및 NaN을
 정상적인 RMSE 0으로 기록하지 않는지도 가짜 CLI로 검증한다. 실제 TUM APE
 측정을 수행한 것은 아니다.
+
+## 후속 구조 검토 안내 — 2026-11-08
+
+현재 `main_realtime.py`는 video_file backend·PTS·offline/realtime pacing·기록·최적화 스냅샷을 지원한다. SAM3 실제 검색과 TUM/evo33매 실험도 후속 세션에서 수행됐으므로 위 초기 미실행 상태는 현재 상태가 아니다. V3 supervisor는 이 추론 경로와 분리 CPU 검색 worker를 관리한다. MOV Display Matrix와 자유 overview축,실제 chooser click 경로도 보정했다.
+
+다음 검토 대상은 새 V4의 상주 worker/증분 관측, frame_uid·map revision 계약,동적 객체 분리,직접 자식 외 검색 worker 종료·고아 상태,장기 메모리/대기열 계측이다. 이 항목들은 이번 문서 세션에서 production 코드를 수정하거나 미검증 lifecycle 결함을 확정했다는 뜻이 아니다.

@@ -46,7 +46,7 @@ class Solver:
         vis_imgs: bool = False,
         device="auto",
         enable_viewer=True,
-        viewer_port=8080):
+        viewer_port=8080, image_size=518, enable_retrieval=True):
 
         self.init_conf_threshold = init_conf_threshold
         self.vis_voxel_size = vis_voxel_size
@@ -59,7 +59,8 @@ class Solver:
         self.map = GraphMap()
         self.graph = PoseGraph()
 
-        self.image_retrieval = ImageRetrieval(device=self.device)
+        self.image_size = image_size
+        self.image_retrieval = ImageRetrieval(device=self.device) if enable_retrieval else None
         self.current_working_submap = None
 
         self.lc_thres = lc_thres
@@ -328,7 +329,11 @@ class Solver:
             raise ValueError("At least one image is required for a submap")
         t1 = time.time()
         with self.vggt_timer:
-            images = load_and_preprocess_images(image_names).to(self.device)
+            if self.image_size == 518:
+                images = load_and_preprocess_images(image_names).to(self.device)
+            else:
+                from vggt_slam.demo.slam_preprocess import load_images
+                images = load_images(image_names, self.image_size).to(self.device)
         print(f"Loaded and preprocessed {len(image_names)} images in {time.time() - t1:.2f} seconds")
         print(f"Preprocessed images shape: {images.shape}")
 
@@ -344,7 +349,8 @@ class Solver:
         new_submap.add_all_frames(images)
         new_submap.set_frame_ids(image_names)
         new_submap.set_last_non_loop_frame_index(images.shape[0] - 1)
-        new_submap.set_all_retrieval_vectors(self.image_retrieval.get_all_submap_embeddings(new_submap))
+        if self.image_retrieval is not None:
+            new_submap.set_all_retrieval_vectors(self.image_retrieval.get_all_submap_embeddings(new_submap))
         new_submap.set_img_names(image_names)
 
         with self.clip_timer:
@@ -364,7 +370,9 @@ class Solver:
         # Check for loop closures and add retrieval vectors from new submap to the database
         predictions_lc = None
         with self.loop_closure_timer:
-            detected_loops = self.image_retrieval.find_loop_closures(self.map, new_submap, max_loop_closures=max_loops, max_similarity_thres=self.lc_thres)
+            if max_loops and self.image_retrieval is None:
+                raise ValueError("Loop retrieval disabled but loop closures requested")
+            detected_loops = self.image_retrieval.find_loop_closures(self.map, new_submap, max_loop_closures=max_loops, max_similarity_thres=self.lc_thres) if self.image_retrieval is not None else []
         recorder = getattr(self, "demo_recorder", None)
         if recorder is not None:
             for candidate in detected_loops:

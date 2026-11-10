@@ -1,0 +1,190 @@
+{
+  "checks": {
+    "8100": true,
+    "picker_v3": true,
+    "8101": true,
+    "8102": true,
+    "8103": true,
+    "restored": true,
+    "same_run": true,
+    "road": true,
+    "native_media": true,
+    "v3_title": true,
+    "preserved": true
+  },
+  "state": {
+    "job": {
+      "id": "live_20261108T093304_c6cbb885",
+      "folder": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T093304_c6cbb885",
+      "filename": "clip.mp4",
+      "input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T093304_c6cbb885/input.mp4",
+      "created_at": 1794159184.546792,
+      "state": "completed",
+      "message": "\uc800\uc7a5\ub41c V3 \uc9c0\ub3c4 \u00b7 \uc804\uccb4 \uad6c\uac04 \uac80\uc0c9 \uac00\ub2a5",
+      "options": {
+        "submap_size": 3,
+        "max_frames": 6,
+        "min_disparity": 0.0,
+        "max_loops": 0
+      },
+      "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T173307_231634000",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "search_ready": true,
+      "updated_at": 1794160848.5902321,
+      "probe": {
+        "width": 518,
+        "height": 294,
+        "fps": 1.0,
+        "duration": 33.0
+      },
+      "elapsed_seconds": 104.96366786956787
+    },
+    "viewer_port": 8104,
+    "history": [
+      {
+        "id": "live_20261108T093304_c6cbb885",
+        "filename": "clip.mp4",
+        "state": "completed",
+        "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T173307_231634000"
+      },
+      {
+        "id": "live_20261108T092540_da3e45b7",
+        "filename": "pandaset33.mp4",
+        "state": "completed",
+        "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T172544_144963000"
+      }
+    ]
+  },
+  "meta": {
+    "viewer_version": "live-v3",
+    "quality_mode": "high",
+    "selected_query": false,
+    "render_seconds": 0.6456013339338824,
+    "chunk_uploads": 2,
+    "scene_point_count": 49998,
+    "playback_quality": "\uc790\ub3d9",
+    "frame_index": 0,
+    "frame_count": 7,
+    "source_frame_id": "0",
+    "timestamp_label": "0.00 s",
+    "playing": false,
+    "follow_rgb": true,
+    "camera_available": true,
+    "aspect": 1.7619047619047619,
+    "road_points": 6000,
+    "road_visible": true,
+    "bev_mode": "Road connectivity",
+    "connectivity": {
+      "occupied_cells": 1673,
+      "edges": 2363,
+      "components": 303
+    },
+    "bev_pan": [
+      0.0,
+      0.0
+    ],
+    "mask_bev": false,
+    "box_bev": false,
+    "box_rgb": false,
+    "bev_box_count": 0,
+    "bev_zoom": 1.0,
+    "bev_trajectory": true,
+    "mask_3d": true,
+    "mask_rgb": true,
+    "point_count": 49998,
+    "bev_plane": "XZ",
+    "raster": {
+      "output_shape_hw": [
+        720,
+        1269
+      ],
+      "antialias": 1.5,
+      "projected_points": 105814,
+      "occupied_pixels": 668566,
+      "shape_hw": [
+        294,
+        518
+      ],
+      "projection": [
+        [
+          531.2646484375,
+          0.0,
+          259.0,
+          0.0
+        ],
+        [
+          0.0,
+          531.2073974609375,
+          147.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    "camera_position": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "version": 1,
+    "viser_port": 61871
+  },
+  "smooth": {
+    "version": "smooth-v2",
+    "generation": 1,
+    "playing": false,
+    "time": 0.0,
+    "duration": 5.0,
+    "rendered_time": 0.0,
+    "frame_index": 0,
+    "media": "/native.mp4?run=video_20261108T173307_231634000",
+    "camera_path_key": [
+      "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T173307_231634000",
+      "2",
+      "after"
+    ],
+    "gpu_scene": {
+      "epoch": 1,
+      "chunks": [
+        {
+          "id": "0_0_dense",
+          "count": 49998,
+          "kind": "points",
+          "near": true
+        },
+        {
+          "id": "road_1da206355a7dac69",
+          "count": 6000,
+          "kind": "points"
+        }
+      ],
+      "map_points": 49998,
+      "point_scale": 1.0,
+      "frame_index": 0,
+      "uploads": 2
+    },
+    "point_scale": 1.0,
+    "playback_quality": "\uc790\ub3d9",
+    "run": "video_20261108T173307_231634000",
+    "timing": "recorded timestamps",
+    "follow_rgb": true,
+    "selected_query": false,
+    "mask_rgb": true,
+    "box_rgb": false
+  },
+  "preserved_sha256": {
+    "events.jsonl": "47500efaf04063617f774cc8068db36a83b810e70563794aff6432f4254b70a1",
+    "poses.txt": "d71383628ab779a63203cea1f41208f0ee599d0c915bf36cc0d645c38881c598",
+    "poses_points.pcd": "d06de0c8b9c8c0e6d6ca36e1fc3bee2d3505258d963ad3cc631650b8ce11052b"
+  }
+}

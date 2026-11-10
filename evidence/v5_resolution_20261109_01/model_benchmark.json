@@ -1,0 +1,86 @@
+{
+  "device": "mps",
+  "cpu_threads": 4,
+  "model_load_seconds": 16.6624186669942,
+  "source_paths": [
+    "/Users/hyunjae.kang/Downloads/2013_05_28_drive_0000_sync/image_00/data_rect/0000000508.png",
+    "/Users/hyunjae.kang/Downloads/2013_05_28_drive_0000_sync/image_00/data_rect/0000000521.png",
+    "/Users/hyunjae.kang/Downloads/2013_05_28_drive_0000_sync/image_00/data_rect/0000000541.png",
+    "/Users/hyunjae.kang/Downloads/2013_05_28_drive_0000_sync/image_00/data_rect/0000000555.png"
+  ],
+  "runs": [
+    {
+      "width": 518,
+      "shape": [
+        4,
+        3,
+        140,
+        518
+      ],
+      "patch_tokens_per_frame": 370,
+      "seconds": [
+        4.78846304200124,
+        2.358301291009411,
+        1.6002860830631107
+      ],
+      "warm_median_seconds": 1.979293687036261,
+      "depth_finite_fraction": 1.0,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "width": 378,
+      "shape": [
+        4,
+        3,
+        98,
+        378
+      ],
+      "patch_tokens_per_frame": 189,
+      "seconds": [
+        2.1489510000683367,
+        1.2824805830605328,
+        1.2222654160577804
+      ],
+      "warm_median_seconds": 1.2523729995591566,
+      "depth_finite_fraction": 1.0,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "width": 322,
+      "shape": [
+        4,
+        3,
+        84,
+        322
+      ],
+      "patch_tokens_per_frame": 138,
+      "seconds": [
+        2.4751807919237763,
+        1.7037671660073102,
+        1.4139538339804858
+      ],
+      "warm_median_seconds": 1.558860499993898,
+      "depth_finite_fraction": 1.0,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "width": 224,
+      "shape": [
+        4,
+        3,
+        56,
+        224
+      ],
+      "patch_tokens_per_frame": 64,
+      "seconds": [
+        2.3336863330332562,
+        1.2375425830250606,
+        1.1746939170407131
+      ],
+      "warm_median_seconds": 1.2061182500328869,
+      "depth_finite_fraction": 1.0,
+      "positive_depth_fraction": 1.0
+    }
+  ],
+  "scope": "Model only, 4 same frames. No independent trajectory GT evaluation."
+}

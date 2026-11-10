@@ -18,10 +18,11 @@ from vggt_slam.demo.query_display import result_observations, overlay_query_rgb
 from vggt_slam.demo.road import RoadLayer, best_road_query, raster_connectivity
 from vggt_slam.demo.cache import CachedRun
 from vggt_slam.demo.bev import raster_bev
-from vggt_slam.demo.camera_view import rgb_camera, raster_camera, overview_distance, display_resolution
+from vggt_slam.demo.camera_view import rgb_camera, raster_camera, overview_distance, display_resolution, overview_axes
 from vggt_slam.demo.main_panel import free_port
 from vggt_slam.demo.smooth_panel import SmoothPanel as MainPanel
-from vggt_slam.demo.smooth_runtime import PlaybackClock, frame_times, CameraPath, PersistentMap
+from vggt_slam.demo.gpu_scene import DenseGPUScene
+from vggt_slam.demo.smooth_runtime import PlaybackClock, frame_times, CameraPath
 from vggt_slam.demo.search_policy import outcome_text, parse_queries, query_label
 
 
@@ -57,17 +58,20 @@ def _obb_segments(center, extent, rotation):
     return np.asarray([[corners[a], corners[b]] for a, b in indices], dtype=np.float32)
 
 
-def serve(run_dir, port=8102, source_fps=10.):
+def serve(run_dir, port=8102, source_fps=10., live_control=None, studio_label="Smooth V2"):
     run_dir = Path(run_dir).resolve()
     runs = {p.name: p for p in run_dir.parent.iterdir() if (p / "manifest.json").is_file()}
     if run_dir.name not in runs:
         raise ValueError(f"run manifest not found: {run_dir}")
+    live_control = Path(live_control) if live_control else None
+    live_state = {"revision": None, "allow_search": live_control is None}
     panel = MainPanel(port)
+    panel.studio_label=studio_label
     server = viser.ViserServer(host="127.0.0.1", port=free_port())
     panel.viser_port = server.get_port()
     server.gui.configure_theme(control_layout="fixed", control_width="large", dark_mode=True,
                                brand_color=(34, 211, 238), show_logo=False, show_share_button=False)
-    server.gui.add_markdown("### VGGT · Map Studio · Smooth V2")
+    server.gui.add_markdown(f"### VGGT · Map Studio · {studio_label}")
     run_select = server.gui.add_dropdown("Run", options=sorted(runs), initial_value=run_dir.name)
     state_text = server.gui.add_markdown("")
     frame = server.gui.add_slider("Map keyframe", min=0, max=1, step=1, initial_value=0)
@@ -83,6 +87,7 @@ def serve(run_dir, port=8102, source_fps=10.):
         fit = server.gui.add_button("Fit map", color="cyan", icon=viser.Icon.FOCUS_2)
         colors = server.gui.add_dropdown("Colors", options=["RGB", "Submaps"], initial_value="RGB")
         budget = server.gui.add_slider("Displayed point limit", min=50_000, max=2_000_000, step=50_000, initial_value=600_000)
+        playback_quality=server.gui.add_dropdown("재생 3D 품질",options=["자동", "높음", "균형", "가벼움"],initial_value="자동")
         point_size = server.gui.add_slider("Point size (점 크기 배율)", min=0.1, max=10.0, step=0.1, initial_value=1.0)
         mask_3d = server.gui.add_checkbox("3D segmentation mask", initial_value=True)
         box_rgb = server.gui.add_checkbox("RGB bounding boxes", initial_value=False)
@@ -134,7 +139,8 @@ def serve(run_dir, port=8102, source_fps=10.):
              "center": np.zeros(3), "radius": 1.0, "loading": False, "playing": False,
              "pending_frame": None, "rendering": False, "render_signature": None}
     clock_box = {"clock": None, "times": None, "path": None, "path_key": None, "timing": "", "run_key": None, "generation": 0}
-    chunks = PersistentMap(server.scene)
+    gpu_scene=DenseGPUScene()
+    panel.gpu_scene=gpu_scene
     stopped = threading.Event()
     render_lock = threading.RLock()
 
@@ -148,8 +154,8 @@ def serve(run_dir, port=8102, source_fps=10.):
         for client in server.get_clients().values():
             fov = np.radians(60)
             distance = overview_distance(state['radius'], fov, client.camera.aspect)
-            direction = np.array([0.35, -0.5, -0.65])
-            client.camera.up_direction = (0, -1, 0)
+            up, direction = overview_axes(state['camera'])
+            client.camera.up_direction = up
             client.camera.fov = fov
             client.camera.position = state["center"] + distance * direction / np.linalg.norm(direction)
             client.camera.look_at = state["center"]
@@ -182,11 +188,11 @@ def serve(run_dir, port=8102, source_fps=10.):
         elapsed = (datetime.fromisoformat(end) - datetime.fromisoformat(start)).total_seconds() if start and end else None
         state_text.content = (f"**저장된 지도 · {run.manifest.get('status', 'unknown')}**  \n"
                               f"{len(run.frames):,} 프레임 · {len(run.steps):,} 서브맵 갱신 · {len(run.object_queries)} 검색  \n"
-                              "Smooth V2 · 원본 영상 / 지도 독립 갱신")
+                              f"{studio_label} · 원본 영상 / 지도 독립 갱신")
         chosen_step = None if step.value == "Unavailable" else int(step.value)
         result = run.render(step=chosen_step, phase=phase.value,
                             frame_index=frame_index if run.frames else None,
-                            budget=min(120000,int(budget.value)) if state["playing"] else int(budget.value), color_mode=colors.value,
+                            budget=min(120000,int(budget.value)) if state["playing"] and not state.get("gpu_fallback") else int(budget.value), color_mode=colors.value,
                             hide_sky=hide_sky.value, sky_threshold=int(sky_threshold.value))
         pts, trajectory = result["points"], result["trajectory"]
         road_query = best_road_query(run.object_queries)
@@ -243,14 +249,12 @@ def serve(run_dir, port=8102, source_fps=10.):
             low, high = np.quantile(sample, [0.02, 0.98], axis=0)
             state["center"] = (low + high) / 2
             state["radius"] = max(float(np.linalg.norm(high - low)), 0.1)
-            if not state["playing"]:
-                chunks.hide()
+            if not state["playing"] and not follow_rgb.value:
                 state["cloud"] = server.scene.add_point_cloud("/map", points=pts, colors=result["colors"],
                                                           point_size=state["radius"] / 2000 * point_size.value, point_shape="circle")
-        if state["playing"] and chosen_step is not None:
-            chunks.update(run,chosen_step,phase.value,result["nodes"],state["radius"]/2000*point_size.value,hide_sky.value,int(sky_threshold.value),colors.value)
-        road_display = road_points[np.linspace(0, len(road_points)-1, min(len(road_points), 20000 if state["playing"] else 150000), dtype=int)] if len(road_points) else road_points
-        if mask_3d.value and show_road.value and len(road_display):
+
+        road_display = road_points[np.linspace(0, len(road_points)-1, min(len(road_points), 150000), dtype=int)] if len(road_points) else road_points
+        if mask_3d.value and show_road.value and len(road_display) and not follow_rgb.value:
             if state['road_cloud'] is None:
                 state['road_cloud'] = server.scene.add_point_cloud('/road_surface', points=road_display,colors=(34,197,94),point_size=state['radius']/1800*point_size.value,point_shape='circle')
             else:
@@ -309,7 +313,7 @@ def serve(run_dir, port=8102, source_fps=10.):
         else:
             frame_text = "RGB / depth / timeline unavailable in this cached result."
         total = f"{len(run.cloud):,}" if run.cloud is not None else "unknown"
-        info.content = (f"**{result['source']}** · displayed {len(pts):,} points · full PCD {total} points  \n"
+        info.content = (f"**{result['source']}** · BEV sample {len(pts):,} points · full PCD {total} points  \n"
                         f"{frame_text} · playback index {frame_index + 1 if current else 0}/{len(run.frames)}  \n"
                         "Coordinates: reconstruction units (metric scale unverified). "
                         "Camera frustum is a decomposition of the projective camera; orientation is illustrative.")
@@ -393,7 +397,24 @@ def serve(run_dir, port=8102, source_fps=10.):
             if not compatible:
                 object_info.content += '  \n박스 숨김: 기록된 optimization step/after를 선택하세요.'
 
-        if camera_projection is not None and not state["playing"]:
+        gpu_info=gpu_scene.snapshot()
+        if chosen_step is not None:
+            playback_budget=min(int(budget.value),{'자동':int(budget.value),'높음':int(budget.value),'균형':300000,'가벼움':120000}[playback_quality.value])
+            gpu_lines=list(projected_boxes)
+            if len(trajectory)>1:gpu_lines.append(np.stack([trajectory[:-1],trajectory[1:]],axis=1))
+            lines=np.concatenate(gpu_lines) if gpu_lines else None
+            gpu_info=gpu_scene.update(run,chosen_step,phase.value,result['nodes'],frame_index,playback_budget,
+                hide_sky.value,int(sky_threshold.value),colors.value,point_scale=point_size.value,
+                road_points=road_display if mask_3d.value and show_road.value else None,lines=lines)
+            gpu_scene.sync_viser(server.scene,state['playing'] and not follow_rgb.value,state['radius']/2000*point_size.value)
+        if camera_projection is not None and (not state["playing"] or state.get("gpu_fallback")):
+            path_key=(clock_box['run_key'],step.value,phase.value)
+            if follow_rgb.value and clock_box['clock'] is not None:
+                if path_key!=clock_box['path_key']:
+                    clock_box['path']=CameraPath(run,chosen_step,phase.value,clock_box['times']);clock_box['path_key']=path_key
+                pose=clock_box['path'].at(clock_box['clock'].position())
+                if pose is not None and 'projection' in pose:
+                    camera_projection=pose['projection'];camera_shape=tuple(pose['shape']);state['camera']=pose
             foreground, foreground_colors = run.camera_preview(frame_index, chosen_step, phase.value,
                     hide_sky.value, int(sky_threshold.value), budget=min(50000, int(budget.value)))
             remaining = max(0, int(budget.value) - len(foreground))
@@ -411,8 +432,9 @@ def serve(run_dir, port=8102, source_fps=10.):
         else:
             camera_image, raster_stats = blank, {}
             if camera_projection is None:camera_status.content = '현재 프레임 카메라가 없습니다.'
+        info.content += f"  \n3D 표시 대상 {gpu_info.get('map_points',0):,}점 · 자동 모드의 실제 표시 점 수는 상단에 표시됩니다."
         panel.publish(rgb_gui.image, bev_image.image, camera_image, {
-            'viewer_version': 'smooth-v2', 'quality_mode': 'balanced' if state['playing'] else 'high', 'selected_query': selected_object is not None, 'render_seconds': time.monotonic()-render_started, 'chunk_uploads': chunks.uploads,
+            'viewer_version': 'live-v3' if studio_label=='Live V3' else 'smooth-v2', 'quality_mode': 'balanced' if state['playing'] else 'high', 'selected_query': selected_object is not None, 'render_seconds': time.monotonic()-render_started, 'chunk_uploads': gpu_scene.uploads, 'scene_point_count':gpu_info.get('map_points',0), 'playback_quality':playback_quality.value,
             'frame_index': frame_index, 'frame_count': len(run.frames),
             'source_frame_id': current['source_frame_id'] if current else 'N/A',
             'timestamp_label': f"{meta['source_timestamp']:.2f} s" if current and isinstance(meta.get('source_timestamp'), (int, float)) else 'N/A',
@@ -434,7 +456,7 @@ def serve(run_dir, port=8102, source_fps=10.):
                 clock_box['last_index']=int(frame.value)
             signature = (str(state["run"].path) if state["run"] is not None else None,
                          frame.value, step.value, phase.value, colors.value, budget.value,
-                         tuple(state['bev_pan']), box_rgb.value, mask_bev.value, box_bev.value, panel.viewport, loop_select.value, object_select.value, observation_select.value, hide_sky.value, sky_threshold.value, bev_plane.value, bev_overlay.value, bev_trajectory.value, bev_zoom.value, mask_3d.value, mask_rgb.value, show_road.value, follow_rgb.value, point_size.value)
+                         tuple(state['bev_pan']), box_rgb.value, mask_bev.value, box_bev.value, playback_quality.value, panel.viewport, loop_select.value, object_select.value, observation_select.value, hide_sky.value, sky_threshold.value, bev_plane.value, bev_overlay.value, bev_trajectory.value, bev_zoom.value, mask_3d.value, mask_rgb.value, show_road.value, follow_rgb.value, point_size.value)
             if not state["loading"] and signature == state["render_signature"]:
                 state["pending_frame"] = None
                 return
@@ -490,7 +512,7 @@ def serve(run_dir, port=8102, source_fps=10.):
             object_select.disabled = object_options == ["None"]
             hide_sky.disabled = run.sky_index is None
             sky_threshold.disabled = run.sky_index is None
-            search_button.disabled = state["searching"] or not run.frames or not run.steps
+            search_button.disabled = not live_state["allow_search"] or state["searching"] or not run.frames or not run.steps
             play.disabled = not run.frames
             state["playing"] = False
             state["pending_frame"] = None
@@ -502,7 +524,7 @@ def serve(run_dir, port=8102, source_fps=10.):
             state_text.content = (f"**저장된 지도 · {run.manifest.get('status', 'unknown')}**  \n"
                                   f"{len(run.frames):,} 프레임 · {len(run.steps):,} 서브맵 갱신 · "
                                   f"{len(run.object_queries)} 검색  \n"
-                                  "Smooth V2 · 원본 영상 / 지도 독립 갱신")
+                                  f"{studio_label} · 원본 영상 / 지도 독립 갱신")
         finally:
             state["loading"] = False
         update()
@@ -511,8 +533,33 @@ def serve(run_dir, port=8102, source_fps=10.):
         else:
             fit_all()
 
+    def refresh_live():
+        while not stopped.wait(.5):
+            try:
+                control = json.loads(live_control.read_text())
+                if control['revision'] == live_state['revision']:continue
+                with render_lock:
+                    live_state.update(revision=control['revision'], allow_search=control.get('allow_search', False))
+                    load_run()
+                    run=state['run']
+                    if control.get('road_result'):
+                        path=control['road_result']
+                        query=json.loads((run.path/path).read_text())
+                        query['_asset_path']=path
+                        # Partial aggregates change in place; give every revision its own display identity.
+                        query['query_id'] += '_live_' + str(control['revision'])
+                        run.object_queries.append(query)
+                    frame.value=max(0,len(run.frames)-1)
+                    state['render_signature']=None
+                    update()
+                    search_button.disabled=not live_state['allow_search']
+                    search_status.content='지도와 도로를 생성하는 중입니다. 완료 후 검색할 수 있습니다.' if not live_state['allow_search'] else '생성 완료 · 전체 구간 검색 가능'
+            except (OSError, ValueError, KeyError) as exc:
+                print(f'Live refresh deferred: {exc}', flush=True)
+
+    run_select.disabled = live_control is not None
     run_select.on_update(load_run)
-    for control in (frame, step, phase, colors, budget, hide_sky, sky_threshold, bev_plane, bev_overlay, bev_trajectory, bev_zoom, mask_3d, mask_rgb, box_rgb, mask_bev, box_bev, show_road, follow_rgb, point_size):
+    for control in (frame, step, phase, colors, budget, hide_sky, sky_threshold, bev_plane, bev_overlay, bev_trajectory, bev_zoom, mask_3d, mask_rgb, box_rgb, mask_bev, box_bev, playback_quality, show_road, follow_rgb, point_size):
         control.on_update(update)
 
     def selected_query():
@@ -607,7 +654,7 @@ def serve(run_dir, port=8102, source_fps=10.):
         except ValueError as exc:
             search_status.content=str(exc);return
         run=state['run']
-        if state['searching'] or run is None:return
+        if state['searching'] or run is None or not live_state['allow_search']:return
         worker_python=Path(__file__).resolve().parents[2]/'.venv-open-set'/'bin'/'python'
         if not worker_python.is_file() or not run.frames or not run.steps:
             search_status.content='검색 환경과 기록된 RGB/depth/snapshot이 필요합니다.';return
@@ -688,6 +735,8 @@ def serve(run_dir, port=8102, source_fps=10.):
     panel.resize = update
     def panel_action(action, payload=None):
         payload = payload or {}
+        if action=='gpu_fallback':
+            state['gpu_fallback']=bool(payload.get('enabled',True));state['render_signature']=None;update();return
         if action=='video_clock':
             if (clock_box['clock'] and state['playing']
                     and payload.get('generation')==clock_box['generation']
@@ -760,8 +809,15 @@ def serve(run_dir, port=8102, source_fps=10.):
         return {'version':'smooth-v2','generation':clock_box['generation'],'playing':state['playing'],'time':clock.position() if clock else 0,
                 'duration':clock.duration if clock else 0,'rendered_time':float(clock_box['times'][index]) if clock else 0,
                 'frame_index':index,'media': '/native.mp4?run='+run_select.value if panel.media else None,
-                'run':run_select.value,'timing':clock_box['timing'],'follow_rgb':follow_rgb.value,
+                'camera_path_key':[clock_box['run_key'],step.value,phase.value],'gpu_scene':gpu_scene.snapshot(), 'point_scale':point_size.value,'playback_quality':playback_quality.value, 'run':run_select.value,'timing':clock_box['timing'],'follow_rgb':follow_rgb.value,
                 'selected_query':state['run'] is not None and selected_query() is not None,'mask_rgb':mask_rgb.value,'box_rgb':box_rgb.value}
+    def camera_path_packet():
+        if state['run'] is None or step.value=='Unavailable':return {}
+        key=(clock_box['run_key'],step.value,phase.value)
+        if key!=clock_box['path_key']:
+            clock_box['path']=CameraPath(state['run'],int(step.value),phase.value,clock_box['times']);clock_box['path_key']=key
+        return {'key':list(key),'samples':clock_box['path'].packet()}
+    panel.camera_path=camera_path_packet
     panel.status=smooth_status
 
     def playback():
@@ -803,6 +859,9 @@ def serve(run_dir, port=8102, source_fps=10.):
     thread.start()
     server.on_client_connect(lambda client: apply_rgb_camera(client) if follow_rgb.value and state["camera"] is not None else fit_all())
     load_run()
+    if live_control:
+        search_button.disabled=True
+        threading.Thread(target=refresh_live,daemon=True).start()
     running=[]
     for status_file in (state['run'].path/'evidence'/'query_jobs').glob('*/status.json'):
         progress=json.loads(status_file.read_text())

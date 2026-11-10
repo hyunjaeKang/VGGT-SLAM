@@ -1,0 +1,292 @@
+{
+  "url": "http://127.0.0.1:8105",
+  "video": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_fixtures/pandaset33_1fps_20261105/clip.mp4",
+  "job": {
+    "id": "live_20261108T223848_e32743a6",
+    "folder": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v4_runs/live_20261108T223848_e32743a6",
+    "filename": "clip.mp4",
+    "input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v4_runs/live_20261108T223848_e32743a6/input.mp4",
+    "created_at": 1794206328.0626838,
+    "state": "completed",
+    "message": "V4 생성 완료 · 사전 객체·ROAD 및 임의 텍스트 정밀 검색 가능",
+    "options": {
+      "submap_size": 3,
+      "max_frames": 6,
+      "min_disparity": 0,
+      "max_loops": 0
+    },
+    "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261109T063856_160696000",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 6,
+    "viewer_ready": true,
+    "viewer_revision": 2,
+    "search_ready": true,
+    "updated_at": 1794206410.515249,
+    "version": "live-v4",
+    "semantic_config": {
+      "classes": [
+        "car",
+        "person",
+        "bicycle"
+      ],
+      "backend": "yolo26",
+      "detect_hz": 10,
+      "surfaces": true,
+      "semantic_device": "cpu"
+    },
+    "semantic_frames": 6,
+    "model_loads": 1,
+    "geometry_done": true,
+    "probe": {
+      "width": 518,
+      "height": 294,
+      "fps": 1,
+      "duration": 33
+    },
+    "live_frames": 6,
+    "live_skipped": 0,
+    "semantic_device": "cpu",
+    "elapsed_seconds": 82.45256233215332
+  },
+  "checks": {
+    "file_picker": true,
+    "search_enabled_during_generation": true,
+    "live_views": true,
+    "live_road_surface": true,
+    "completed_counts": true,
+    "search_ready": true,
+    "v3_title": true,
+    "search_enabled_after_generation": true,
+    "resident_model_loaded_once": true,
+    "semantic_frames_complete": true,
+    "search_selected": true,
+    "javascript_exceptions": true
+  },
+  "samples": [
+    {
+      "state": "loading",
+      "decoded_frames": 0,
+      "map_frames": 0,
+      "steps": 0,
+      "road_frames": 0,
+      "semantic_frames": 0,
+      "model_loads": 0,
+      "search_ready": false,
+      "viewer_ready": false,
+      "viewer_revision": 0,
+      "at": 1794206329.069231
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 4,
+      "steps": 1,
+      "road_frames": 0,
+      "semantic_frames": 0,
+      "model_loads": 1,
+      "search_ready": false,
+      "viewer_ready": false,
+      "viewer_revision": 0,
+      "at": 1794206373.449718
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 4,
+      "steps": 1,
+      "road_frames": 0,
+      "semantic_frames": 0,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794206376.503346
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 4,
+      "steps": 1,
+      "road_frames": 1,
+      "semantic_frames": 1,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794206381.0295858
+    },
+    {
+      "state": "semantic",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 2,
+      "semantic_frames": 2,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794206383.907093
+    },
+    {
+      "state": "semantic",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 3,
+      "semantic_frames": 3,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794206387.911694
+    },
+    {
+      "state": "semantic",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 4,
+      "semantic_frames": 4,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794206390.648094
+    },
+    {
+      "state": "semantic",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 5,
+      "semantic_frames": 5,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794206395.578681
+    },
+    {
+      "state": "semantic",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "semantic_frames": 6,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794206400.339632
+    },
+    {
+      "state": "finalizing",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "semantic_frames": 6,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794206401.671027
+    },
+    {
+      "state": "completed",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "semantic_frames": 6,
+      "model_loads": 1,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 2,
+      "at": 1794206411.117701
+    }
+  ],
+  "final_meta": {
+    "viewer_version": "live-v4",
+    "quality_mode": "high",
+    "selected_query": true,
+    "render_seconds": 3.3393602080177516,
+    "chunk_uploads": 11,
+    "scene_point_count": 349910,
+    "playback_quality": "자동",
+    "frame_index": 6,
+    "frame_count": 7,
+    "source_frame_id": "5",
+    "timestamp_label": "5.00 s",
+    "playing": false,
+    "follow_rgb": false,
+    "camera_available": true,
+    "aspect": 1.7619047619047619,
+    "road_points": 36000,
+    "road_visible": true,
+    "bev_mode": "Road connectivity",
+    "connectivity": {
+      "occupied_cells": 2164,
+      "edges": 3739,
+      "components": 86
+    },
+    "bev_pan": [
+      0,
+      0
+    ],
+    "mask_bev": false,
+    "box_bev": false,
+    "box_rgb": true,
+    "bev_box_count": 0,
+    "bev_zoom": 1,
+    "bev_trajectory": true,
+    "mask_3d": true,
+    "mask_rgb": true,
+    "point_count": 349910,
+    "bev_plane": "XZ",
+    "raster": {
+      "output_shape_hw": [
+        681,
+        1200
+      ],
+      "antialias": 1.5,
+      "projected_points": 292423,
+      "occupied_pixels": 1241694,
+      "shape_hw": [
+        294,
+        518
+      ],
+      "projection": [
+        [
+          507.59099486501736,
+          -8.54993190412386,
+          249.88209777720988,
+          -66.77339839802929
+        ],
+        [
+          -2.6192198985181108,
+          500.94630011169727,
+          163.94963554006637,
+          -37.46876182884919
+        ],
+        [
+          0.0015505705532051063,
+          -0.044112430470263156,
+          0.9673684652832435,
+          -0.253836926022594
+        ]
+      ]
+    },
+    "camera_position": [
+      0.0024359761427782413,
+      -0.010905314976331579,
+      0.26189823010913216
+    ],
+    "version": 14,
+    "viser_port": 54924
+  },
+  "javascript_exceptions": []
+}

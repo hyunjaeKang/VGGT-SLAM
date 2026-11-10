@@ -52,10 +52,33 @@ def scope_frames(frames, mode, limit=24, current=None):
     return [ordered[i] for i in np.linspace(0, len(ordered)-1, min(limit, len(ordered)), dtype=int)]
 
 
+def query_model_label(item):
+    """Name only recorded model identities; never guess from an opaque hash."""
+    import re
+    search = item.get('search') or {}
+    identity = search.get('backend') or search.get('model') or item.get('backend') or item.get('model')
+    if not identity:
+        return '모델 미기록'
+    value = str(identity).lower()
+    for pattern, label in ((r'rf[-_ ]?detr|rf[-_ ]?deter', 'RF-DETR'),
+                           (r'yoloe', 'YOLOE'), (r'yolo[-_ ]?26', 'YOLO26'),
+                           (r'yolo[-_ ]?11', 'YOLO11'), (r'sam[-_ ]?3', 'SAM3'),
+                           (r'segformer', 'SegFormer')):
+        if re.search(pattern, value):
+            return label
+    return str(identity)
+
+
 def query_label(item):
     valid = sum(bool(d.get('valid')) for d in item.get('detections', []))
-    search = item.get('search', {})
-    if search.get('schema_version', 0) >= 3:
-        names = {'all':'전수', 'sampled':'표본', 'current':'현재', 'candidate':'후보'}
-        return f"{item['query']} · {names.get(search.get('mode'), '검색')} {search.get('inspected_frames', 0)}장 · 3D관측 {valid}건 · {item['query_id'][-6:]}"
-    return f"{item['query']} · {valid}개 · {item['query_id'][-6:]}"
+    search = item.get('search') or {}
+    names = {'all': '전체', 'sampled': '표본', 'current': '현재 RGB',
+             'candidate': 'PE 후보', 'live': '생성 중'}
+    scope = names.get(search.get('mode'), '범위 미기록')
+    count = search.get('inspected_frames')
+    if count is not None:
+        scope += f' {count}장'
+    title=item['query']
+    if search.get('all_classes'):
+        title=f"전체 객체 {len(search.get('class_counts',{}))}종 · 2D {len(item.get('detections',[]))}건"
+    return f"{title} · {query_model_label(item)} · {scope} · 3D관측 {valid}건 · {item['query_id'][-6:]}"

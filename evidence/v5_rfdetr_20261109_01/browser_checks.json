@@ -1,0 +1,12 @@
+{
+  "search_tab": true,
+  "model_selector": true,
+  "scope": true,
+  "all_models": true,
+  "rfdetr_help": true,
+  "actual_rfdetr_search": true,
+  "valid_3d": true,
+  "saved_model_and_scope": true,
+  "selected_query": true,
+  "no_js_errors": true
+}

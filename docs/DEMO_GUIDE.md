@@ -1,3 +1,6 @@
+<!-- session-context: 2026-11-08 -->
+> **현재 상태 안내 (2026-11-08):** 이 문서의 과거 실험·수치·코드 리뷰는 당시 범위의 기록입니다. 최신 구현·버전·검증은 [CURRENT_STATUS.md](CURRENT_STATUS.md), 다음 세션의 실행 순서는 [SESSION_HANDOFF.md](SESSION_HANDOFF.md), 지도 생성 중 객체 탐색 설계는 [HTML 계획서](../26.11.09.VGGT_SLAM.Plan.html)를 먼저 확인하세요. V4는 아직 미구현입니다.
+
 # VGGT-SLAM Demo Guide
 
 This repository supports offline image runs, saved-run inspection, and incremental video-file input. A video-file run executes SLAM while decoding the file; it is separate from opening a previously cached result. RealSense remains available in the original live entry point, but the demo evidence here uses video files.
@@ -193,3 +196,7 @@ The actual `video_20261106T011557_281290000` session captured 13 frames/three su
 See [DEMO_ACCEPTANCE_REVIEW.md](DEMO_ACCEPTANCE_REVIEW.md) for the final code/evidence comparison and object review. The 20 existing valid car/tree masks reproduced exactly and their reconstructed support points lie inside their saved boxes. This checks consistency, not independent object accuracy. Car detections #1 and #5 have strong extreme-point sensitivity and remain flagged for geometry review. Contact sheets, 3D diagnostic plots, and per-detection values are under the live run's `evidence/quality_review_01/`.
 
 Future object queries reject rank-deficient support and retain excluded masks/reasons. No percentile trimming was silently applied to the original boxes. Use `scripts/demo_audit_object_quality.py --run <run> --replay <car-tree-SAM3-replay-root> --output <new-audit-folder>` to repeat the recorded-depth audit without rerunning VGGT.
+
+## Current V1/V2/V3 entry points (2026-11-08)
+
+Use [DEMO_VERSIONS.md](DEMO_VERSIONS.md) for version-specific commands and [LIVE_V3.md](LIVE_V3.md) for disk-video upload and actual incremental reconstruction. The earlier two-FPS/end-frame cached playback description applies to Classic behavior; Smooth V2 opens at frame zero and separates native RGB playback from map updates. V3 adds actual inference, not only replay. Its general object Search is enabled after map/ROAD generation completes. MOV rotation is now applied before inference. Continue through [SESSION_HANDOFF.md](SESSION_HANDOFF.md); the proposed concurrent predefined-object V4 is a plan, not an available flag.

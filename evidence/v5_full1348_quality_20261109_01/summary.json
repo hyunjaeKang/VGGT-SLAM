@@ -1,0 +1,56 @@
+{
+  "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261109T212129_410269000",
+  "elapsed_seconds": 526.416599,
+  "candidates": 5,
+  "accepted": 4,
+  "ate_rmse_m": 59.99541590337273,
+  "matched_gt_frames": 1276,
+  "loop_pairs": [
+    {
+      "query_video_id": 826,
+      "candidate_video_id": 112,
+      "query_original_id": 1334,
+      "candidate_original_id": 620,
+      "gap_seconds": 71.4,
+      "accepted": false,
+      "match_id": "867_10_102_16"
+    },
+    {
+      "query_video_id": 1312,
+      "candidate_video_id": 1,
+      "query_original_id": 1820,
+      "candidate_original_id": 509,
+      "gap_seconds": 131.1,
+      "accepted": true,
+      "match_id": "1377_16_0_1"
+    },
+    {
+      "query_video_id": 1323,
+      "candidate_video_id": 5,
+      "query_original_id": 1831,
+      "candidate_original_id": 513,
+      "gap_seconds": 131.8,
+      "accepted": true,
+      "match_id": "1396_11_0_5"
+    },
+    {
+      "query_video_id": 1330,
+      "candidate_video_id": 12,
+      "query_original_id": 1838,
+      "candidate_original_id": 520,
+      "gap_seconds": 131.8,
+      "accepted": true,
+      "match_id": "1415_2_0_12"
+    },
+    {
+      "query_video_id": 1347,
+      "candidate_video_id": 28,
+      "query_original_id": 1855,
+      "candidate_original_id": 536,
+      "gap_seconds": 131.9,
+      "accepted": true,
+      "match_id": "1434_3_17_12"
+    }
+  ],
+  "interpretation": "Loop constraints were added, but all-frame reconstruction remains inaccurate; 60m fitted ATE is not accepted map quality."
+}

@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "all_five_versions": true,
+    "local_anchor_links": true,
+    "build_filter": true,
+    "watch_filter": true,
+    "commands": true,
+    "mobile_no_overflow": true,
+    "javascript_exceptions": true
+  },
+  "errors": []
+}

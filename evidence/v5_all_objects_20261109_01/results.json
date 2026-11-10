@@ -1,0 +1,74 @@
+[
+  {
+    "model": "yolo26",
+    "returncode": 0,
+    "output": "logs/demo_runs/video_20261109T213652_654365000/evidence/query_jobs/all_yolo26_1794273504550381000",
+    "status": {
+      "state": "completed",
+      "message": "검색 완료 · 4/224 프레임 · 2D 9건 / 3D 7건",
+      "mode": "sampled",
+      "query": "all",
+      "worker_pid": 61590,
+      "result": "evidence/query_jobs/all_yolo26_1794273504550381000/result.json",
+      "valid_boxes": 7,
+      "mask_count": 9,
+      "attempted_frames": 4,
+      "total_frames": 224,
+      "elapsed_seconds": 1.0391640000743791,
+      "class_counts": {
+        "car": 8,
+        "motorcycle": 1
+      },
+      "all_classes": true
+    }
+  },
+  {
+    "model": "yolo11",
+    "returncode": 0,
+    "output": "logs/demo_runs/video_20261109T213652_654365000/evidence/query_jobs/all_yolo11_1794273507666013000",
+    "status": {
+      "state": "completed",
+      "message": "검색 완료 · 4/224 프레임 · 2D 14건 / 3D 12건",
+      "mode": "sampled",
+      "query": "all",
+      "worker_pid": 61687,
+      "result": "evidence/query_jobs/all_yolo11_1794273507666013000/result.json",
+      "valid_boxes": 12,
+      "mask_count": 14,
+      "attempted_frames": 4,
+      "total_frames": 224,
+      "elapsed_seconds": 0.9935724579263479,
+      "class_counts": {
+        "car": 10,
+        "motorcycle": 2,
+        "potted plant": 2
+      },
+      "all_classes": true
+    }
+  },
+  {
+    "model": "rfdetr",
+    "returncode": 0,
+    "output": "logs/demo_runs/video_20261109T213652_654365000/evidence/query_jobs/all_rfdetr_1794273510257830000",
+    "status": {
+      "state": "completed",
+      "message": "검색 완료 · 4/224 프레임 · 2D 12건 / 3D 10건",
+      "mode": "sampled",
+      "query": "all",
+      "worker_pid": 61755,
+      "result": "evidence/query_jobs/all_rfdetr_1794273510257830000/result.json",
+      "valid_boxes": 10,
+      "mask_count": 12,
+      "attempted_frames": 4,
+      "total_frames": 224,
+      "elapsed_seconds": 4.270223416038789,
+      "class_counts": {
+        "car": 8,
+        "motorcycle": 1,
+        "person": 1,
+        "truck": 2
+      },
+      "all_classes": true
+    }
+  }
+]

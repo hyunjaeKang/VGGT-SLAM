@@ -1,0 +1,13 @@
+{
+  "state": "completed",
+  "message": "\uac80\uc0c9 \uc644\ub8cc \u00b7 1/224 \ud504\ub808\uc784 \u00b7 2D 2\uac74 / 3D 1\uac74",
+  "mode": "current",
+  "query": "car",
+  "worker_pid": 15091,
+  "result": "evidence/query_jobs/rfdetr_1794268469760971000/result.json",
+  "valid_boxes": 1,
+  "mask_count": 2,
+  "attempted_frames": 1,
+  "total_frames": 224,
+  "elapsed_seconds": 6.657092750072479
+}

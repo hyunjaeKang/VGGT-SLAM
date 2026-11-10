@@ -1,0 +1,37 @@
+{
+  "folder": "logs/demo_v4_runs/live_20261108T223848_e32743a6",
+  "event_count": 25,
+  "metrics": {
+    "model_load.seconds": {
+      "n": 1,
+      "p50": 3.474187499959953,
+      "p95": 3.474187499959953,
+      "max": 3.474187499959953
+    },
+    "detector.seconds": {
+      "n": 6,
+      "p50": 0.3186805209843442,
+      "p95": 0.5959230729786213,
+      "max": 0.6740196669707075
+    },
+    "live_result.seconds": {
+      "n": 6,
+      "p50": 0.34638431249186397,
+      "p95": 0.6246271040290594,
+      "max": 0.6949562500230968
+    },
+    "surfaces.seconds": {
+      "n": 6,
+      "p50": 3.815442395512946,
+      "p95": 4.5602742912305985,
+      "max": 4.723601415986195
+    },
+    "depth_join.seconds": {
+      "n": 6,
+      "p50": 4.400802687450778,
+      "p95": 4.96362852040329,
+      "max": 5.103934082901105
+    }
+  },
+  "qualification": "Measured samples only. No independent GT or realtime acceptance implied."
+}

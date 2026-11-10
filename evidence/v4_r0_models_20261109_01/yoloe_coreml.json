@@ -1,0 +1,31 @@
+{
+  "yoloe": {
+    "times": [
+      1.080367499962449,
+      0.45069145900197327,
+      0.7104020420229062
+    ],
+    "classes": [
+      "car",
+      "person",
+      "printer"
+    ],
+    "detections": 7,
+    "model_hash": "48f24206bc8680d60cbbfa296b0140da849669b9515058b72f5a945142df0654",
+    "loads": 1
+  },
+  "coreml": {
+    "path": "logs/demo_models/v4/yolo26n-seg.mlpackage",
+    "export_seconds": 23.89932416600641,
+    "times": [
+      4.552343083079904,
+      0.07293716701678932,
+      0.07840954198036343
+    ],
+    "counts": [
+      14,
+      14,
+      14
+    ]
+  }
+}

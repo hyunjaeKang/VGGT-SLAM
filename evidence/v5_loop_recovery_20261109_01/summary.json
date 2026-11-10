@@ -1,0 +1,46 @@
+{
+  "job": {
+    "id": "live_20261109T113118_loop_quality",
+    "folder": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v5_jobs/live_20261109T113118_loop_quality",
+    "filename": "KITTI selected · loop quality 518.mp4",
+    "input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_inputs/kitti_closed_loop_508_1855_20261109/kitti_closed_loop_v2_selected_10fps.mp4",
+    "created_at": 1794252678.77927,
+    "updated_at": 1794252763.099634,
+    "state": "completed",
+    "message": "루프 품질 비교 완료 · 2개 재방문 연결",
+    "options": {
+      "submap_size": 16,
+      "max_frames": 0,
+      "min_disparity": 0.0,
+      "max_loops": 1,
+      "image_size": 518,
+      "cpu_threads": 4,
+      "min_loop_seconds": 10.0
+    },
+    "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261109T193118_668535000",
+    "decoded_frames": 226,
+    "map_frames": 226,
+    "steps": 15,
+    "road_frames": 0,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "search_ready": false,
+    "version": "slam-v5",
+    "semantic_enabled": false,
+    "probe": {
+      "width": 1408,
+      "height": 376,
+      "fps": 10.0,
+      "duration": 22.6
+    },
+    "elapsed_seconds": 84.32036399841309,
+    "elapsed_scope": "CLI geometry only; viewer launched subsequently",
+    "quality_evaluation": "evidence/v5_loop_recovery_20261109_01/evaluation/trajectory_metrics.json"
+  },
+  "accepted_loops": 2,
+  "fitted_ate_rmse_m": 12.561790423207334,
+  "matched_gt_frames": 217,
+  "prior_failed_full_ate_rmse_m": 113.8958606911363,
+  "prior_v2_ate_rmse_m": 9.948557764999993,
+  "causal_note": "Selection, resolution, submap size and temporal filtering changed together; do not attribute improvement solely to temporal filtering."
+}

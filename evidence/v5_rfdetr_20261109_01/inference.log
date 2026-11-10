@@ -1,0 +1,12 @@
+검색 준비 · current · 1/224 프레임 · 1 검색어
+/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/.venv-rfdetr/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/.venv-rfdetr/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+W1109 15:54:32.931000 15091 .venv-rfdetr/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+[2026-11-09 15:54:33] [INFO] rf-detr - File /Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_models/rfdetr/rf-detr-seg-nano.pt already exists with correct MD5 hash.
+[2026-11-09 15:54:33] [INFO] rf-detr - File /Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_models/rfdetr/rf-detr-seg-nano.pt already exists with correct MD5 hash.
+RFDETR 1/1 · frame 256 · car
+[2026-11-09 15:54:34] [WARNING] rf-detr - Model is not optimized for inference. Latency may be higher than expected. Create predictor = native_model.inference(...) and use predictor.predict(...). For a checkpoint, first load native_model = RFDETR.from_checkpoint(...).
+검사 완료 1/1 프레임
+검색 완료 · 1/224 프레임 · 2D 2건 / 3D 1건

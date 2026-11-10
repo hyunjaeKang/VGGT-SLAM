@@ -1,0 +1,1 @@
+{"state": "running", "message": "RFDETR 20/24 · frame 1131 · car", "mode": "sampled", "query": "car", "worker_pid": 80927, "completed_frames": 19, "total_frames": 24, "mask_count": 61, "valid_boxes": 52}

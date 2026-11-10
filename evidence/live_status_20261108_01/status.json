@@ -1,0 +1,1646 @@
+{
+  "at": "2026-11-08T22:35:00.211344+00:00",
+  "live": {
+    "job": {
+      "id": "live_20261108T115826_4ffce9d7",
+      "folder": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T115826_4ffce9d7",
+      "filename": "clip.mp4",
+      "input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T115826_4ffce9d7/input.mp4",
+      "created_at": 1794167906.71873,
+      "state": "road",
+      "message": "3D 지도 완료 · 전체 키프레임 ROAD 분할 중",
+      "options": {
+        "submap_size": 8,
+        "max_frames": 0,
+        "min_disparity": 10.0,
+        "max_loops": 1
+      },
+      "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T195829_755817000",
+      "decoded_frames": 2700,
+      "map_frames": 2196,
+      "steps": 275,
+      "road_frames": 1088,
+      "viewer_ready": true,
+      "viewer_revision": 6,
+      "search_ready": false,
+      "updated_at": 1794177299.9783309,
+      "probe": {
+        "width": 1280,
+        "height": 720,
+        "fps": 30.0,
+        "duration": 90.0
+      }
+    },
+    "viewer_port": 8104,
+    "history": [
+      {
+        "id": "live_20261108T104656_694854fa",
+        "filename": "input.mov",
+        "state": "completed",
+        "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T184700_282397000"
+      },
+      {
+        "id": "live_20261108T101000_7836a2fd",
+        "filename": "duke_status.mov",
+        "state": "completed",
+        "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T181003_605025000"
+      },
+      {
+        "id": "live_20261108T093304_c6cbb885",
+        "filename": "clip.mp4",
+        "state": "completed",
+        "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T173307_231634000"
+      },
+      {
+        "id": "live_20261108T092540_da3e45b7",
+        "filename": "pandaset33.mp4",
+        "state": "completed",
+        "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T172544_144963000"
+      }
+    ]
+  },
+  "frame": {
+    "viewer_version": "live-v3",
+    "quality_mode": "high",
+    "selected_query": false,
+    "render_seconds": 1.6456439580069855,
+    "chunk_uploads": 82679,
+    "scene_point_count": 600000,
+    "playback_quality": "자동",
+    "frame_index": 2469,
+    "frame_count": 2470,
+    "source_frame_id": "2698",
+    "timestamp_label": "89.93 s",
+    "playing": false,
+    "follow_rgb": true,
+    "camera_available": true,
+    "aspect": 1.7619047619047619,
+    "road_points": 6492000,
+    "road_visible": true,
+    "bev_mode": "Road connectivity",
+    "connectivity": {
+      "occupied_cells": 2955,
+      "edges": 5039,
+      "components": 114
+    },
+    "bev_pan": [
+      0.0,
+      0.0
+    ],
+    "mask_bev": false,
+    "box_bev": false,
+    "box_rgb": false,
+    "bev_box_count": 0,
+    "bev_zoom": 1.0,
+    "bev_trajectory": true,
+    "mask_3d": true,
+    "mask_rgb": true,
+    "point_count": 600000,
+    "bev_plane": "XZ",
+    "raster": {
+      "output_shape_hw": [
+        960,
+        1691
+      ],
+      "antialias": 1.5,
+      "projected_points": 196839,
+      "occupied_pixels": 795676,
+      "shape_hw": [
+        294,
+        518
+      ],
+      "projection": [
+        [
+          102.83070020825976,
+          142.18545963866163,
+          -42.34236195013995,
+          34.52425165621946
+        ],
+        [
+          192.60299396624512,
+          -196.4392648628744,
+          -101.16905867729332,
+          115.81972174883008
+        ],
+        [
+          0.6162552787830983,
+          0.5073090976697204,
+          -0.6023843547051172,
+          0.5333205763761986
+        ]
+      ]
+    },
+    "camera_position": [
+      -0.0747194799980432,
+      0.06956358819038268,
+      0.8674935520375795
+    ],
+    "version": 1138,
+    "viser_port": 56525
+  },
+  "smooth": {
+    "version": "smooth-v2",
+    "generation": 756,
+    "playing": false,
+    "time": 89.93333333333334,
+    "duration": 89.93333333333334,
+    "rendered_time": 89.93333333333334,
+    "frame_index": 2469,
+    "media": null,
+    "camera_path_key": [
+      "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T115826_4ffce9d7/live_run",
+      "275",
+      "after"
+    ],
+    "point_scale": 1.0,
+    "playback_quality": "자동",
+    "run": "live_run",
+    "timing": "recorded timestamps",
+    "follow_rgb": true,
+    "selected_query": false,
+    "mask_rgb": true,
+    "box_rgb": false
+  },
+  "summary": {
+    "source_mode": "video_file_incremental",
+    "video": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T115826_4ffce9d7/input.mp4",
+    "video_sha256": "a042f987ead1274726ef89d7ad4f8732ec0f093d3e72a3ee7fa2e2ae49b18edc",
+    "pacing": "offline",
+    "source_fps": 30.0,
+    "decoded_frames": 2700,
+    "timestamp_type_counts": {
+      "video_pts_seconds": 2700
+    },
+    "pacing_clock": "per-frame timestamp: observed PTS or explicitly labelled FPS approximation",
+    "selected_keyframes": 2196,
+    "keyframe_backlog_dropped": 0,
+    "submaps": 275,
+    "submap_processing": [
+      {
+        "submap_id": 0,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 6.21913091710303
+      },
+      {
+        "submap_id": 9,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 5.635692166979425
+      },
+      {
+        "submap_id": 18,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.1733306660316885
+      },
+      {
+        "submap_id": 29,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.870072917081416
+      },
+      {
+        "submap_id": 40,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 6.765563541906886
+      },
+      {
+        "submap_id": 51,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 6.9566382500343025
+      },
+      {
+        "submap_id": 62,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 6.7450011250330135
+      },
+      {
+        "submap_id": 73,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 6.9063641669927165
+      },
+      {
+        "submap_id": 84,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.310677749919705
+      },
+      {
+        "submap_id": 95,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.1549411659361795
+      },
+      {
+        "submap_id": 106,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.244039374985732
+      },
+      {
+        "submap_id": 117,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.93083349999506
+      },
+      {
+        "submap_id": 128,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.309839249937795
+      },
+      {
+        "submap_id": 139,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.025725165964104
+      },
+      {
+        "submap_id": 150,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.379336042096838
+      },
+      {
+        "submap_id": 161,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.007493000011891
+      },
+      {
+        "submap_id": 172,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.141694374964572
+      },
+      {
+        "submap_id": 183,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.998651709058322
+      },
+      {
+        "submap_id": 194,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.5445463749347255
+      },
+      {
+        "submap_id": 205,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.183871375047602
+      },
+      {
+        "submap_id": 216,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.155469457968138
+      },
+      {
+        "submap_id": 227,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.000234249979258
+      },
+      {
+        "submap_id": 238,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.62059554096777
+      },
+      {
+        "submap_id": 249,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.101678292034194
+      },
+      {
+        "submap_id": 260,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.244239291991107
+      },
+      {
+        "submap_id": 271,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.3693474169122055
+      },
+      {
+        "submap_id": 282,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.940713291987777
+      },
+      {
+        "submap_id": 293,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.32275054208003
+      },
+      {
+        "submap_id": 304,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.449153875000775
+      },
+      {
+        "submap_id": 315,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.1978464589919895
+      },
+      {
+        "submap_id": 326,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.256121541955508
+      },
+      {
+        "submap_id": 337,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.651871041976847
+      },
+      {
+        "submap_id": 348,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.438421915983781
+      },
+      {
+        "submap_id": 359,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.5771734999725595
+      },
+      {
+        "submap_id": 370,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.54139462497551
+      },
+      {
+        "submap_id": 381,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.678428875049576
+      },
+      {
+        "submap_id": 392,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.24935487494804
+      },
+      {
+        "submap_id": 403,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.958277458092198
+      },
+      {
+        "submap_id": 414,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.983990040956996
+      },
+      {
+        "submap_id": 425,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.606624291976914
+      },
+      {
+        "submap_id": 436,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.507803207961842
+      },
+      {
+        "submap_id": 447,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.863656125031412
+      },
+      {
+        "submap_id": 458,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.025692417053506
+      },
+      {
+        "submap_id": 469,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 7.8085297079524025
+      },
+      {
+        "submap_id": 480,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.279970915988088
+      },
+      {
+        "submap_id": 491,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.210080042015761
+      },
+      {
+        "submap_id": 502,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.241967084002681
+      },
+      {
+        "submap_id": 513,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.46736954106018
+      },
+      {
+        "submap_id": 524,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.476115333032794
+      },
+      {
+        "submap_id": 535,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.554425916983746
+      },
+      {
+        "submap_id": 546,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.291513792006299
+      },
+      {
+        "submap_id": 557,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.324305540998466
+      },
+      {
+        "submap_id": 568,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.24042558297515
+      },
+      {
+        "submap_id": 579,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.870375583064742
+      },
+      {
+        "submap_id": 590,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.155704083037563
+      },
+      {
+        "submap_id": 601,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.408733375021257
+      },
+      {
+        "submap_id": 612,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.391968083102256
+      },
+      {
+        "submap_id": 623,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.162720041000284
+      },
+      {
+        "submap_id": 634,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.9680670829257
+      },
+      {
+        "submap_id": 645,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.306576124974526
+      },
+      {
+        "submap_id": 656,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.105286041973159
+      },
+      {
+        "submap_id": 667,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 17.058068125043064
+      },
+      {
+        "submap_id": 678,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.163884707959369
+      },
+      {
+        "submap_id": 689,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.920627082930878
+      },
+      {
+        "submap_id": 700,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.945254000020213
+      },
+      {
+        "submap_id": 711,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.238987666089088
+      },
+      {
+        "submap_id": 722,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.023192499997094
+      },
+      {
+        "submap_id": 733,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.374068124918267
+      },
+      {
+        "submap_id": 744,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.982898375019431
+      },
+      {
+        "submap_id": 755,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.399766416987404
+      },
+      {
+        "submap_id": 766,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.234156375052407
+      },
+      {
+        "submap_id": 777,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.192296666908078
+      },
+      {
+        "submap_id": 788,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.030368875013664
+      },
+      {
+        "submap_id": 799,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.830681334016845
+      },
+      {
+        "submap_id": 810,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.618855957989581
+      },
+      {
+        "submap_id": 821,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.461106000002474
+      },
+      {
+        "submap_id": 832,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.358046083012596
+      },
+      {
+        "submap_id": 843,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.615901999990456
+      },
+      {
+        "submap_id": 854,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.780096542090178
+      },
+      {
+        "submap_id": 865,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.599142292048782
+      },
+      {
+        "submap_id": 876,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.398857500054874
+      },
+      {
+        "submap_id": 887,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.551710583968088
+      },
+      {
+        "submap_id": 898,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.704248291091062
+      },
+      {
+        "submap_id": 909,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.226840750081465
+      },
+      {
+        "submap_id": 920,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.861554499948397
+      },
+      {
+        "submap_id": 931,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.006044624955393
+      },
+      {
+        "submap_id": 942,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.700079500093125
+      },
+      {
+        "submap_id": 953,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.499071958940476
+      },
+      {
+        "submap_id": 964,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.345239332993515
+      },
+      {
+        "submap_id": 975,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.056285624974407
+      },
+      {
+        "submap_id": 986,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.977839416009374
+      },
+      {
+        "submap_id": 997,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.969105625059456
+      },
+      {
+        "submap_id": 1008,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.181158875115216
+      },
+      {
+        "submap_id": 1019,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.129442041972652
+      },
+      {
+        "submap_id": 1028,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.33162816602271
+      },
+      {
+        "submap_id": 1039,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 15.233112000045367
+      },
+      {
+        "submap_id": 1050,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.080405083950609
+      },
+      {
+        "submap_id": 1061,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.937347208033316
+      },
+      {
+        "submap_id": 1072,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 15.637047749944031
+      },
+      {
+        "submap_id": 1083,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.667182832956314
+      },
+      {
+        "submap_id": 1094,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.001334959059022
+      },
+      {
+        "submap_id": 1105,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.125497041037306
+      },
+      {
+        "submap_id": 1116,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.379591542063281
+      },
+      {
+        "submap_id": 1127,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.843738125055097
+      },
+      {
+        "submap_id": 1138,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.241662915912457
+      },
+      {
+        "submap_id": 1149,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.611796792014502
+      },
+      {
+        "submap_id": 1160,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.221029917011037
+      },
+      {
+        "submap_id": 1171,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.776679667062126
+      },
+      {
+        "submap_id": 1182,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.58103308302816
+      },
+      {
+        "submap_id": 1193,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.434601500048302
+      },
+      {
+        "submap_id": 1204,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.284416791982949
+      },
+      {
+        "submap_id": 1215,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.310192000004463
+      },
+      {
+        "submap_id": 1226,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.62893891602289
+      },
+      {
+        "submap_id": 1237,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.659070083056577
+      },
+      {
+        "submap_id": 1248,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.35835875000339
+      },
+      {
+        "submap_id": 1259,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 17.607581667019986
+      },
+      {
+        "submap_id": 1270,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.1809953750344
+      },
+      {
+        "submap_id": 1281,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.915869042044505
+      },
+      {
+        "submap_id": 1292,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.652492165914737
+      },
+      {
+        "submap_id": 1303,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.097997250035405
+      },
+      {
+        "submap_id": 1314,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.926008583046496
+      },
+      {
+        "submap_id": 1325,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.198851374909282
+      },
+      {
+        "submap_id": 1336,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 16.924952042056248
+      },
+      {
+        "submap_id": 1347,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.077894791960716
+      },
+      {
+        "submap_id": 1358,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.291918832925148
+      },
+      {
+        "submap_id": 1369,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.7573137920117
+      },
+      {
+        "submap_id": 1380,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.959336500032805
+      },
+      {
+        "submap_id": 1391,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.53127258294262
+      },
+      {
+        "submap_id": 1402,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.321634749998339
+      },
+      {
+        "submap_id": 1413,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 15.962595500051975
+      },
+      {
+        "submap_id": 1424,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.41928316699341
+      },
+      {
+        "submap_id": 1435,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.378808208974078
+      },
+      {
+        "submap_id": 1446,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.557766041019931
+      },
+      {
+        "submap_id": 1457,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.112676750053652
+      },
+      {
+        "submap_id": 1468,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.518230707966723
+      },
+      {
+        "submap_id": 1479,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.017614708049223
+      },
+      {
+        "submap_id": 1490,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.018562208977528
+      },
+      {
+        "submap_id": 1501,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.066906166961417
+      },
+      {
+        "submap_id": 1512,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.977651334018447
+      },
+      {
+        "submap_id": 1523,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.085399457952008
+      },
+      {
+        "submap_id": 1532,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.530146875069477
+      },
+      {
+        "submap_id": 1543,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.316650958033279
+      },
+      {
+        "submap_id": 1554,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.795062000048347
+      },
+      {
+        "submap_id": 1563,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.393836083007045
+      },
+      {
+        "submap_id": 1574,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.36312250001356
+      },
+      {
+        "submap_id": 1583,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.956687125028111
+      },
+      {
+        "submap_id": 1594,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.422875166987069
+      },
+      {
+        "submap_id": 1605,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.672465207986534
+      },
+      {
+        "submap_id": 1616,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.027180542005226
+      },
+      {
+        "submap_id": 1627,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.755611625034362
+      },
+      {
+        "submap_id": 1638,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.49844937492162
+      },
+      {
+        "submap_id": 1649,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.846025333972648
+      },
+      {
+        "submap_id": 1658,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.546169999986887
+      },
+      {
+        "submap_id": 1667,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.512063875095919
+      },
+      {
+        "submap_id": 1678,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.956032457994297
+      },
+      {
+        "submap_id": 1689,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.953301166999154
+      },
+      {
+        "submap_id": 1700,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.610591416014358
+      },
+      {
+        "submap_id": 1711,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.437774916063063
+      },
+      {
+        "submap_id": 1722,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.706419499940239
+      },
+      {
+        "submap_id": 1733,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.066050915978849
+      },
+      {
+        "submap_id": 1744,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.79993341700174
+      },
+      {
+        "submap_id": 1753,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.531255749985576
+      },
+      {
+        "submap_id": 1764,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.591244249953888
+      },
+      {
+        "submap_id": 1773,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.090148792020045
+      },
+      {
+        "submap_id": 1784,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.200140832923353
+      },
+      {
+        "submap_id": 1795,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.289214542019181
+      },
+      {
+        "submap_id": 1806,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.054174792021513
+      },
+      {
+        "submap_id": 1817,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 8.626746708061546
+      },
+      {
+        "submap_id": 1826,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.962522915913723
+      },
+      {
+        "submap_id": 1837,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.01188895793166
+      },
+      {
+        "submap_id": 1848,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.208130583981983
+      },
+      {
+        "submap_id": 1859,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.163930041948333
+      },
+      {
+        "submap_id": 1870,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.245831417036243
+      },
+      {
+        "submap_id": 1881,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.393446250003763
+      },
+      {
+        "submap_id": 1892,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.34656274993904
+      },
+      {
+        "submap_id": 1901,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.326433167094365
+      },
+      {
+        "submap_id": 1910,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.945360707934014
+      },
+      {
+        "submap_id": 1919,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.637524125049822
+      },
+      {
+        "submap_id": 1930,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.889441791921854
+      },
+      {
+        "submap_id": 1941,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.704677375033498
+      },
+      {
+        "submap_id": 1952,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.385561665985733
+      },
+      {
+        "submap_id": 1963,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.020967582939193
+      },
+      {
+        "submap_id": 1974,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.273157290997915
+      },
+      {
+        "submap_id": 1985,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.594856958952732
+      },
+      {
+        "submap_id": 1996,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.071433291072026
+      },
+      {
+        "submap_id": 2007,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.081212916993536
+      },
+      {
+        "submap_id": 2018,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.461667332914658
+      },
+      {
+        "submap_id": 2029,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.436932708020322
+      },
+      {
+        "submap_id": 2040,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.412628457997926
+      },
+      {
+        "submap_id": 2051,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.065669832983986
+      },
+      {
+        "submap_id": 2062,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.311909083044156
+      },
+      {
+        "submap_id": 2073,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.110299124964513
+      },
+      {
+        "submap_id": 2084,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.755824291962199
+      },
+      {
+        "submap_id": 2095,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.879697749973275
+      },
+      {
+        "submap_id": 2106,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.247848749975674
+      },
+      {
+        "submap_id": 2117,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.039927207981236
+      },
+      {
+        "submap_id": 2128,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.541762792039663
+      },
+      {
+        "submap_id": 2139,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.949082833016291
+      },
+      {
+        "submap_id": 2150,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.722521124989726
+      },
+      {
+        "submap_id": 2161,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.898010084056295
+      },
+      {
+        "submap_id": 2172,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.566606792039238
+      },
+      {
+        "submap_id": 2183,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.164092874969356
+      },
+      {
+        "submap_id": 2194,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.37554325000383
+      },
+      {
+        "submap_id": 2205,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.627530209021643
+      },
+      {
+        "submap_id": 2216,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.3856957500102
+      },
+      {
+        "submap_id": 2227,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.136222540982999
+      },
+      {
+        "submap_id": 2238,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 15.811721332953312
+      },
+      {
+        "submap_id": 2249,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.7622408750467
+      },
+      {
+        "submap_id": 2258,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 16.002385708969086
+      },
+      {
+        "submap_id": 2269,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 19.928396499948576
+      },
+      {
+        "submap_id": 2280,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 16.509729707962833
+      },
+      {
+        "submap_id": 2291,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.388766458025202
+      },
+      {
+        "submap_id": 2302,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.485697750002146
+      },
+      {
+        "submap_id": 2313,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.394060334074311
+      },
+      {
+        "submap_id": 2324,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.917924333945848
+      },
+      {
+        "submap_id": 2335,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.755237292032689
+      },
+      {
+        "submap_id": 2344,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 16.22862862504553
+      },
+      {
+        "submap_id": 2355,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.537088625016622
+      },
+      {
+        "submap_id": 2366,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.137793625006452
+      },
+      {
+        "submap_id": 2377,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.23561025003437
+      },
+      {
+        "submap_id": 2388,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.220756458002143
+      },
+      {
+        "submap_id": 2397,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.929842332960106
+      },
+      {
+        "submap_id": 2408,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 19.471244541928172
+      },
+      {
+        "submap_id": 2417,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.44489133299794
+      },
+      {
+        "submap_id": 2428,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.687871667090803
+      },
+      {
+        "submap_id": 2439,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.120237791910768
+      },
+      {
+        "submap_id": 2450,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.070790749974549
+      },
+      {
+        "submap_id": 2461,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 24.192570165963843
+      },
+      {
+        "submap_id": 2472,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.331508917035535
+      },
+      {
+        "submap_id": 2483,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.143327709054574
+      },
+      {
+        "submap_id": 2494,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.650543000083417
+      },
+      {
+        "submap_id": 2503,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.00709149998147
+      },
+      {
+        "submap_id": 2514,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.2535396249732
+      },
+      {
+        "submap_id": 2525,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 15.960420666961
+      },
+      {
+        "submap_id": 2536,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.031155665987171
+      },
+      {
+        "submap_id": 2547,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.476569375023246
+      },
+      {
+        "submap_id": 2558,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.311595250037499
+      },
+      {
+        "submap_id": 2569,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.666622083052061
+      },
+      {
+        "submap_id": 2580,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.554368125041947
+      },
+      {
+        "submap_id": 2591,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 18.861971833044663
+      },
+      {
+        "submap_id": 2602,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.077817709068768
+      },
+      {
+        "submap_id": 2613,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.96007766702678
+      },
+      {
+        "submap_id": 2624,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.57287599996198
+      },
+      {
+        "submap_id": 2635,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.527289125020616
+      },
+      {
+        "submap_id": 2646,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 9.880969124962576
+      },
+      {
+        "submap_id": 2657,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 16.659127000020817
+      },
+      {
+        "submap_id": 2666,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.141203333972953
+      },
+      {
+        "submap_id": 2677,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.8991151250666
+      },
+      {
+        "submap_id": 2688,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.075197541969828
+      },
+      {
+        "submap_id": 2699,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.166249083937146
+      },
+      {
+        "submap_id": 2710,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.952786875073798
+      },
+      {
+        "submap_id": 2721,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 19.939154291991144
+      },
+      {
+        "submap_id": 2732,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.859705042093992
+      },
+      {
+        "submap_id": 2743,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.726747374981642
+      },
+      {
+        "submap_id": 2754,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.18281449994538
+      },
+      {
+        "submap_id": 2765,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.312682958086953
+      },
+      {
+        "submap_id": 2776,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.58131329191383
+      },
+      {
+        "submap_id": 2787,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 19.353577250032686
+      },
+      {
+        "submap_id": 2798,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 15.168378749978729
+      },
+      {
+        "submap_id": 2809,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.54435941693373
+      },
+      {
+        "submap_id": 2820,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.508097332902253
+      },
+      {
+        "submap_id": 2831,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.51747083303053
+      },
+      {
+        "submap_id": 2842,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.89171154203359
+      },
+      {
+        "submap_id": 2853,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 18.432859959080815
+      },
+      {
+        "submap_id": 2864,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 14.236269250046462
+      },
+      {
+        "submap_id": 2875,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.514427124988288
+      },
+      {
+        "submap_id": 2886,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 13.97992658300791
+      },
+      {
+        "submap_id": 2897,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.806204667082056
+      },
+      {
+        "submap_id": 2906,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 11.986173749901354
+      },
+      {
+        "submap_id": 2915,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 10.537156000034884
+      },
+      {
+        "submap_id": 2924,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 15.971508875023574
+      },
+      {
+        "submap_id": 2935,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 15.017465083976276
+      },
+      {
+        "submap_id": 2946,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.455891874968074
+      },
+      {
+        "submap_id": 2957,
+        "input_frames_including_overlap": 9,
+        "elapsed_seconds": 12.742339374963194
+      },
+      {
+        "submap_id": 2968,
+        "input_frames_including_overlap": 4,
+        "elapsed_seconds": 8.931918915943243
+      }
+    ],
+    "pause_toggle_events": 0,
+    "single_step_frames": 0,
+    "stop_reason": "eof_or_range",
+    "submap_latency_seconds_p50": 11.071433291072026,
+    "submap_latency_seconds_p95": 15.980771925207227,
+    "capture_wall_seconds": 3112.9938075829996,
+    "decode_pacing_fps": 0.8673322746171289,
+    "limitations": [
+      "Video optical-flow selection and inference run sequentially in one process",
+      "GT trajectory evaluation requires a timestamp-aligned reference"
+    ]
+  },
+  "file_sizes": {
+    "manifest.json": 2791,
+    "poses.txt": 203546,
+    "poses_points.pcd": 3642478901
+  },
+  "road": [
+    {
+      "step": "v3_snapshots",
+      "status": {
+        "state": "running",
+        "message": "SAM3 1089/2196 · frame 1270 · road",
+        "mode": "all",
+        "query": "road",
+        "worker_pid": 84681,
+        "partial_result": "evidence/query_jobs/road/partial_result.json",
+        "completed_frames": 1088,
+        "total_frames": 2196,
+        "mask_count": 1467,
+        "valid_boxes": 1465
+      },
+      "mtime": 1794177296.3634968
+    },
+    {
+      "step": "v3_snapshots",
+      "status": {
+        "state": "completed",
+        "message": "검색 완료 · 9/9 프레임 · 2D 11건 / 3D 9건",
+        "mode": "all",
+        "query": "road",
+        "worker_pid": 32429,
+        "partial_result": "evidence/query_jobs/road/partial_result.json",
+        "result": "evidence/query_jobs/road/result.json",
+        "valid_boxes": 9,
+        "mask_count": 11,
+        "attempted_frames": 9,
+        "total_frames": 9,
+        "elapsed_seconds": 98.26662712497637
+      },
+      "mtime": 1794168028.1183155
+    },
+    {
+      "step": "v3_snapshots",
+      "status": {
+        "state": "completed",
+        "message": "검색 완료 · 1001/1001 프레임 · 2D 1293건 / 3D 1291건",
+        "mode": "all",
+        "query": "road",
+        "worker_pid": 78948,
+        "partial_result": "evidence/query_jobs/road/partial_result.json",
+        "result": "evidence/query_jobs/road/result.json",
+        "valid_boxes": 1291,
+        "mask_count": 1293,
+        "attempted_frames": 1001,
+        "total_frames": 1001,
+        "elapsed_seconds": 7253.518109249999
+      },
+      "mtime": 1794176471.472554
+    },
+    {
+      "step": "v3_snapshots",
+      "status": {
+        "state": "completed",
+        "message": "검색 완료 · 113/113 프레임 · 2D 153건 / 3D 151건",
+        "mode": "all",
+        "query": "road",
+        "worker_pid": 36464,
+        "partial_result": "evidence/query_jobs/road/partial_result.json",
+        "result": "evidence/query_jobs/road/result.json",
+        "valid_boxes": 151,
+        "mask_count": 153,
+        "attempted_frames": 113,
+        "total_frames": 113,
+        "elapsed_seconds": 1180.559933249955
+      },
+      "mtime": 1794169212.505245
+    }
+  ],
+  "elapsed_job_seconds": 9393.507433891296,
+  "processes": "11908 93441   0.1  0.0  28464    05:38:38 .venv/bin/python demo.py view --run logs/demo_runs/s03_kitti_loop_on_20261031_01 --port 8102 --version smooth --source-fps 10\n14851 93441   0.0  0.0  15456 02-21:09:08 .venv/bin/python demo.py view --run logs/demo_runs/video_20261106T011557_281290000 --port 8095\n23195 93441   6.1  0.1  59584    04:36:15 .venv/bin/python demo.py live --port 8103 --viewer-port 8104\n27396 93441   0.0  0.0  16960    21:15:43 .venv/bin/python demo.py view --run logs/demo_runs/s03_kitti_loop_on_20261031_01 --port 8101\n28183 93441   0.0  0.0  15472 03-18:00:21 .venv/bin/python demo.py view --run logs/demo_runs/object_queries_20261105_01 --port 8092\n32354 23195  98.2 12.0 8086560    02:36:15 /Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/.venv/bin/python -u demo.py view --version smooth --run /Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T115826_4ffce9d7/live_run --port 8104 --source-fps 30.0 --studio-label Live V3 --live-control /Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T115826_4ffce9d7/live_control.json\n32973 93441   0.0  0.0  15504 03-17:04:20 .venv/bin/python demo.py view --run logs/demo_runs/s10_tum_xyz33_20261105_01 --port 8093\n46517 93441   0.0  0.0  16944 02-00:40:41 .venv/bin/python demo.py view --run logs/demo_runs/video_20261106T064802_616910000 --port 8097\n54148 93441   0.0  0.0  20016 03-21:35:48 .venv/bin/python demo.py view --run logs/demo_runs/video_20261105T004239_058560000 --port 8091\n84681 23195 250.5 10.1 6787616       13:48 /Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/.venv-open-set/bin/python -u scripts/demo_search_cached.py --run /Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T195829_755817000/evidence/v3_snapshots/275 --output /Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T195829_755817000/evidence/v3_snapshots/275/evidence/query_jobs/road --query road --mode all --stream-results"
+}

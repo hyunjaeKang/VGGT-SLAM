@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "source_rows": true,
+    "desktop_no_horizontal_overflow": true,
+    "calculator_initialized": true,
+    "model_filter": true,
+    "calculator_overload_warning": true,
+    "source_search": true,
+    "mobile_no_horizontal_overflow": true,
+    "javascript_exceptions": true
+  },
+  "errors": [],
+  "file": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/26.11.09.VGGT_SLAM.Plan.html"
+}

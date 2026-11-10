@@ -1,0 +1,76 @@
+{
+  "torch": "2.3.1",
+  "mps": true,
+  "models": {
+    "yolo11n-seg.pt_cpu": {
+      "load_seconds": 0.02553329197689891,
+      "inference_seconds": [
+        0.5379129590000957,
+        0.04230979201383889,
+        0.03918279195204377,
+        0.039126374991610646
+      ],
+      "detections": 15,
+      "tracked": 15,
+      "model_hash": "55ed65c56c91713d23e8402371c6c49a6fd84f257f7dce452e8d70e41dcbe152"
+    },
+    "yolo11n-seg.pt_mps": {
+      "load_seconds": 0.01734274998307228,
+      "inference_seconds": [
+        5.346740416949615,
+        0.17939608404412866,
+        0.12881949997972697,
+        0.15485979104414582
+      ],
+      "detections": 14,
+      "tracked": 14,
+      "model_hash": "55ed65c56c91713d23e8402371c6c49a6fd84f257f7dce452e8d70e41dcbe152"
+    },
+    "yolo26n-seg.pt_cpu": {
+      "load_seconds": 0.02197724999859929,
+      "inference_seconds": [
+        0.05510487500578165,
+        0.03942862490657717,
+        0.034997958107851446,
+        0.03904833295382559
+      ],
+      "detections": 14,
+      "tracked": 14,
+      "model_hash": "361fbfabab285c3237700b6bb91d7ecfa602cd945fffda8dbe1242829b71e73f"
+    },
+    "yolo26n-seg.pt_mps": {
+      "load_seconds": 0.059734541922807693,
+      "inference_seconds": [
+        1.0592937079491094,
+        0.10105737508274615,
+        0.13381895795464516,
+        0.14750062499660999
+      ],
+      "detections": 13,
+      "tracked": 13,
+      "model_hash": "361fbfabab285c3237700b6bb91d7ecfa602cd945fffda8dbe1242829b71e73f"
+    },
+    "surfaces_cpu": {
+      "inference_seconds": [
+        0.11499520798679441,
+        0.09859883296303451,
+        0.09254745801445097
+      ],
+      "pixels": {
+        "road": 56860,
+        "sky": 11357
+      }
+    },
+    "surfaces_mps": {
+      "inference_seconds": [
+        1.786491582985036,
+        0.05297991703264415,
+        0.08306641702074558
+      ],
+      "pixels": {
+        "road": 15247,
+        "sky": 853
+      }
+    }
+  }
+}

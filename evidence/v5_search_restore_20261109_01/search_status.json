@@ -1,0 +1,13 @@
+{
+  "state": "completed",
+  "message": "\uac80\uc0c9 \uc644\ub8cc \u00b7 1/226 \ud504\ub808\uc784 \u00b7 2D 9\uac74 / 3D 4\uac74",
+  "mode": "current",
+  "query": "car",
+  "worker_pid": 59896,
+  "result": "evidence/query_jobs/search_1794259633948002000/result.json",
+  "valid_boxes": 4,
+  "mask_count": 9,
+  "attempted_frames": 1,
+  "total_frames": 226,
+  "elapsed_seconds": 20.62184591696132
+}

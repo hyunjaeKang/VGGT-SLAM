@@ -1,0 +1,9 @@
+{
+  "search_tab": true,
+  "model_selector": true,
+  "sam3_help": true,
+  "scope": true,
+  "all_models": true,
+  "yolo_help": true,
+  "no_js_errors": true
+}

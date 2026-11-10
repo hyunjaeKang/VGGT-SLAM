@@ -114,7 +114,7 @@ def threaded_process_submap(image_names_subset, solver, model, args, clip_model,
                 solver.graph.optimize()
             else:
                 record_preview(solver.current_working_submap, recorder,
-                               per_frame=50_000 if args.camera == "video_file" else 1_000)
+                               per_frame=getattr(args,"preview_points",50_000) if args.camera == "video_file" else 1_000)
                 optimize_recorded(solver.graph, solver.map, recorder, args.demo_step)
                 args.demo_step += 1
             if args.vis_map:
@@ -199,6 +199,7 @@ def run_camera_pipeline(args):
         device=device,
         enable_viewer=not args.headless,
         viewer_port=args.viewer_port,
+        **({"image_size": args.image_size, "enable_retrieval": bool(args.max_loops)} if getattr(args, "slam_fast_start", False) else {}),
     )
     if args.camera == "video_file":
         solver.demo_recorder = args.demo_recorder
@@ -225,7 +226,11 @@ def run_camera_pipeline(args):
 
     model = VGGT()
     _URL = "https://huggingface.co/facebook/VGGT-1B/resolve/main/model.pt"
-    model.load_state_dict(torch.hub.load_state_dict_from_url(_URL, map_location="cpu"))
+    if getattr(args, "slam_fast_start", False):
+        from vggt_slam.demo.slam_preprocess import load_local_weights
+        load_local_weights(model)
+    else:
+        model.load_state_dict(torch.hub.load_state_dict_from_url(_URL, map_location="cpu"))
 
     model.eval()
     model = model.to(device=device, dtype=model_dtype(device))
@@ -289,6 +294,9 @@ def run_camera_pipeline(args):
         video_keyframe_log = (Path(args.keyframe_folder) / "video_keyframes.jsonl").open("x", encoding="utf-8")
         video_drop_log = (Path(args.keyframe_folder) / "video_drops.jsonl").open("x", encoding="utf-8")
         args.video_frame_records = {}
+        if getattr(args, "slam_fast_start", False):
+            solver.map.loop_frame_records = args.video_frame_records
+            solver.map.loop_min_seconds = getattr(args, "min_loop_seconds", 0.)
         args.demo_step = 1
         args.submap_metrics = []
     decoded_frames = 0

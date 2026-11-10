@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 
-def raster_bev(points, colors, trajectory, *, plane='XZ', size=480, zoom=1., show_trajectory=True, road_points=None, pan=(0., 0.), mask_points=None, boxes=()):
+def raster_bev(points, colors, trajectory, *, plane='XZ', size=480, zoom=1., show_trajectory=True, road_points=None, pan=(0., 0.), mask_points=None, boxes=(), mask_colors=None):
     """Project the visible map only; unknown cells stay dark, not free space.
 
     XZ is the initial camera horizontal plane (camera Y points down).
@@ -59,13 +59,17 @@ def raster_bev(points, colors, trajectory, *, plane='XZ', size=480, zoom=1., sho
     mask_cells = 0
     if mask_points is not None:
         semantic = np.asarray(mask_points).reshape(-1, 3)
-        semantic = semantic[np.isfinite(semantic).all(axis=1)]
+        semantic_colors=np.tile([34,211,238],(len(semantic),1)) if mask_colors is None else np.asarray(mask_colors).reshape(-1,3)
+        if len(semantic_colors)!=len(semantic):raise ValueError('mask point/color mismatch')
+        finite=np.isfinite(semantic).all(axis=1)
+        semantic,semantic_colors=semantic[finite],semantic_colors[finite]
         uv_mask = pixels(semantic[:, [a,b]])
-        uv_mask = uv_mask[((uv_mask >= pad) & (uv_mask < size-pad)).all(axis=1)]
-        unique = np.unique(uv_mask[:,1]*size+uv_mask[:,0])
+        good=((uv_mask >= pad) & (uv_mask < size-pad)).all(axis=1)
+        uv_mask,semantic_colors=uv_mask[good],semantic_colors[good]
+        unique,first = np.unique(uv_mask[:,1]*size+uv_mask[:,0],return_index=True)
         mask_cells = len(unique)
         flat = canvas.reshape(-1,3)
-        flat[unique] = (flat[unique]*.3 + np.array([34,211,238])*.7).astype(np.uint8)
+        flat[unique] = (flat[unique]*.3 + semantic_colors[first]*.7).astype(np.uint8)
     image = Image.fromarray(canvas)
     draw = ImageDraw.Draw(image)
     for i in range(5):

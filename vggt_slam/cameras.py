@@ -119,6 +119,14 @@ class VideoFileCamera(Camera):
             raise OSError(f"cannot open video file: {self.path}")
         reported_fps = float(self._capture.get(cv2.CAP_PROP_FPS))
         self._fps = reported_fps if np.isfinite(reported_fps) and reported_fps > 0 else 0.0
+        # AVFoundation reports MOV display rotation but often leaves AUTO off.
+        # Disable automatic rotation when supported, then apply it once ourselves.
+        rotation = float(self._capture.get(cv2.CAP_PROP_ORIENTATION_META))
+        self._orientation_degrees = int(round(rotation)) % 360 if np.isfinite(rotation) else 0
+        if self._orientation_degrees not in (0, 90, 180, 270):
+            self._orientation_degrees = 0
+        self._capture.set(cv2.CAP_PROP_ORIENTATION_AUTO, 0)
+        self._rotate_manually = self._capture.get(cv2.CAP_PROP_ORIENTATION_AUTO) != 1
         self._capture.set(cv2.CAP_PROP_POS_FRAMES, self.start_frame)
         self._next_frame = self.start_frame
         self._started_at = time.monotonic()
@@ -142,6 +150,10 @@ class VideoFileCamera(Camera):
             raise EndOfStream(self.path)
         import cv2
 
+        if self._rotate_manually and self._orientation_degrees:
+            frame = cv2.rotate(frame, {90: cv2.ROTATE_90_CLOCKWISE,
+                                     180: cv2.ROTATE_180,
+                                     270: cv2.ROTATE_90_COUNTERCLOCKWISE}[self._orientation_degrees])
         timestamp = float(self._capture.get(cv2.CAP_PROP_POS_MSEC)) / 1000.0
         self._raw_timestamp = timestamp if np.isfinite(timestamp) else None
         valid_pts = (np.isfinite(timestamp) and timestamp >= 0

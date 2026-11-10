@@ -1,0 +1,40 @@
+{
+  "id": "live_20261109T133652_full_keyframes",
+  "folder": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v5_jobs/live_20261109T133652_full_keyframes",
+  "filename": "KITTI 전체1348입력 · 키프레임224 · 루프검증.mp4",
+  "input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_inputs/kitti_closed_loop_508_1855_20261109/kitti_closed_loop_full_10fps.mp4",
+  "created_at": 1794260212.786176,
+  "updated_at": 1794260292.846282,
+  "state": "completed",
+  "message": "전체 영상 처리 완료 · 완료 후 검색 가능",
+  "options": {
+    "submap_size": 16,
+    "max_frames": 0,
+    "min_disparity": 80,
+    "max_loops": 1,
+    "image_size": 518,
+    "cpu_threads": 4,
+    "min_loop_seconds": 10.0
+  },
+  "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261109T213652_654365000",
+  "decoded_frames": 1348,
+  "map_frames": 224,
+  "steps": 14,
+  "road_frames": 0,
+  "viewer_ready": false,
+  "viewer_revision": 0,
+  "search_ready": true,
+  "version": "slam-v5",
+  "semantic_enabled": false,
+  "probe": {
+    "width": 1408,
+    "height": 376,
+    "fps": 10.0,
+    "duration": 134.8
+  },
+  "elapsed_seconds": 80.060106,
+  "elapsed_scope": "CLI geometry only; viewer opened afterwards",
+  "accepted_loops": 1,
+  "fitted_ate_rmse_m": 11.558307670676681,
+  "quality_evaluation": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/evidence/v5_full_input_keyframes_20261109_01/evaluation/trajectory_metrics.json"
+}

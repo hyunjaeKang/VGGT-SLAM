@@ -1,0 +1,1297 @@
+Using device: mps
+/Users/hyunjae.kang/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+/Users/hyunjae.kang/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/attention.py:33: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+/Users/hyunjae.kang/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+Initializing and loading VGGT model...
+All models loaded. Starting SLAM loop.
+Initializing video_file camera...
+Waiting for first camera frame...
+Camera ready.
+[Main] Launching submap 1 (frame 17)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.20 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 0
+/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/.venv/lib/python3.11/site-packages/torch/nn/functional.py:4073: UserWarning: The operator 'aten::upsample_bicubic2d.out' is not currently supported on the MPS backend and will fall back to run on the CPU. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/aten/src/ATen/mps/MPSFallback.mm:13.)
+  return torch._C._nn.upsample_bicubic2d(input, output_size, align_corners, scale_factors)
+[Camera] frame=30  KFs=14/17  submaps=1  [SLAM running]
+Created new submap in 0.47 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 4.71 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 2 (frame 33)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.22 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 17
+Created new submap in 0.20 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.86 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1249004291487457, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 3 (frame 49)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.24 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 34
+[Camera] frame=60  KFs=12/17  submaps=3  [SLAM running]
+Created new submap in 0.21 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.37 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.073795214506004, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 4 (frame 65)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.24 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 51
+Created new submap in 0.20 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.37 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.001960161520552, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 5 (frame 81)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.24 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 68
+[Camera] frame=90  KFs=10/17  submaps=5  [SLAM running]
+Created new submap in 0.27 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.46 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1159203371994864, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 6 (frame 97)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.21 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 85
+Created new submap in 0.21 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.37 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.008085025550074, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 7 (frame 113)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.22 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 102
+[Camera] frame=120  KFs=8/17  submaps=7  [SLAM running]
+Created new submap in 0.25 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.37 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0333446566760598, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 8 (frame 129)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.24 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 119
+Created new submap in 0.20 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.34 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.2218896534605155, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 9 (frame 145)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=150  KFs=6/17  submaps=9  [SLAM running]
+Loaded and preprocessed 17 images in 0.23 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 136
+Created new submap in 0.26 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.36 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.7713221632215601, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 10 (frame 161)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.27 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 153
+Created new submap in 0.35 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.27 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.180110829895088, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 11 (frame 177)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=180  KFs=4/17  submaps=11  [SLAM running]
+Loaded and preprocessed 17 images in 0.22 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 170
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.26 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0090399788941502, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 12 (frame 193)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.23 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 187
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.25 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0464177091514195, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 13 (frame 209)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=210  KFs=2/17  submaps=13  [SLAM running]
+Loaded and preprocessed 17 images in 0.32 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 204
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0160074791459481, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 14 (frame 225)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.20 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 221
+Created new submap in 0.31 seconds
+[Camera] frame=240  KFs=16/17  submaps=14  [SLAM running]
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.22 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.129846579843861, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 15 (frame 241)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.29 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 238
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.20 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.8553038471770196, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 16 (frame 257)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.25 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 255
+[Camera] frame=270  KFs=14/17  submaps=16  [SLAM running]
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.22 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.4081121474278273, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 17 (frame 273)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.19 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 272
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.22 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.6986111536476499, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 18 (frame 289)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 289
+[Camera] frame=300  KFs=12/17  submaps=18  [SLAM running]
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.8437476130752318, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 19 (frame 305)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.21 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 306
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9270625810621459, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 20 (frame 321)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.19 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 323
+[Camera] frame=330  KFs=10/17  submaps=20  [SLAM running]
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.22 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0575605341416234, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 21 (frame 337)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.24 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 340
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.22 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.15518474229026, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 22 (frame 353)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.20 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 357
+[Camera] frame=360  KFs=8/17  submaps=22  [SLAM running]
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9899676078578212, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 23 (frame 369)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 374
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.6202648152447325, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 24 (frame 385)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=390  KFs=6/17  submaps=24  [SLAM running]
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 391
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.22 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9745133455433288, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 25 (frame 401)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 408
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.057400622104704, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 26 (frame 417)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=420  KFs=4/17  submaps=26  [SLAM running]
+Loaded and preprocessed 17 images in 0.20 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 425
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.24 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0558120277724012, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 27 (frame 433)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 442
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.25 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9258488215140089, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 28 (frame 449)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=450  KFs=2/17  submaps=28  [SLAM running]
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 459
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0024468349724822, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 29 (frame 465)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 476
+[Camera] frame=480  KFs=16/17  submaps=29  [SLAM running]
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9235645646776658, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 30 (frame 481)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 493
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.24 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.7037244913704959, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 31 (frame 497)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 510
+[Camera] frame=510  KFs=14/17  submaps=31  [SLAM running]
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9666697214048725, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 32 (frame 513)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 527
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.24 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0700822495196316, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 33 (frame 529)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.21 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 544
+[Camera] frame=540  KFs=12/17  submaps=33  [SLAM running]
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.8557415760509042, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 34 (frame 545)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 561
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.24 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9640597923558589, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 35 (frame 561)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 578
+[Camera] frame=570  KFs=10/17  submaps=35  [SLAM running]
+Created new submap in 0.35 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.20 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9215818156174146, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 36 (frame 577)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 595
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.067943132667065, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 37 (frame 593)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=600  KFs=8/17  submaps=37  [SLAM running]
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 612
+Created new submap in 0.35 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0902824540142788, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 38 (frame 609)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 629
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.20 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1657944958571402, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 39 (frame 625)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=630  KFs=6/17  submaps=39  [SLAM running]
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 646
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1857691358628577, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 40 (frame 641)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 663
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.20 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0206010586000058, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 41 (frame 657)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=660  KFs=4/17  submaps=41  [SLAM running]
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 680
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.20 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.603284163606455, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 42 (frame 673)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 697
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.45 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.5830341646527881, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 43 (frame 689)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=690  KFs=2/17  submaps=43  [SLAM running]
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 714
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.22 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.3808781460245299, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 44 (frame 705)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 731
+[Camera] frame=720  KFs=16/17  submaps=44  [SLAM running]
+Created new submap in 0.34 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.2964085822656393, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 45 (frame 721)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 748
+Created new submap in 0.30 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0291447815206434, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 46 (frame 737)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.46 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 765
+[Camera] frame=750  KFs=14/17  submaps=46  [SLAM running]
+Created new submap in 0.42 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.26 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.7614448925925195, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 47 (frame 753)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.23 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 782
+Created new submap in 0.34 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.97158641138573, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 48 (frame 769)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 799
+[Camera] frame=780  KFs=12/17  submaps=48  [SLAM running]
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0619226983202932, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 49 (frame 785)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 816
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.37 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.7946724060536869, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 50 (frame 801)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 833
+[Camera] frame=810  KFs=10/17  submaps=50  [SLAM running]
+Created new submap in 0.34 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.22 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0746522642847238, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 51 (frame 817)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 850
+Created new submap in 0.35 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0222322048024273, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 52 (frame 833)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 867
+[Camera] frame=840  KFs=8/17  submaps=52  [SLAM running]
+Created new submap in 0.31 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+detected_loops [LoopMatch(similarity_score=0.9388314485549927, query_submap_id=867, query_submap_frame=10, detected_submap_id=102, detected_submap_frame=16)]
+21
+Average of top quarter attention values (all frames): 0.5656769
+CameraHead trunk_fn: B=1, S=2, C=2048
+Converting pose encoding to extrinsic and intrinsic matrices...
+Loop closure image match ratio too low, skipping loop closure
+scale factor (1.0195298803764767, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 53 (frame 849)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 884
+Created new submap in 0.20 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.31 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9994392096227969, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 54 (frame 865)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=870  KFs=6/17  submaps=54  [SLAM running]
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 901
+Created new submap in 0.25 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.8070547512247491, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 55 (frame 881)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.20 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 918
+Created new submap in 0.27 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1149018650534384, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 56 (frame 897)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=900  KFs=4/17  submaps=56  [SLAM running]
+Loaded and preprocessed 17 images in 0.22 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 935
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.24 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1852730707942465, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 57 (frame 913)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 952
+Created new submap in 0.26 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9880588886517774, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 58 (frame 929)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=930  KFs=2/17  submaps=58  [SLAM running]
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 969
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.17 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9707428945935705, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 59 (frame 945)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 986
+[Camera] frame=960  KFs=16/17  submaps=59  [SLAM running]
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.8632539805475088, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 60 (frame 961)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1003
+Created new submap in 0.27 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.17 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1498199332777035, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 61 (frame 977)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.36 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1020
+[Camera] frame=990  KFs=14/17  submaps=61  [SLAM running]
+Created new submap in 0.29 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.34 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.7358230910179092, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 62 (frame 993)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.21 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1037
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9012798254110524, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 63 (frame 1009)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.30 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1054
+[Camera] frame=1020  KFs=12/17  submaps=63  [SLAM running]
+Created new submap in 0.30 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.29 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.3203435969687722, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 64 (frame 1025)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.51 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1071
+Created new submap in 2.15 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 6.23 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9816861029092991, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 65 (frame 1041)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=1050  KFs=10/17  submaps=65  [SLAM running]
+Loaded and preprocessed 17 images in 0.23 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1088
+Created new submap in 0.32 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.21 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0543317843558646, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 66 (frame 1057)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.15 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1105
+Created new submap in 0.26 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1387794403848581, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 67 (frame 1073)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1122
+[Camera] frame=1080  KFs=8/17  submaps=67  [SLAM running]
+Created new submap in 0.25 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9283457685814978, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 68 (frame 1089)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1139
+Created new submap in 0.27 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.2959459216094906, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 69 (frame 1105)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=1110  KFs=6/17  submaps=69  [SLAM running]
+Loaded and preprocessed 17 images in 0.21 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1156
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.7982796055750229, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 70 (frame 1121)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1173
+Created new submap in 0.27 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.116446339678241, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 71 (frame 1137)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=1140  KFs=4/17  submaps=71  [SLAM running]
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1190
+Created new submap in 0.27 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9210377505981142, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 72 (frame 1153)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1207
+Created new submap in 0.29 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0419649529011725, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 73 (frame 1169)...
+[SLAM] Processing submap (17 frames)...
+[Camera] frame=1170  KFs=2/17  submaps=73  [SLAM running]
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1224
+Created new submap in 0.27 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9442778945207437, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 74 (frame 1185)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.25 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1241
+[Camera] frame=1200  KFs=16/17  submaps=74  [SLAM running]
+Created new submap in 0.29 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9180858599747659, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 75 (frame 1201)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.19 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1258
+Created new submap in 0.29 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.0178182285582817, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 76 (frame 1217)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1275
+[Camera] frame=1230  KFs=14/17  submaps=76  [SLAM running]
+Created new submap in 0.27 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.8304096961584684, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 77 (frame 1233)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.25 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1292
+Created new submap in 0.29 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.20 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1756624069445287, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 78 (frame 1249)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1309
+[Camera] frame=1260  KFs=12/17  submaps=78  [SLAM running]
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.2639650703829655, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 79 (frame 1265)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.16 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1326
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.18 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.8984665868940798, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 80 (frame 1281)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.18 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1343
+[Camera] frame=1290  KFs=10/17  submaps=80  [SLAM running]
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (1.1617985321435365, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 81 (frame 1297)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.17 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1360
+Created new submap in 0.28 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+Converting pose encoding to extrinsic and intrinsic matrices...
+scale factor (0.9547687937557712, None)
+Initial total error: 0.000000
+[SLAM] Submap done.
+[Main] Launching submap 82 (frame 1313)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.21 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1377
+[Camera] frame=1320  KFs=8/17  submaps=82  [SLAM running]
+Created new submap in 0.33 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.16 seconds
+detected_loops [LoopMatch(similarity_score=0.8096808791160583, query_submap_id=1377, query_submap_frame=16, detected_submap_id=0, detected_submap_frame=1)]
+21
+Average of top quarter attention values (all frames): 1.0417886
+CameraHead trunk_fn: B=1, S=2, C=2048
+Converting pose encoding to extrinsic and intrinsic matrices...
+['logs/demo_runs/video_20261109T212129_410269000/keyframes/frame_001313.png', 'logs/demo_runs/video_20261109T212129_410269000/keyframes/frame_000002.png']
+scale factor (1.1304254703897096, None)
+Creating new Loop closure submap with id 1394
+Loop closure conf (2, 140, 518)
+1394 0 1377 16
+scale factor (0.9110949710238008, None)
+scale factor (1.063197087849168, None)
+Initial total error: 281974.768161
+[SLAM] Submap done.
+[Main] Launching submap 83 (frame 1329)...
+[SLAM] Processing submap (17 frames)...
+Loaded and preprocessed 17 images in 0.24 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1396
+Created new submap in 0.24 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.19 seconds
+detected_loops [LoopMatch(similarity_score=0.34569454193115234, query_submap_id=1396, query_submap_frame=11, detected_submap_id=0, detected_submap_frame=5)]
+21
+Average of top quarter attention values (all frames): 1.0390346
+CameraHead trunk_fn: B=1, S=2, C=2048
+Converting pose encoding to extrinsic and intrinsic matrices...
+['logs/demo_runs/video_20261109T212129_410269000/keyframes/frame_001324.png', 'logs/demo_runs/video_20261109T212129_410269000/keyframes/frame_000006.png']
+scale factor (1.105626326976545, None)
+Creating new Loop closure submap with id 1413
+Loop closure conf (2, 140, 518)
+1413 0 1396 11
+scale factor (0.671574185545913, None)
+scale factor (1.4102847769368354, None)
+Initial total error: 72724.282304
+[SLAM] Submap done.
+[Main] Launching submap 84 (frame 1345)...
+[SLAM] Processing submap (17 frames)...
+[Video] End of file/range; flushing pending frames.
+Loaded and preprocessed 17 images in 0.19 seconds
+Preprocessed images shape: torch.Size([17, 3, 140, 518])
+Creating new submap with id 1415
+Created new submap in 0.30 seconds
+21
+CameraHead trunk_fn: B=1, S=17, C=2048
+VGGT model inference took 3.11 seconds
+detected_loops [LoopMatch(similarity_score=0.4226743280887604, query_submap_id=1415, query_submap_frame=2, detected_submap_id=0, detected_submap_frame=12)]
+21
+Average of top quarter attention values (all frames): 1.0286742
+CameraHead trunk_fn: B=1, S=2, C=2048
+Converting pose encoding to extrinsic and intrinsic matrices...
+['logs/demo_runs/video_20261109T212129_410269000/keyframes/frame_001331.png', 'logs/demo_runs/video_20261109T212129_410269000/keyframes/frame_000013.png']
+scale factor (1.1515019529063628, None)
+Creating new Loop closure submap with id 1432
+Loop closure conf (2, 140, 518)
+1432 0 1415 2
+scale factor (0.6888278381936854, None)
+scale factor (1.4979490856349285, None)
+Initial total error: 76900.676676
+[SLAM] Submap done.
+[SLAM] Processing submap (4 frames)...
+Loaded and preprocessed 4 images in 0.04 seconds
+Preprocessed images shape: torch.Size([4, 3, 140, 518])
+Creating new submap with id 1434
+Created new submap in 0.22 seconds
+21
+CameraHead trunk_fn: B=1, S=4, C=2048
+VGGT model inference took 1.28 seconds
+detected_loops [LoopMatch(similarity_score=0.358384370803833, query_submap_id=1434, query_submap_frame=3, detected_submap_id=17, detected_submap_frame=12)]
+21
+Average of top quarter attention values (all frames): 1.0275806
+CameraHead trunk_fn: B=1, S=2, C=2048
+Converting pose encoding to extrinsic and intrinsic matrices...
+['logs/demo_runs/video_20261109T212129_410269000/keyframes/frame_001348.png', 'logs/demo_runs/video_20261109T212129_410269000/keyframes/frame_000029.png']
+scale factor (0.77021644633199, None)
+Creating new Loop closure submap with id 1438
+Loop closure conf (2, 140, 518)
+1438 0 1434 3
+scale factor (0.9125942565726138, None)
+scale factor (1.493168665323188, None)
+Initial total error: 79622.438497
+[SLAM] Submap done.
+Total number of submaps in map 89
+Total number of loop closures in map 4
+Video summary: decoded=1348, keyframes=1348, submaps=85, keyframe_backlog_dropped=0, pacing=offline
+[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0]
+[17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0, 29.0, 30.0, 31.0, 32.0, 33.0]
+[33.0, 34.0, 35.0, 36.0, 37.0, 38.0, 39.0, 40.0, 41.0, 42.0, 43.0, 44.0, 45.0, 46.0, 47.0, 48.0, 49.0]
+[49.0, 50.0, 51.0, 52.0, 53.0, 54.0, 55.0, 56.0, 57.0, 58.0, 59.0, 60.0, 61.0, 62.0, 63.0, 64.0, 65.0]
+[65.0, 66.0, 67.0, 68.0, 69.0, 70.0, 71.0, 72.0, 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0]
+[81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0]
+[97.0, 98.0, 99.0, 100.0, 101.0, 102.0, 103.0, 104.0, 105.0, 106.0, 107.0, 108.0, 109.0, 110.0, 111.0, 112.0, 113.0]
+[113.0, 114.0, 115.0, 116.0, 117.0, 118.0, 119.0, 120.0, 121.0, 122.0, 123.0, 124.0, 125.0, 126.0, 127.0, 128.0, 129.0]
+[129.0, 130.0, 131.0, 132.0, 133.0, 134.0, 135.0, 136.0, 137.0, 138.0, 139.0, 140.0, 141.0, 142.0, 143.0, 144.0, 145.0]
+[145.0, 146.0, 147.0, 148.0, 149.0, 150.0, 151.0, 152.0, 153.0, 154.0, 155.0, 156.0, 157.0, 158.0, 159.0, 160.0, 161.0]
+[161.0, 162.0, 163.0, 164.0, 165.0, 166.0, 167.0, 168.0, 169.0, 170.0, 171.0, 172.0, 173.0, 174.0, 175.0, 176.0, 177.0]
+[177.0, 178.0, 179.0, 180.0, 181.0, 182.0, 183.0, 184.0, 185.0, 186.0, 187.0, 188.0, 189.0, 190.0, 191.0, 192.0, 193.0]
+[193.0, 194.0, 195.0, 196.0, 197.0, 198.0, 199.0, 200.0, 201.0, 202.0, 203.0, 204.0, 205.0, 206.0, 207.0, 208.0, 209.0]
+[209.0, 210.0, 211.0, 212.0, 213.0, 214.0, 215.0, 216.0, 217.0, 218.0, 219.0, 220.0, 221.0, 222.0, 223.0, 224.0, 225.0]
+[225.0, 226.0, 227.0, 228.0, 229.0, 230.0, 231.0, 232.0, 233.0, 234.0, 235.0, 236.0, 237.0, 238.0, 239.0, 240.0, 241.0]
+[241.0, 242.0, 243.0, 244.0, 245.0, 246.0, 247.0, 248.0, 249.0, 250.0, 251.0, 252.0, 253.0, 254.0, 255.0, 256.0, 257.0]
+[257.0, 258.0, 259.0, 260.0, 261.0, 262.0, 263.0, 264.0, 265.0, 266.0, 267.0, 268.0, 269.0, 270.0, 271.0, 272.0, 273.0]
+[273.0, 274.0, 275.0, 276.0, 277.0, 278.0, 279.0, 280.0, 281.0, 282.0, 283.0, 284.0, 285.0, 286.0, 287.0, 288.0, 289.0]
+[289.0, 290.0, 291.0, 292.0, 293.0, 294.0, 295.0, 296.0, 297.0, 298.0, 299.0, 300.0, 301.0, 302.0, 303.0, 304.0, 305.0]
+[305.0, 306.0, 307.0, 308.0, 309.0, 310.0, 311.0, 312.0, 313.0, 314.0, 315.0, 316.0, 317.0, 318.0, 319.0, 320.0, 321.0]
+[321.0, 322.0, 323.0, 324.0, 325.0, 326.0, 327.0, 328.0, 329.0, 330.0, 331.0, 332.0, 333.0, 334.0, 335.0, 336.0, 337.0]
+[337.0, 338.0, 339.0, 340.0, 341.0, 342.0, 343.0, 344.0, 345.0, 346.0, 347.0, 348.0, 349.0, 350.0, 351.0, 352.0, 353.0]
+[353.0, 354.0, 355.0, 356.0, 357.0, 358.0, 359.0, 360.0, 361.0, 362.0, 363.0, 364.0, 365.0, 366.0, 367.0, 368.0, 369.0]
+[369.0, 370.0, 371.0, 372.0, 373.0, 374.0, 375.0, 376.0, 377.0, 378.0, 379.0, 380.0, 381.0, 382.0, 383.0, 384.0, 385.0]
+[385.0, 386.0, 387.0, 388.0, 389.0, 390.0, 391.0, 392.0, 393.0, 394.0, 395.0, 396.0, 397.0, 398.0, 399.0, 400.0, 401.0]
+[401.0, 402.0, 403.0, 404.0, 405.0, 406.0, 407.0, 408.0, 409.0, 410.0, 411.0, 412.0, 413.0, 414.0, 415.0, 416.0, 417.0]
+[417.0, 418.0, 419.0, 420.0, 421.0, 422.0, 423.0, 424.0, 425.0, 426.0, 427.0, 428.0, 429.0, 430.0, 431.0, 432.0, 433.0]
+[433.0, 434.0, 435.0, 436.0, 437.0, 438.0, 439.0, 440.0, 441.0, 442.0, 443.0, 444.0, 445.0, 446.0, 447.0, 448.0, 449.0]
+[449.0, 450.0, 451.0, 452.0, 453.0, 454.0, 455.0, 456.0, 457.0, 458.0, 459.0, 460.0, 461.0, 462.0, 463.0, 464.0, 465.0]
+[465.0, 466.0, 467.0, 468.0, 469.0, 470.0, 471.0, 472.0, 473.0, 474.0, 475.0, 476.0, 477.0, 478.0, 479.0, 480.0, 481.0]
+[481.0, 482.0, 483.0, 484.0, 485.0, 486.0, 487.0, 488.0, 489.0, 490.0, 491.0, 492.0, 493.0, 494.0, 495.0, 496.0, 497.0]
+[497.0, 498.0, 499.0, 500.0, 501.0, 502.0, 503.0, 504.0, 505.0, 506.0, 507.0, 508.0, 509.0, 510.0, 511.0, 512.0, 513.0]
+[513.0, 514.0, 515.0, 516.0, 517.0, 518.0, 519.0, 520.0, 521.0, 522.0, 523.0, 524.0, 525.0, 526.0, 527.0, 528.0, 529.0]
+[529.0, 530.0, 531.0, 532.0, 533.0, 534.0, 535.0, 536.0, 537.0, 538.0, 539.0, 540.0, 541.0, 542.0, 543.0, 544.0, 545.0]
+[545.0, 546.0, 547.0, 548.0, 549.0, 550.0, 551.0, 552.0, 553.0, 554.0, 555.0, 556.0, 557.0, 558.0, 559.0, 560.0, 561.0]
+[561.0, 562.0, 563.0, 564.0, 565.0, 566.0, 567.0, 568.0, 569.0, 570.0, 571.0, 572.0, 573.0, 574.0, 575.0, 576.0, 577.0]
+[577.0, 578.0, 579.0, 580.0, 581.0, 582.0, 583.0, 584.0, 585.0, 586.0, 587.0, 588.0, 589.0, 590.0, 591.0, 592.0, 593.0]
+[593.0, 594.0, 595.0, 596.0, 597.0, 598.0, 599.0, 600.0, 601.0, 602.0, 603.0, 604.0, 605.0, 606.0, 607.0, 608.0, 609.0]
+[609.0, 610.0, 611.0, 612.0, 613.0, 614.0, 615.0, 616.0, 617.0, 618.0, 619.0, 620.0, 621.0, 622.0, 623.0, 624.0, 625.0]
+[625.0, 626.0, 627.0, 628.0, 629.0, 630.0, 631.0, 632.0, 633.0, 634.0, 635.0, 636.0, 637.0, 638.0, 639.0, 640.0, 641.0]
+[641.0, 642.0, 643.0, 644.0, 645.0, 646.0, 647.0, 648.0, 649.0, 650.0, 651.0, 652.0, 653.0, 654.0, 655.0, 656.0, 657.0]
+[657.0, 658.0, 659.0, 660.0, 661.0, 662.0, 663.0, 664.0, 665.0, 666.0, 667.0, 668.0, 669.0, 670.0, 671.0, 672.0, 673.0]
+[673.0, 674.0, 675.0, 676.0, 677.0, 678.0, 679.0, 680.0, 681.0, 682.0, 683.0, 684.0, 685.0, 686.0, 687.0, 688.0, 689.0]
+[689.0, 690.0, 691.0, 692.0, 693.0, 694.0, 695.0, 696.0, 697.0, 698.0, 699.0, 700.0, 701.0, 702.0, 703.0, 704.0, 705.0]
+[705.0, 706.0, 707.0, 708.0, 709.0, 710.0, 711.0, 712.0, 713.0, 714.0, 715.0, 716.0, 717.0, 718.0, 719.0, 720.0, 721.0]
+[721.0, 722.0, 723.0, 724.0, 725.0, 726.0, 727.0, 728.0, 729.0, 730.0, 731.0, 732.0, 733.0, 734.0, 735.0, 736.0, 737.0]
+[737.0, 738.0, 739.0, 740.0, 741.0, 742.0, 743.0, 744.0, 745.0, 746.0, 747.0, 748.0, 749.0, 750.0, 751.0, 752.0, 753.0]
+[753.0, 754.0, 755.0, 756.0, 757.0, 758.0, 759.0, 760.0, 761.0, 762.0, 763.0, 764.0, 765.0, 766.0, 767.0, 768.0, 769.0]
+[769.0, 770.0, 771.0, 772.0, 773.0, 774.0, 775.0, 776.0, 777.0, 778.0, 779.0, 780.0, 781.0, 782.0, 783.0, 784.0, 785.0]
+[785.0, 786.0, 787.0, 788.0, 789.0, 790.0, 791.0, 792.0, 793.0, 794.0, 795.0, 796.0, 797.0, 798.0, 799.0, 800.0, 801.0]
+[801.0, 802.0, 803.0, 804.0, 805.0, 806.0, 807.0, 808.0, 809.0, 810.0, 811.0, 812.0, 813.0, 814.0, 815.0, 816.0, 817.0]
+[817.0, 818.0, 819.0, 820.0, 821.0, 822.0, 823.0, 824.0, 825.0, 826.0, 827.0, 828.0, 829.0, 830.0, 831.0, 832.0, 833.0]
+[833.0, 834.0, 835.0, 836.0, 837.0, 838.0, 839.0, 840.0, 841.0, 842.0, 843.0, 844.0, 845.0, 846.0, 847.0, 848.0, 849.0]
+[849.0, 850.0, 851.0, 852.0, 853.0, 854.0, 855.0, 856.0, 857.0, 858.0, 859.0, 860.0, 861.0, 862.0, 863.0, 864.0, 865.0]
+[865.0, 866.0, 867.0, 868.0, 869.0, 870.0, 871.0, 872.0, 873.0, 874.0, 875.0, 876.0, 877.0, 878.0, 879.0, 880.0, 881.0]
+[881.0, 882.0, 883.0, 884.0, 885.0, 886.0, 887.0, 888.0, 889.0, 890.0, 891.0, 892.0, 893.0, 894.0, 895.0, 896.0, 897.0]
+[897.0, 898.0, 899.0, 900.0, 901.0, 902.0, 903.0, 904.0, 905.0, 906.0, 907.0, 908.0, 909.0, 910.0, 911.0, 912.0, 913.0]
+[913.0, 914.0, 915.0, 916.0, 917.0, 918.0, 919.0, 920.0, 921.0, 922.0, 923.0, 924.0, 925.0, 926.0, 927.0, 928.0, 929.0]
+[929.0, 930.0, 931.0, 932.0, 933.0, 934.0, 935.0, 936.0, 937.0, 938.0, 939.0, 940.0, 941.0, 942.0, 943.0, 944.0, 945.0]
+[945.0, 946.0, 947.0, 948.0, 949.0, 950.0, 951.0, 952.0, 953.0, 954.0, 955.0, 956.0, 957.0, 958.0, 959.0, 960.0, 961.0]
+[961.0, 962.0, 963.0, 964.0, 965.0, 966.0, 967.0, 968.0, 969.0, 970.0, 971.0, 972.0, 973.0, 974.0, 975.0, 976.0, 977.0]
+[977.0, 978.0, 979.0, 980.0, 981.0, 982.0, 983.0, 984.0, 985.0, 986.0, 987.0, 988.0, 989.0, 990.0, 991.0, 992.0, 993.0]
+[993.0, 994.0, 995.0, 996.0, 997.0, 998.0, 999.0, 1000.0, 1001.0, 1002.0, 1003.0, 1004.0, 1005.0, 1006.0, 1007.0, 1008.0, 1009.0]
+[1009.0, 1010.0, 1011.0, 1012.0, 1013.0, 1014.0, 1015.0, 1016.0, 1017.0, 1018.0, 1019.0, 1020.0, 1021.0, 1022.0, 1023.0, 1024.0, 1025.0]
+[1025.0, 1026.0, 1027.0, 1028.0, 1029.0, 1030.0, 1031.0, 1032.0, 1033.0, 1034.0, 1035.0, 1036.0, 1037.0, 1038.0, 1039.0, 1040.0, 1041.0]
+[1041.0, 1042.0, 1043.0, 1044.0, 1045.0, 1046.0, 1047.0, 1048.0, 1049.0, 1050.0, 1051.0, 1052.0, 1053.0, 1054.0, 1055.0, 1056.0, 1057.0]
+[1057.0, 1058.0, 1059.0, 1060.0, 1061.0, 1062.0, 1063.0, 1064.0, 1065.0, 1066.0, 1067.0, 1068.0, 1069.0, 1070.0, 1071.0, 1072.0, 1073.0]
+[1073.0, 1074.0, 1075.0, 1076.0, 1077.0, 1078.0, 1079.0, 1080.0, 1081.0, 1082.0, 1083.0, 1084.0, 1085.0, 1086.0, 1087.0, 1088.0, 1089.0]
+[1089.0, 1090.0, 1091.0, 1092.0, 1093.0, 1094.0, 1095.0, 1096.0, 1097.0, 1098.0, 1099.0, 1100.0, 1101.0, 1102.0, 1103.0, 1104.0, 1105.0]
+[1105.0, 1106.0, 1107.0, 1108.0, 1109.0, 1110.0, 1111.0, 1112.0, 1113.0, 1114.0, 1115.0, 1116.0, 1117.0, 1118.0, 1119.0, 1120.0, 1121.0]
+[1121.0, 1122.0, 1123.0, 1124.0, 1125.0, 1126.0, 1127.0, 1128.0, 1129.0, 1130.0, 1131.0, 1132.0, 1133.0, 1134.0, 1135.0, 1136.0, 1137.0]
+[1137.0, 1138.0, 1139.0, 1140.0, 1141.0, 1142.0, 1143.0, 1144.0, 1145.0, 1146.0, 1147.0, 1148.0, 1149.0, 1150.0, 1151.0, 1152.0, 1153.0]
+[1153.0, 1154.0, 1155.0, 1156.0, 1157.0, 1158.0, 1159.0, 1160.0, 1161.0, 1162.0, 1163.0, 1164.0, 1165.0, 1166.0, 1167.0, 1168.0, 1169.0]
+[1169.0, 1170.0, 1171.0, 1172.0, 1173.0, 1174.0, 1175.0, 1176.0, 1177.0, 1178.0, 1179.0, 1180.0, 1181.0, 1182.0, 1183.0, 1184.0, 1185.0]
+[1185.0, 1186.0, 1187.0, 1188.0, 1189.0, 1190.0, 1191.0, 1192.0, 1193.0, 1194.0, 1195.0, 1196.0, 1197.0, 1198.0, 1199.0, 1200.0, 1201.0]
+[1201.0, 1202.0, 1203.0, 1204.0, 1205.0, 1206.0, 1207.0, 1208.0, 1209.0, 1210.0, 1211.0, 1212.0, 1213.0, 1214.0, 1215.0, 1216.0, 1217.0]
+[1217.0, 1218.0, 1219.0, 1220.0, 1221.0, 1222.0, 1223.0, 1224.0, 1225.0, 1226.0, 1227.0, 1228.0, 1229.0, 1230.0, 1231.0, 1232.0, 1233.0]
+[1233.0, 1234.0, 1235.0, 1236.0, 1237.0, 1238.0, 1239.0, 1240.0, 1241.0, 1242.0, 1243.0, 1244.0, 1245.0, 1246.0, 1247.0, 1248.0, 1249.0]
+[1249.0, 1250.0, 1251.0, 1252.0, 1253.0, 1254.0, 1255.0, 1256.0, 1257.0, 1258.0, 1259.0, 1260.0, 1261.0, 1262.0, 1263.0, 1264.0, 1265.0]
+[1265.0, 1266.0, 1267.0, 1268.0, 1269.0, 1270.0, 1271.0, 1272.0, 1273.0, 1274.0, 1275.0, 1276.0, 1277.0, 1278.0, 1279.0, 1280.0, 1281.0]
+[1281.0, 1282.0, 1283.0, 1284.0, 1285.0, 1286.0, 1287.0, 1288.0, 1289.0, 1290.0, 1291.0, 1292.0, 1293.0, 1294.0, 1295.0, 1296.0, 1297.0]
+[1297.0, 1298.0, 1299.0, 1300.0, 1301.0, 1302.0, 1303.0, 1304.0, 1305.0, 1306.0, 1307.0, 1308.0, 1309.0, 1310.0, 1311.0, 1312.0, 1313.0]
+[1313.0, 1314.0, 1315.0, 1316.0, 1317.0, 1318.0, 1319.0, 1320.0, 1321.0, 1322.0, 1323.0, 1324.0, 1325.0, 1326.0, 1327.0, 1328.0, 1329.0]
+[1329.0, 1330.0, 1331.0, 1332.0, 1333.0, 1334.0, 1335.0, 1336.0, 1337.0, 1338.0, 1339.0, 1340.0, 1341.0, 1342.0, 1343.0, 1344.0, 1345.0]
+[1345.0, 1346.0, 1347.0, 1348.0]
+Saved 76,721,971 points to logs/demo_runs/video_20261109T212129_410269000/poses_points.pcd
+Video run saved: logs/demo_runs/video_20261109T212129_410269000

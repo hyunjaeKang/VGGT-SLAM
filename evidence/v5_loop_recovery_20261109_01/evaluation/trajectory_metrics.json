@@ -1,0 +1,56 @@
+{
+  "estimated_frames": 226,
+  "reference_frames": 10514,
+  "matched_frames": 217,
+  "unmatched_estimated_frames": 9,
+  "matched_frame_range": [
+    508,
+    1855
+  ],
+  "full_reference_path_length_m": 8403.154085473563,
+  "alignment": "Proper Sim(3) fitted to all matched camera positions",
+  "meters_per_reconstruction_unit": 76.31071547206693,
+  "rotation_reconstruction_to_reference": [
+    [
+      -0.6832052739035622,
+      0.010990879837527062,
+      0.7301436531743296
+    ],
+    [
+      -0.7294886208839472,
+      0.0346619685950553,
+      -0.6831141192611614
+    ],
+    [
+      -0.032816241576325095,
+      -0.999338655558521,
+      -0.015663517973042603
+    ]
+  ],
+  "translation_reconstruction_to_reference_m": [
+    1055.2240805395436,
+    3824.611544183774,
+    116.04900546390716
+  ],
+  "reference_world_up_in_reconstruction": [
+    -0.032816241576325095,
+    -0.999338655558521,
+    -0.015663517973042603
+  ],
+  "alignment_singular_values": [
+    110.3274599707886,
+    53.39357834596257,
+    1.8271443123378226e-05
+  ],
+  "ate_rmse_m": 12.561790423207334,
+  "ate_median_m": 9.745785396159961,
+  "ate_max_m": 26.54678370698012,
+  "estimated_input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/evidence/v5_loop_recovery_20261109_01/estimated_original_kitti_ids.txt",
+  "reference_input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/kitti360_0000_reference/cam0_to_world.txt",
+  "limitations": [
+    "Alignment and scale are fitted on the evaluated trajectory",
+    "Missing reference frame IDs are excluded, not interpolated",
+    "ATE is not the official KITTI segment-drift benchmark",
+    "No independent terrain-height or LiDAR geometry validation"
+  ]
+}

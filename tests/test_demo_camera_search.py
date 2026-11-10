@@ -83,3 +83,15 @@ def test_overview_fits_bounding_sphere_for_wide_and_tall_viewports():
         angular_radius = np.arcsin(radius / distance)
         assert angular_radius < fov/2
         assert angular_radius < np.arctan(np.tan(fov/2)*aspect)
+
+
+def test_free_overview_respects_a_rolled_camera_horizon():
+    from vggt_slam.demo.camera_view import overview_axes
+    # A camera rolled by 180 degrees has world +Y as its image's upward axis.
+    rotation=Rotation.from_euler('z',180,degrees=True).as_matrix()
+    camera=rgb_camera(np.column_stack([rotation,np.zeros(3)]),(60,80))
+    up,direction=overview_axes(camera)
+    assert np.dot(up,camera['up'])>.999
+    # Overview is above that horizon and behind its forward-facing camera.
+    assert np.dot(direction,up)>0
+    assert np.dot(direction,camera['forward'])<0

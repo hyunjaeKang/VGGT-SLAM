@@ -1,0 +1,54 @@
+[
+  {
+    "state": "loading",
+    "decoded_frames": 0,
+    "map_frames": 0,
+    "steps": 0,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "at": 1794245758.3527281
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 4,
+    "map_frames": 4,
+    "steps": 1,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794245775.407254
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 1,
+    "at": 1794245777.0142238
+  },
+  {
+    "state": "completed",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 2,
+    "at": 1794245780.1101298
+  }
+]

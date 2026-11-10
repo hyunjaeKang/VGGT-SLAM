@@ -58,3 +58,16 @@ def test_rgb_boxes_can_be_shown_without_masks(tmp_path):
     assert (result[4,4]==100).all()
     assert result[2,2,0]==255
     np.testing.assert_array_equal(overlay_query_rgb(image,tmp_path,q,0,show_masks=False),image)
+
+
+def test_overlap_frame_uses_same_source_observation_only(tmp_path):
+    import json
+    from PIL import Image
+    from vggt_slam.demo.query_display import overlay_query_rgb
+    folder=tmp_path/'observation';folder.mkdir()
+    Image.fromarray(np.full((4,5),255,np.uint8)).save(folder/'mask.png')
+    (folder/'result.json').write_text(json.dumps({'detections':[{'mask_path':'mask.png'}]}))
+    query={'_asset_path':'result.json','search':{'observations':[{'playback_index':33,'source_frame_id':'256','mask_count':1,'result':'observation/result.json'}]}}
+    image=np.zeros((4,5,3),np.uint8)
+    assert overlay_query_rgb(image,tmp_path,query,34,source_frame_id='256').any()
+    assert not overlay_query_rgb(image,tmp_path,query,34,source_frame_id='257').any()

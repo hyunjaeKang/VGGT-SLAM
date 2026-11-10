@@ -1,0 +1,67 @@
+[
+  {
+    "state": "loading",
+    "decoded_frames": 0,
+    "map_frames": 0,
+    "steps": 0,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 2,
+    "at": 1794246070.2426
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 4,
+    "map_frames": 4,
+    "steps": 1,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 2,
+    "at": 1794246088.2959108
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 3,
+    "at": 1794246089.46912
+  },
+  {
+    "state": "finalizing",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 3,
+    "at": 1794246091.5495622
+  },
+  {
+    "state": "completed",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "semantic_frames": null,
+    "model_loads": null,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794246093.378816
+  }
+]

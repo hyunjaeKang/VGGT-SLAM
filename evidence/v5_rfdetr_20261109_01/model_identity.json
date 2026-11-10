@@ -1,0 +1,10 @@
+{
+  "package": "rfdetr==1.12.0",
+  "model": "RFDETRSegNano",
+  "checkpoint": "logs/demo_models/rfdetr/rf-detr-seg-nano.pt",
+  "sha256": "a44613a4ecd6b5ba61a62002c600b0b6cb7a9da2936a45317ec4b62c635fb99b",
+  "size": 134545398,
+  "device": "cpu",
+  "input_size": 312,
+  "source": "https://repo.roboflow.com/rfdetr/rf-detr-seg-n-ft.pth"
+}

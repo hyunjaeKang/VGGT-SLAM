@@ -1,3 +1,6 @@
+<!-- session-context: 2026-11-08 -->
+> **재개 지침 갱신:** 아래는 10-30 원계획/프롬프트의 보존본입니다. S00–S12의 선택 경로 실증과 V1/V2/V3 구현·MOV 회전 보정까지 진행됐으므로 처음부터 다시 시작하지 마세요. [SESSION_HANDOFF.md](docs/SESSION_HANDOFF.md)와 [CURRENT_STATUS.md](docs/CURRENT_STATUS.md)가 최신 상태이며, 다음 과제는 [26.11.09.VGGT_SLAM.Plan.html](26.11.09.VGGT_SLAM.Plan.html)의 V4 R0 측정부터입니다. 과거 “코드/서버를 시작하지 않았다” 문구는 작성 당시의 기록입니다.
+
 # Terra / Luna 실행용 인계 프롬프트
 
 작성: 2026-10-30. 이 문서는 모델을 변경한 다음 제출하는 실행 지시다.

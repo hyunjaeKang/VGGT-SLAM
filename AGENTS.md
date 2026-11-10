@@ -39,3 +39,8 @@ re-read whole files.
 After big code changes, refresh the graph with `graft build` (deterministic,
 no API key, $0).
 <!-- graft:end -->
+
+
+## Session continuation — 2026-11-08
+
+Before resuming demo work, read `docs/SESSION_HANDOFF.md` and `docs/CURRENT_STATUS.md`, then the latest entries in `docs/DEMO_PROGRESS.md`. The original 2026-10-30 plan/prompt is historical; do not restart completed stages. V4 is implemented with outstanding latency/acceptance work; V5 adds a separate geometry-only video path. Read `docs/LIVE_V4.md`, `docs/LIVE_V5.md`, and `docs/USER_GUIDE.html` for current scope. The original V4 architecture plan remains `26.11.09.VGGT_SLAM.Plan.html`. Inspect the current V3 job and running services before restarting anything. Preserve V1/V2/V3, existing runs, user-deleted query lists, unrelated `TerraScene/` changes, and uncommitted work.

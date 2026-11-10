@@ -31,6 +31,16 @@ def rgb_camera(camera, shape):
             'fov': float(fov), 'aspect': w/h, 'projection': p, 'intrinsic': k}
 
 
+
+def overview_axes(camera=None):
+    """Keep a free overview above the recorded camera's horizon, including roll."""
+    if camera is None:
+        return np.array([0., -1., 0.]), np.array([.35, -.5, -.65])
+    up = camera['up'] / np.linalg.norm(camera['up'])
+    forward = camera['forward'] / np.linalg.norm(camera['forward'])
+    right = np.cross(forward, up)
+    return up, .35 * right + .5 * up - .65 * forward
+
 def display_resolution(shape, viewport):
     """Fit calibrated image aspect into the viewport, bounded for CPU rendering."""
     h, w = shape

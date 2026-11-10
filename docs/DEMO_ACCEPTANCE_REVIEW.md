@@ -1,3 +1,6 @@
+<!-- session-context: 2026-11-08 -->
+> **현재 상태 안내 (2026-11-08):** 이 문서의 과거 실험·수치·코드 리뷰는 당시 범위의 기록입니다. 최신 구현·버전·검증은 [CURRENT_STATUS.md](CURRENT_STATUS.md), 다음 세션의 실행 순서는 [SESSION_HANDOFF.md](SESSION_HANDOFF.md), 지도 생성 중 객체 탐색 설계는 [HTML 계획서](../26.11.09.VGGT_SLAM.Plan.html)를 먼저 확인하세요. V4는 아직 미구현입니다.
+
 # 데모 변경분·객체 박스 최종 검토
 
 검토: 2026-11-06 UTC. 기준 HEAD `3031d6d9340db249b0c7a458fe4e3cef07ec02c9`와 현재 미커밋 변경분. 입력·종료·검색·마스크/깊이 좌표 변환·저장·평가·캐시 표시 경로를 중심으로 코드와 실제 증거를 대조했다. 기존 데이터/결과, `.DS_Store`, `TerraScene/`는 보존했다. 커밋·환경 재구성은 이번 범위에 포함하지 않는다.
@@ -66,3 +69,7 @@ VGGT 전체 추론을 반복하지 않고 live run의 정확한 두 선택 RGB�
 - `uvx --offline ruff check --select E9,F63,F7,F82 main.py main_realtime.py scripts tests vggt_slam`: All checks passed.
 - compileall, `git diff --check`, graft build 통과.
 - 실제 모델 재실행과 합성 rank/release-error 회귀를 구분해 기록했다. 이번 변경 후 live 세션 전체를 다시 실행한 것은 아니며, 공통 mask/OBB 경로에 실제 27개 replay mask를 적용했다.
+
+## 후속 인수 범위 — 2026-11-08
+
+이후 V2 GPU/반복 재생/툴바와 V3 파일 업로드·실제 지도/ROAD·완료 후 검색·복원·MOV 방향 보정이 추가됐다. 최신 기존 코드 검증은149개 통과이며 이 문서의94개는11-06 당시 기록이다. 실제 chooser 이벤트 검사가 추가돼 DOM 강제 파일 지정으로는 놓친 disabled 입력 문제를 보완했다. V4 사전 객체 동시 추적은 아직 구현하지 않았고 목표 latency/GT 품질을 합격 처리하지 않았다. 현재90초 V3 작업은 완료 후 별도 인수해야 한다. 근거와 정확한 run/파일은 `CURRENT_STATUS.md`와 `SESSION_HANDOFF.md`를 따른다.

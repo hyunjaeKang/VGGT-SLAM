@@ -1,0 +1,6 @@
+/Users/hyunjae.kang/.matplotlib is not a writable directory
+Matplotlib created a temporary cache directory at /var/folders/xk/hd_6wmxj32ngdnnm2x5h1_7r0000gn/T/matplotlib-69mltnbh because there was an issue with the default path (/Users/hyunjae.kang/.matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+검색 준비 · current · 1/224 프레임 · 1 검색어
+YOLO11 1/1 · frame 256 · car
+검사 완료 1/1 프레임
+검색 완료 · 1/224 프레임 · 2D 1건 / 3D 1건

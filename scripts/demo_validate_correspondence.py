@@ -26,15 +26,19 @@ def main():
         raise ValueError("incomplete frame events")
     records = [np.load(run / item["asset_paths"]["depth"]) for item in frames]
     confidence = np.stack([record["confidence"] for record in records])
-    threshold = np.percentile(confidence, manifest["execution_args"]["conf_threshold"]) + 1e-6
+    threshold = np.percentile(confidence, manifest.get("execution_args", manifest.get("config", {}))["conf_threshold"]) + 1e-6
     first = records[0]
     depth, K = first["depth"], first["intrinsic"]
     height, width = depth.shape
     u, v = np.meshgrid(np.arange(width), np.arange(height))
     local = np.stack(((u - K[0, 2]) * depth / K[0, 0],
                       (v - K[1, 2]) * depth / K[1, 1], depth), axis=-1).astype(np.float32)
-    matrices = np.load(run / "poses_camera_matrices.npz")
-    projection = matrices["projection_matrices"][0]
+    matrix_path = run / "poses_camera_matrices.npz"
+    if not matrix_path.exists():
+        step = max(e["payload"]["step"] for e in events if e["event_type"] == "optimization_finished")
+        matrix_path = run / "snapshots" / str(step) / "after.npz"
+    with np.load(matrix_path) as matrices:
+        projection = matrices["projection_matrices"][0].copy()
     K4 = np.eye(4)
     K4[:3, :3] = K
     homography = np.linalg.inv(projection) @ K4
@@ -51,12 +55,12 @@ def main():
     point_error = np.linalg.norm(cloud["xyz"][:len(xyz)] - xyz, axis=1)
     mismatched = int(np.count_nonzero(np.any(unpack_rgb(cloud["rgb"][:len(rgb)]) != rgb, axis=1)))
     metadata = [json.loads((run / item["asset_paths"]["metadata"]).read_text()) for item in frames]
-    mapping = crop_mappings([item["source_path"] for item in metadata], depth.shape)[0]
+    mapping = crop_mappings([item["source_path"] for item in metadata], depth.shape, target_size=depth.shape[-1])[0]
     with Image.open(metadata[0]["source_path"]) as source:
         if source.mode == "RGBA":
             source = Image.alpha_composite(Image.new("RGBA", source.size, (255, 255, 255, 255)), source)
         resized = source.convert("RGB").resize(tuple(mapping["resized_size_wh"]), Image.Resampling.BICUBIC)
-    cropped = np.asarray(resized)[mapping["crop_top"]:mapping["crop_top"] + 518]
+    cropped = np.asarray(resized)[mapping["crop_top"]:mapping["crop_top"] + width]
     expected_rgb = np.full((height, width, 3), 255, dtype=np.uint8)
     top = mapping["batch_pad_top"]
     expected_rgb[top:top + len(cropped)] = cropped

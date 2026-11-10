@@ -1,3 +1,6 @@
+<!-- session-context: 2026-11-08 -->
+> **현재 상태 안내 (2026-11-08):** 이 문서의 과거 실험·수치·코드 리뷰는 당시 범위의 기록입니다. 최신 구현·버전·검증은 [CURRENT_STATUS.md](CURRENT_STATUS.md), 다음 세션의 실행 순서는 [SESSION_HANDOFF.md](SESSION_HANDOFF.md), 지도 생성 중 객체 탐색 설계는 [HTML 계획서](../26.11.09.VGGT_SLAM.Plan.html)를 먼저 확인하세요. V4는 아직 미구현입니다.
+
 # VGGT-SLAM Demo Results
 
 Generated from local run manifests, event logs, metrics, and evidence files. Metrics keep the alignment and ground-truth limitations recorded by each run.
@@ -94,3 +97,16 @@ Evidence for `video_20261106T064204_758372000`: [`evidence/source_video.json`](.
 `video_20261106T064802_616910000` video: 2670 decoded, 474 selected keyframes, 0 dropped, pacing `offline`, submap latency p50/p95 4.942555771005573/5.148959427690715 s; ATE requires a timestamp-aligned reference.
 
 Evidence for `video_20261106T064802_616910000`: [`evidence/browser_youtube_01/after_controls.png`](../logs/demo_runs/video_20261106T064802_616910000/evidence/browser_youtube_01/after_controls.png), [`evidence/browser_youtube_01/browser.json`](../logs/demo_runs/video_20261106T064802_616910000/evidence/browser_youtube_01/browser.json), [`evidence/browser_youtube_01/initial.png`](../logs/demo_runs/video_20261106T064802_616910000/evidence/browser_youtube_01/initial.png), [`evidence/cached_reopen.json`](../logs/demo_runs/video_20261106T064802_616910000/evidence/cached_reopen.json), [`evidence/pointcloud_integrity.json`](../logs/demo_runs/video_20261106T064802_616910000/evidence/pointcloud_integrity.json), [`evidence/source_video.json`](../logs/demo_runs/video_20261106T064802_616910000/evidence/source_video.json), [`evidence/trajectory_preview.png`](../logs/demo_runs/video_20261106T064802_616910000/evidence/trajectory_preview.png), [`evidence/video_integrity_01/estimated_pts.tum`](../logs/demo_runs/video_20261106T064802_616910000/evidence/video_integrity_01/estimated_pts.tum), [`evidence/video_integrity_01/validation.json`](../logs/demo_runs/video_20261106T064802_616910000/evidence/video_integrity_01/validation.json).
+
+## 2026-11-08 V2/V3 보충 — 이 절은 위 자동 보고서 이후의 기록
+
+| 실험 | 실제 결과 | 증거 |
+|---|---|---|
+| V2 GPU/툴바 | M2 Max/Metal600k맵점·RGB약9.9965fps/GPU animation약59.979Hz, 반복 재생/툴바 안정 | KITTI run의`browser_gpu_quality_live_20261108_01`, `browser_toolbar_stability_20261108_01` |
+| V3 PandaSet6 |799486점/2서브맵/104.96초,ROAD6프레임,car전수55.96초 | 루트`evidence/browser_live_v3_20261108_01/` |
+| V3 사용자 MOV 전체 |305입력/95키프레임/12단계/831.53초 | `video_20261108T181003_605025000` **반전 입력으로 만든 결과**, 재생성 필요 |
+| V3 MOV 방향 보정6 |233500점/2서브맵/94.07초,정상RGB·3D,ROAD6검사(유효road없음) | `video_20261108T184700_282397000`, 루트`browser_live_v3_rotation_20261108_01` |
+| 최신 기존 코드 검사 |149 passed/30.25초,기존Dash warning1 | `DEMO_PROGRESS.md`의회전보정항목 |
+| 새 V3 유튜브90초 | 실행 중,최종 미확정 | `live_20261108T115826_4ffce9d7`의job.json/실제run 저장을재조회 |
+
+출력 건수는 관측 수이며 고유 객체 수나 GT 정확도가 아니다. 이번 인계/조사 세션은 문서·HTML만 변경했으며 위 모델 실험/149개 테스트를 다시 실행하지 않았다. V4·새 detector/CoreML/CUDA 성능은 아직 측정하지 않았다.

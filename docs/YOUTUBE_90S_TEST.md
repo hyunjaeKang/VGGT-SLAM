@@ -1,3 +1,6 @@
+<!-- session-context: 2026-11-08 -->
+> **현재 상태 안내 (2026-11-08):** 이 문서의 과거 실험·수치·코드 리뷰는 당시 범위의 기록입니다. 최신 구현·버전·검증은 [CURRENT_STATUS.md](CURRENT_STATUS.md), 다음 세션의 실행 순서는 [SESSION_HANDOFF.md](SESSION_HANDOFF.md), 지도 생성 중 객체 탐색 설계는 [HTML 계획서](../26.11.09.VGGT_SLAM.Plan.html)를 먼저 확인하세요. V4는 아직 미구현입니다.
+
 # YouTube 주행 영상 첫 90초 테스트
 
 실행: 2026-11-06 UTC. [사용자 지정 영상](https://www.youtube.com/watch?v=2t1i5LYoZXo)의 첫 0–90초를 받아 실제 VGGT-SLAM 비디오 입력으로 처리했다.

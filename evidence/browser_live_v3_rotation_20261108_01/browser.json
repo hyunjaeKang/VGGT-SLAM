@@ -1,0 +1,250 @@
+{
+  "url": "http://127.0.0.1:8103",
+  "video": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T101000_7836a2fd/input.mov",
+  "job": {
+    "id": "live_20261108T104656_694854fa",
+    "folder": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T104656_694854fa",
+    "filename": "input.mov",
+    "input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T104656_694854fa/input.mov",
+    "created_at": 1794163616.977209,
+    "state": "completed",
+    "message": "지도 생성 완료 · 오른쪽 검색 패널에서 전체 구간 검색 가능",
+    "options": {
+      "submap_size": 3,
+      "max_frames": 6,
+      "min_disparity": 0,
+      "max_loops": 0
+    },
+    "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T184700_282397000",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 6,
+    "viewer_ready": true,
+    "viewer_revision": 5,
+    "search_ready": true,
+    "updated_at": 1794163711.047822,
+    "probe": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 29.99508277331585,
+      "duration": 10.1667
+    },
+    "elapsed_seconds": 94.07060980796814
+  },
+  "checks": {
+    "file_picker": true,
+    "search_disabled_during_generation": true,
+    "live_views": true,
+    "completed_counts": true,
+    "search_ready": true,
+    "v3_title": true,
+    "search_enabled_after_generation": true,
+    "search_all_default": true,
+    "search_selected": true,
+    "javascript_exceptions": true
+  },
+  "samples": [
+    {
+      "state": "loading",
+      "decoded_frames": 0,
+      "map_frames": 0,
+      "steps": 0,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": false,
+      "viewer_revision": 3,
+      "at": 1794163617.9794629
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 4,
+      "steps": 1,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": false,
+      "viewer_revision": 3,
+      "at": 1794163633.082277
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 4,
+      "steps": 1,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 4,
+      "at": 1794163635.761662
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 4,
+      "at": 1794163637.454654
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 1,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 4,
+      "at": 1794163654.490293
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 2,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 4,
+      "at": 1794163662.4905221
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 3,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 4,
+      "at": 1794163670.980225
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 4,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 4,
+      "at": 1794163679.1554072
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 5,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 4,
+      "at": 1794163698.8599832
+    },
+    {
+      "state": "finalizing",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 4,
+      "at": 1794163706.811834
+    },
+    {
+      "state": "completed",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 5,
+      "at": 1794163712.479806
+    }
+  ],
+  "final_meta": {
+    "viewer_version": "live-v3",
+    "quality_mode": "high",
+    "selected_query": true,
+    "render_seconds": 0.9026772080687806,
+    "chunk_uploads": 8,
+    "scene_point_count": 170322,
+    "playback_quality": "자동",
+    "frame_index": 6,
+    "frame_count": 7,
+    "source_frame_id": "5",
+    "timestamp_label": "0.17 s",
+    "playing": false,
+    "follow_rgb": false,
+    "camera_available": true,
+    "aspect": 1.7619047619047619,
+    "road_points": 0,
+    "road_visible": false,
+    "bev_mode": "Road connectivity",
+    "connectivity": {
+      "occupied_cells": 0,
+      "edges": 0,
+      "components": 0
+    },
+    "bev_pan": [
+      0,
+      0
+    ],
+    "mask_bev": false,
+    "box_bev": false,
+    "box_rgb": false,
+    "bev_box_count": 0,
+    "bev_zoom": 1,
+    "bev_trajectory": true,
+    "mask_3d": true,
+    "mask_rgb": true,
+    "point_count": 170322,
+    "bev_plane": "XZ",
+    "raster": {
+      "output_shape_hw": [
+        681,
+        1200
+      ],
+      "antialias": 1.5,
+      "projected_points": 194875,
+      "occupied_pixels": 320581,
+      "shape_hw": [
+        294,
+        518
+      ],
+      "projection": [
+        [
+          448.0414869455614,
+          0.6291682148304253,
+          256.7272290777474,
+          0.034589268977814905
+        ],
+        [
+          0.2198222658725209,
+          448.54298631926946,
+          146.32998931674985,
+          -0.10939215365260078
+        ],
+        [
+          0.004121278850562767,
+          0.0009501078061845972,
+          0.998330042350732,
+          -0.0008223825331953183
+        ]
+      ]
+    },
+    "camera_position": [
+      -0.0005504938748208029,
+      -2.533408986321384e-05,
+      0.0008260548186386235
+    ],
+    "version": 16,
+    "viser_port": 60572
+  },
+  "javascript_exceptions": []
+}

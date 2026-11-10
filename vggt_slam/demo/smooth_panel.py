@@ -25,7 +25,10 @@ class SmoothPanel:
         self.lock = threading.RLock()
         self.snapshots = OrderedDict()
         self.version = 0
+        self.studio_label="Smooth V2"
         self.viser_port = None
+        self.gpu_scene=None
+        self.camera_path=lambda: {}
         self.status = lambda: {}
         self.media = None
         self.action = None
@@ -51,6 +54,17 @@ class SmoothPanel:
 
             def do_GET(self):
                 url = urlsplit(self.path)
+                if url.path == '/api/gpu_scene' and panel.gpu_scene is not None:
+                    self.send_data(200,json.dumps(panel.gpu_scene.snapshot()).encode(),'application/json');return
+                if url.path == '/api/camera_path':
+                    self.send_data(200,json.dumps(panel.camera_path()).encode(),'application/json');return
+                if url.path.startswith('/gpu_chunk/') and panel.gpu_scene is not None:
+                    import re
+                    match=re.fullmatch(r'/gpu_chunk/(\d+)/([a-zA-Z0-9_]+)',url.path)
+                    data=panel.gpu_scene.packet(int(match[1]),match[2]) if match else None
+                    self.send_data(200 if data else 404,data or b'Not found','application/octet-stream');return
+                if url.path == '/gpu_renderer.js':
+                    self.send_data(200,(Path(__file__).parent/'web'/'gpu_renderer.js').read_bytes(),'text/javascript');return
                 if url.path == '/api/smooth':
                     self.send_data(200, json.dumps(panel.status()).encode(), 'application/json')
                     return
@@ -90,6 +104,8 @@ class SmoothPanel:
                     return
                 if url.path == '/':
                     data = (Path(__file__).parent / 'web' / 'studio_smooth.html').read_bytes()
+                    if panel.studio_label!='Smooth V2':
+                        data=data.replace(b'Smooth V2',panel.studio_label.encode())
                     self.send_data(200, data, 'text/html; charset=utf-8')
                     return
                 with panel.lock:
@@ -123,7 +139,7 @@ class SmoothPanel:
                                 panel.resize()
                         self.send_data(200, b'{"ok":true}', 'application/json')
                         return
-                    if data.get('action') not in ('reset', 'free', 'zoom_in', 'zoom_out', 'zoom_reset', 'road_overlay', 'trajectory', 'mask_3d', 'mask_rgb', 'mask_bev', 'box_bev', 'box_rgb', 'bev_view', 'frame', 'previous_frame', 'next_frame', 'play', 'pause', 'video_clock') or panel.action is None:
+                    if data.get('action') not in ('reset', 'free', 'zoom_in', 'zoom_out', 'zoom_reset', 'road_overlay', 'trajectory', 'mask_3d', 'mask_rgb', 'mask_bev', 'box_bev', 'box_rgb', 'bev_view', 'frame', 'previous_frame', 'next_frame', 'play', 'pause', 'video_clock', 'gpu_fallback') or panel.action is None:
                         raise ValueError('unknown action')
                     panel.action(data['action'], data)
                     self.send_data(200, b'{"ok":true}', 'application/json')

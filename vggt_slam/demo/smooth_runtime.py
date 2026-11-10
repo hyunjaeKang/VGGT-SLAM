@@ -56,7 +56,7 @@ class CameraPath:
         for i,event in enumerate(run.frames):
             meta=json.loads((run.path/event['asset_paths']['metadata']).read_text())
             node=int(event['submap_id'])+meta['submap_frame_index']
-            if node in cameras:samples[float(times[i])]=rgb_camera(cameras[node],tuple(meta['resolution_hw']))
+            if node in cameras:samples[float(times[i])]=dict(rgb_camera(cameras[node],tuple(meta['resolution_hw'])),shape=list(meta['resolution_hw']))
         self.times=np.array(sorted(samples))
         self.samples=[samples[t] for t in self.times]
         self.slerp=Slerp(self.times,Rotation.from_quat([s['wxyz'][[1,2,3,0]] for s in self.samples])) if len(self.times)>1 else None
@@ -70,9 +70,17 @@ class CameraPath:
         a,b=self.samples[i:i+2]
         rotation=self.slerp(t)
         matrix=rotation.as_matrix()
-        return {'position':a['position']*(1-alpha)+b['position']*alpha,
+        pose={'position':a['position']*(1-alpha)+b['position']*alpha,
                 'wxyz':rotation.as_quat()[[3,0,1,2]],'up':-matrix[:,1],
                 'forward':matrix[:,2], 'fov':a['fov']*(1-alpha)+b['fov']*alpha}
+        if 'intrinsic' in a:
+            k=a['intrinsic']*(1-alpha)+b['intrinsic']*alpha
+            m=k@matrix.T
+            pose.update(intrinsic=k,shape=a['shape'],projection=np.column_stack([m,-m@pose['position']]))
+        return pose
+
+    def packet(self):
+        return [{'time':float(t),'position':s['position'].tolist(),'wxyz':s['wxyz'].tolist(),'intrinsic':s['intrinsic'].tolist(),'shape':s['shape']} for t,s in zip(self.times,self.samples)]
 
 
 class PersistentMap:

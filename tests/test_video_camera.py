@@ -158,3 +158,28 @@ def test_no_clock_marks_offline_unavailable_and_rejects_realtime(monkeypatch):
     camera, _ = mock_timed_camera(monkeypatch, [float("nan")], 0)
     with pytest.raises(ValueError, match="requires increasing PTS"):
         camera.capture()
+
+
+@pytest.mark.parametrize('degrees', [90, 180, 270])
+def test_mov_display_rotation_matches_ffmpeg_upright_frame(tmp_path, degrees):
+    """Compare actual decode against ffmpeg autorotation, including portrait MOV."""
+    import shutil
+    import subprocess
+    ffmpeg=shutil.which('ffmpeg')
+    if not ffmpeg:pytest.skip('ffmpeg required for a real display-matrix fixture')
+    source=tmp_path/'source.avi'
+    writer=cv2.VideoWriter(str(source),cv2.VideoWriter_fourcc(*'MJPG'),10.,(64,48))
+    frame=np.zeros((48,64,3),np.uint8)
+    frame[:20,:25]=(10,30,230);frame[25:,30:]=(220,120,10)
+    for _ in range(3):writer.write(frame)
+    writer.release()
+    base=tmp_path/'base.mp4';movie=tmp_path/'rotated.mov';reference=tmp_path/'reference.png'
+    subprocess.run([ffmpeg,'-v','error','-i',str(source),'-c:v','libx264','-pix_fmt','yuv420p',str(base)],check=True)
+    subprocess.run([ffmpeg,'-v','error','-i',str(base),'-c','copy','-metadata:s:v:0',f'rotate={degrees}',str(movie)],check=True)
+    subprocess.run([ffmpeg,'-v','error','-i',str(movie),'-frames:v','1',str(reference)],check=True)
+    camera=VideoFileCamera(str(movie));camera.start()
+    try:
+        decoded=camera.capture();upright=cv2.imread(str(reference))
+        assert decoded.shape==upright.shape
+        assert np.abs(decoded.astype(float)-upright).mean()<3
+    finally:camera.stop()

@@ -1,0 +1,52 @@
+{
+  "run_id": "video_20261109T182600_236195000",
+  "frame_id": "0",
+  "tested_points": 19755,
+  "confidence_threshold": 1.1102980242500304,
+  "max_xyz_error": 0.0,
+  "rgb_mismatched_points": 0,
+  "source_preprocess_max_rgb_error_8bit": 0,
+  "pcd_total_points": 60858,
+  "source_to_preprocessed_mapping_reconstructed": {
+    "mode": "vggt_crop",
+    "source_size_wh": [
+      1408,
+      376
+    ],
+    "resized_size_wh": [
+      322,
+      84
+    ],
+    "crop_top": 0,
+    "batch_pad_top": 0,
+    "batch_size_hw": [
+      84,
+      322
+    ],
+    "pixel_center_source_to_output": [
+      [
+        0.22869318181818182,
+        0,
+        -0.38565340909090906
+      ],
+      [
+        0,
+        0.22340425531914893,
+        -0.38829787234042556
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "resampling": "PIL bicubic; EXIF orientation not applied",
+    "note": "cropped source regions have no output pixel; padding has no source pixel"
+  },
+  "limitations": [
+    "First submap and first frame only",
+    "Source images and current preprocessing implementation must match the original execution",
+    "No ground-truth geometry or metric-depth accuracy verified"
+  ],
+  "passed": true
+}

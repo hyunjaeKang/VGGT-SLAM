@@ -1,0 +1,8 @@
+{
+  "search_tab": true,
+  "opens_detection_frame": true,
+  "annotated_pixels_differ": true,
+  "playing_uses_annotated_rgb": true,
+  "rgb_updates_during_playback": true,
+  "no_js_errors": true
+}

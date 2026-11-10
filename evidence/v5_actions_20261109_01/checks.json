@@ -1,0 +1,146 @@
+{
+  "checks": {
+    "frame_seek": true,
+    "free_camera": true,
+    "reset_rgb_camera": true,
+    "bev_zoom_pan": true,
+    "bev_reset": true,
+    "pause": true,
+    "final_geometry_only": true,
+    "camera_available": true,
+    "resolution_378": true,
+    "chooser_v5_link": true,
+    "guide_served": true
+  },
+  "actions": [
+    {
+      "action": "frame",
+      "frame": 2,
+      "playing": false,
+      "follow_rgb": true
+    },
+    {
+      "action": "free",
+      "frame": 2,
+      "playing": false,
+      "follow_rgb": false
+    },
+    {
+      "action": "reset",
+      "frame": 2,
+      "playing": false,
+      "follow_rgb": true
+    },
+    {
+      "action": "bev_view",
+      "frame": 2,
+      "playing": false,
+      "follow_rgb": true
+    },
+    {
+      "action": "zoom_reset",
+      "frame": 2,
+      "playing": false,
+      "follow_rgb": true
+    },
+    {
+      "action": "frame",
+      "frame": 0,
+      "playing": false,
+      "follow_rgb": true
+    },
+    {
+      "action": "play",
+      "frame": 1,
+      "playing": true,
+      "follow_rgb": true
+    },
+    {
+      "action": "pause",
+      "frame": 1,
+      "playing": false,
+      "follow_rgb": true
+    },
+    {
+      "action": "frame",
+      "frame": 0,
+      "playing": false,
+      "follow_rgb": true
+    }
+  ],
+  "final_meta": {
+    "viewer_version": "slam-v5",
+    "quality_mode": "high",
+    "selected_query": false,
+    "render_seconds": 0.0498890420421958,
+    "chunk_uploads": 5,
+    "scene_point_count": 10000,
+    "playback_quality": "\uc790\ub3d9",
+    "frame_index": 0,
+    "frame_count": 7,
+    "source_frame_id": "0",
+    "timestamp_label": "0.00 s",
+    "playing": false,
+    "follow_rgb": true,
+    "camera_available": true,
+    "aspect": 3.857142857142857,
+    "road_points": 0,
+    "road_visible": false,
+    "bev_mode": "\ud45c\uba74 \uc9c0\ub3c4",
+    "connectivity": null,
+    "bev_pan": [
+      0.0,
+      0.0
+    ],
+    "mask_bev": false,
+    "box_bev": false,
+    "box_rgb": false,
+    "bev_box_count": 0,
+    "bev_zoom": 1.0,
+    "bev_trajectory": true,
+    "mask_3d": false,
+    "mask_rgb": false,
+    "point_count": 10000,
+    "bev_plane": "XZ",
+    "raster": {
+      "output_shape_hw": [
+        249,
+        960
+      ],
+      "antialias": 1.0,
+      "projected_points": 19916,
+      "occupied_pixels": 47769,
+      "shape_hw": [
+        98,
+        378
+      ],
+      "projection": [
+        [
+          179.1689453125,
+          0.0,
+          189.0,
+          0.0
+        ],
+        [
+          0.0,
+          201.1147003173828,
+          49.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    "camera_position": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "version": 21,
+    "viser_port": 60178
+  }
+}

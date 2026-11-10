@@ -1,0 +1,313 @@
+{
+  "url": "http://127.0.0.1:8103",
+  "video": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_fixtures/pandaset33_1fps_20261105/clip.mp4",
+  "job": {
+    "id": "live_20261108T093304_c6cbb885",
+    "folder": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T093304_c6cbb885",
+    "filename": "clip.mp4",
+    "input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T093304_c6cbb885/input.mp4",
+    "created_at": 1794159184.546792,
+    "state": "completed",
+    "message": "지도 생성 완료 · 오른쪽 검색 패널에서 전체 구간 검색 가능",
+    "options": {
+      "submap_size": 3,
+      "max_frames": 6,
+      "min_disparity": 0,
+      "max_loops": 0
+    },
+    "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261108T173307_231634000",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 6,
+    "viewer_ready": true,
+    "viewer_revision": 2,
+    "search_ready": true,
+    "updated_at": 1794159289.5104609,
+    "probe": {
+      "width": 518,
+      "height": 294,
+      "fps": 1,
+      "duration": 33
+    },
+    "elapsed_seconds": 104.96366786956787
+  },
+  "checks": {
+    "file_picker": true,
+    "search_disabled_during_generation": true,
+    "live_views": true,
+    "live_road_surface": true,
+    "completed_counts": true,
+    "search_ready": true,
+    "v3_title": true,
+    "search_enabled_after_generation": true,
+    "search_all_default": true,
+    "search_selected": true,
+    "javascript_exceptions": true
+  },
+  "samples": [
+    {
+      "state": "loading",
+      "decoded_frames": 0,
+      "map_frames": 0,
+      "steps": 0,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": false,
+      "viewer_revision": 0,
+      "at": 1794159185.548463
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 4,
+      "steps": 1,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": false,
+      "viewer_revision": 0,
+      "at": 1794159202.635891
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 4,
+      "steps": 1,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159203.6406
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159206.477449
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 0,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159208.3190231
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 1,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159228.305723
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 2,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159236.4999108
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 3,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159247.0523882
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 4,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159256.489579
+    },
+    {
+      "state": "road",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 5,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159276.16733
+    },
+    {
+      "state": "finalizing",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794159285.449023
+    },
+    {
+      "state": "completed",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 6,
+      "search_ready": true,
+      "viewer_ready": true,
+      "viewer_revision": 2,
+      "at": 1794159290.945256
+    }
+  ],
+  "final_meta": {
+    "viewer_version": "live-v3",
+    "quality_mode": "high",
+    "selected_query": true,
+    "render_seconds": 1.5227052500704303,
+    "chunk_uploads": 11,
+    "scene_point_count": 349910,
+    "playback_quality": "자동",
+    "frame_index": 6,
+    "frame_count": 7,
+    "source_frame_id": "5",
+    "timestamp_label": "5.00 s",
+    "playing": false,
+    "follow_rgb": false,
+    "camera_available": true,
+    "aspect": 1.7619047619047619,
+    "road_points": 36000,
+    "road_visible": true,
+    "bev_mode": "Road connectivity",
+    "connectivity": {
+      "occupied_cells": 2249,
+      "edges": 3909,
+      "components": 84
+    },
+    "bev_pan": [
+      0,
+      0
+    ],
+    "mask_bev": false,
+    "box_bev": false,
+    "box_rgb": false,
+    "bev_box_count": 0,
+    "bev_zoom": 1,
+    "bev_trajectory": true,
+    "mask_3d": true,
+    "mask_rgb": true,
+    "point_count": 349910,
+    "bev_plane": "XZ",
+    "raster": {
+      "output_shape_hw": [
+        681,
+        1200
+      ],
+      "antialias": 1.5,
+      "projected_points": 292612,
+      "occupied_pixels": 1241376,
+      "shape_hw": [
+        294,
+        518
+      ],
+      "projection": [
+        [
+          507.59099486501736,
+          -8.54993190412386,
+          249.88209777720988,
+          -66.77339839802929
+        ],
+        [
+          -2.6192198985181108,
+          500.94630011169727,
+          163.94963554006637,
+          -37.46876182884919
+        ],
+        [
+          0.0015505705532051063,
+          -0.044112430470263156,
+          0.9673684652832435,
+          -0.253836926022594
+        ]
+      ]
+    },
+    "camera_position": [
+      0.0024359761427782413,
+      -0.010905314976331579,
+      0.26189823010913216
+    ],
+    "version": 15,
+    "viser_port": 52660
+  },
+  "javascript_exceptions": [],
+  "search_evidence": {
+    "state": "completed",
+    "message": "검색 완료 · 6/6 프레임 · 2D 116건 / 3D 104건",
+    "mode": "all",
+    "query": "car",
+    "worker_pid": 81013,
+    "result": "evidence/query_jobs/search_1794159297263186000/result.json",
+    "valid_boxes": 104,
+    "mask_count": 116,
+    "attempted_frames": 6,
+    "total_frames": 6,
+    "elapsed_seconds": 55.9569635419175
+  },
+  "actual_run_summary": {
+    "source_mode": "video_file_incremental",
+    "video": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v3_jobs/live_20261108T093304_c6cbb885/input.mp4",
+    "video_sha256": "dc73b47c5cd6708ac5a80b9c60e1e4309c978c44f42f18ea07b8672ee1cee2a2",
+    "pacing": "offline",
+    "source_fps": 1.0,
+    "decoded_frames": 6,
+    "timestamp_type_counts": {
+      "video_pts_seconds": 6
+    },
+    "pacing_clock": "per-frame timestamp: observed PTS or explicitly labelled FPS approximation",
+    "selected_keyframes": 6,
+    "keyframe_backlog_dropped": 0,
+    "submaps": 2,
+    "submap_processing": [
+      {
+        "submap_id": 0,
+        "input_frames_including_overlap": 4,
+        "elapsed_seconds": 3.83346245798748
+      },
+      {
+        "submap_id": 4,
+        "input_frames_including_overlap": 3,
+        "elapsed_seconds": 3.4465092909522355
+      }
+    ],
+    "pause_toggle_events": 0,
+    "single_step_frames": 0,
+    "stop_reason": "max_frames",
+    "submap_latency_seconds_p50": 3.6399858744698577,
+    "submap_latency_seconds_p95": 3.8141147996357176,
+    "capture_wall_seconds": 7.329026374965906,
+    "decode_pacing_fps": 0.8186626289809076,
+    "limitations": [
+      "Video optical-flow selection and inference run sequentially in one process",
+      "GT trajectory evaluation requires a timestamp-aligned reference"
+    ]
+  }
+}

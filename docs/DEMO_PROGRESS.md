@@ -1,3 +1,5 @@
+> **최신 요약 (2026-11-08):** [SESSION_HANDOFF.md](SESSION_HANDOFF.md) → [CURRENT_STATUS.md](CURRENT_STATUS.md) → [V4 HTML 계획](../26.11.09.VGGT_SLAM.Plan.html). 아래 기록은 시간순 누적이며 초기 “미완료” 표시는 이후 완료 증거로 갱신됩니다. V3와 회전 보정은 구현·검증됐고 V4는 계획 단계입니다. 현재 사용자가 새 유튜브90초 작업을 실행 중이므로 job 상태를 먼저 확인하세요.
+
 # 데모 진행 기록
 
 ## S00 — 진단 (2026-10-30)
@@ -450,3 +452,266 @@
 
 - 누적 데모 구현·테스트·문서·V1 표시소스 스냅샷78개 파일을 커밋 대상으로 확인했다. TerraScene/과 .DS_Store는 별도 변경으로 보존하고 제외했다. 실행 데이터/logs/모델은 포함하지 않는다. *.json ignore 규칙으로 제외되던 V1 SHA256 manifest는 해당 파일만 명시적으로 추가했다.
 - 전체133 passed(13.22초,기존Dash warning1). 최초sandbox검사는132통과/1실패:OMP 공유메모리 제한으로git 자식프로세스가SIGABRT한 환경 오류였고,코드 변경 없이 제한 밖 동일검사로133개 통과했다. staged diff --check 통과.
+
+## Smooth V2 재생 3D 점 밀도·투영 일치 — 2026-11-08
+
+- 원인확인:PersistentMap 노드당1000점한도와재생시단순Viser중앙투영/정지시full K CPU투영의차이. 특히skew/principal-point가큰프레임에서형태/시점차이가커졌다. 기존V1은수정하지않는다.
+- 새 gpu_scene.py:고밀도camera-local샘플→선택snapshot world좌표의immutable packet(positions float32/colors uint8),N/offset 검증가능한VGP2포맷. 동일노드최초1회업로드,고정무작위순서의draw count만LOD변경. 현재3개관측우선배분,전체budget준수. seek미래노드제외,sky필터/finite검사,run/snapshot/qualityepoch변경시낡은packet거부. free orbit도동일한점샘플사용.
+- 새 gpu_renderer.js:별도WebGL shader로full K/pose를직접clip좌표에투영. CV +Y→GL축처리·depth test·원형soft point·실제뷰aspect/레터박스보존. camera path를최초수신후각requestAnimationFrame에위치/Slerp/K보간. 미래맵을잠깐표시하지않도록scene frame/epoch/path검사. 버퍼비동기수신/삭제·LOD draw count와geometry전송분리. GPU준비전은기존보정이미지를표시하고WebGL불가시CPU fallback. 숨긴camera img의rect가0이되는문제를피해실제height splitter 경계로canvas크기를계산한다.
+- viewer_smooth/smooth_panel:GPU scene/path/packet엔드포인트,재생품질자동/높음/균형/가벼움,paused CPU도동일한보간P로시점차이완화. 보정GPU사용시Viser중복점군draw를피하고자유시점에서만동일LOD를보여준다. RGB재생/세대동기화/검색/BEV/소스데이터는유지한다. 표시면과BEV계산샘플수를구분한다.
+- 신규 packet/LOD·near우선/반복업로드없음/seek/world투영/sky/snapshotepoch테스트4개. full136 passed(25.59초,기존Dash warning1;4번째추가전),관련9개통과. 최종전체검증은추가후별도실행한다.
+- 실제Metal `browser_gpu_quality_metal_20261108_01`:renderer Apple M2 Max,software=false,실제맵600000점(정지/재생동일),GPU約59.9775fps,RGB requestVideoFrameCallback約9.99625fps,영상/벽시계1.0000. P픽셀최대오차1.364e-12,고화질정지복원/JS예외0. playing_dense_gpu.png 육안확인:RGB와동일방향의조밀한건물/문/도로표현.
+- 첫SwiftShader고정600k실험은GPU約2fps/RGB約1.5fps로느렸고그사실을보존했다. 자동소프트웨어01(120k/960px)은GPU約6.82fps/RGB約3.65fps였다. 따라서명시적software감지시자동모드만90000점/640px/road10000제출로더낮추고재검증한다. 이환경을실제Metal성능으로혼동하지않는다.
+
+- 자동소프트웨어02 최종실험은90000점LOD/640px/road10000으로영상속도1.00005배,RGB제시4.495fps/GPU6.493fps였다. 하드웨어가속과동등한성능은아니며그한계를docs/DEMO_VERSIONS에도기록했다. 일반GPU는600k로유지했고형편에따라자동/고정높음/균형/가벼움을선택할수있다.
+- 최종전체137 passed(25.45초,기존Dash warning1). free orbit의snapshot전환시동일개수buffer를잘못재사용하지않도록epoch변경에서Viser handle도재생성하게수정했고관련9개통과. budget변경은패킷/epoch를유지하고GPU draw count만바꾸는회귀도추가했다.
+- 운영V2(8102)적용후 `browser_gpu_quality_live_20261108_01/validation.json`:실제Metal/M2 Max,정지/재생600000점,RGB제시9.9965fps/GPU animation59.9790fps,벽시계속도0.999975배. 재생중자유3D/Reset전환·정지복원·JS예외0. 투영오차1.364e-12는JS보정행렬수학비교이며GPU raster실픽셀정밀도가아니다. 렌더스크린샷/스크립트보존. WebGL epoch교체시ready를해제해로딩중빈GPU화면을피하고기존보정이미지를사용한다.
+- Classic 표시소스SHA비교는기존대로demo.py launcher만차이,나머지V1모듈/HTML동일. 운영8101/V1·8100선택화면은유지하며임시8120만종료한다. 원본지도/PCD/깊이/분할/사용자검색목록은변경하지않았다. JS문법·compileall·diff-check통과,graft build갱신.
+
+## V2 재생 중 상단 툴바 깜빡임 수정 — 2026-11-08
+
+- 원인:지도스냅샷poll과smoothPoll이#mode/#status에다른문구를서로덮었다. poll은ON/OFF와Play문구도같은값으로textContent재할당하여DOM을불필요하게재생성했다. 길이가다른상태문구·blur배경이GPU화면위에서재배치/합성을증폭시킬수있었다.
+- studio_smooth.html만수정(V1유지):mode/status는smoothPoll한곳에서만갱신하고NativeRGB시간라벨과지도프레임라벨의소유도구분. setText/setPressed로실제변경일때만DOM수정. 모드/상태/프레임영역과Play버튼너비를고정하고숫자는tabular,툴바배경을불투명·명시z-index/isolation으로지정해GPU배경blur의존을제거했다. 미디어없는run의RGB표시는기록이미지로복귀한다.
+- 실제Chrome/Metal `browser_toolbar_stability_20261108_01/validation.json`:정상재생4초동안MutationObserver가감시한버튼/모드/재생상태불필요변경0회,버튼좌표·너비·높이20샘플모두일치. pause/resume라벨정상변경,JS예외0. playing_stable_toolbar.png/검증스크립트보존. JS문법/node --check·git diff --check통과. HTML/CSS/DOM갱신변경이므로백엔드전체테스트반복대신실제DOM/레이아웃/전환을검증했다. 운영8102가정적HTML을동적으로읽으므로재시작없이페이지새로고침으로적용된다.
+
+## Live V3 — 디스크 비디오에서 실제 지도·도로 생성 및 완료 후 검색 — 2026-11-08
+
+- 사용자 요청: V2를 기반으로 새 버전을 만들고, 로컬 비디오 선택 → 실제 3D/RGB/BEV+ROAD 생성 표시 → 생성 완료 후 검색을 구현했다. 기존 V1(8101)·V2(8102) 실행과 이전 사용자 데이터/검색 삭제 목록은 보존했다. 새 V3는 `http://localhost:8103`, 작업 뷰는 8104이며 8100 선택 화면에 링크를 추가했다. 실행은 `.venv/bin/python demo.py live --port 8103 --viewer-port 8104`. 사용법·저장 구조·범위는 `docs/LIVE_V3.md`에 기록했다.
+- `live_studio.py`/`studio_live.html`: 실제 파일 선택과 스트리밍 업로드(원본 복사본, 최대4GiB), 설정 검증, 고유 작업 폴더와 실제 run 식별, 단계·입력/고유지도/서브맵/ROAD 수·경과시간·로그, 완료 작업 다시 열기를 구현했다. 동시 생성/취소된 업로드 교체를 막고 중지는 자신이 실행한 자식만 대상으로 하며 결과를 삭제하지 않는다. 서비스 재시작 후 완료 작업 기록을 다시 읽는다.
+- 실제 모델 경로: 기존 `.venv`의 `main_realtime.py --camera video_file --headless --no_video_window --video_pacing offline --device auto`로 VGGT 깊이·카메라·점군·서브맵 연결·그래프 최적화를 수행한다. 이 Mac에서는 MPS가 선택됐다. ROAD는 `.venv-open-set`의 SAM3 CPU worker로 계산한다. `demo_search_cached.py --stream-results`는 프레임마다 원자적 부분 결과를 공개한다(기본 검색 동작은 유지). 최신 스냅샷 배치로 합치며 같은 run의 segmentation 캐시를 재사용한다.
+- 기록 중 JSONL의 미완성 마지막 줄은 제외하고 마지막 `optimization_finished`까지의 접두부만 공개한다. 완료 스냅샷 폴더만 링크하여 worker가 미완성 NPZ를 읽지 않는다. 원본 Recorder 이벤트를 수정하지 않는다. V2 viewer에 선택적 live-control 갱신을 추가했고, 미지정 시 기존 V2 동작을 유지한다. 생성 중에는 최신 지도 프레임으로 이동하며 검색을 막는다. 생성 완료 후 실제 최종 run으로 전환해 전체 구간 검색을 허용한다. sky_v3·smooth_media_v3 캐시는 별도 생성하고 원본 PCD/깊이를 변경하지 않는다.
+- 첫 실제 소량 실험 `logs/demo_v3_jobs/live_20261108T092540_da3e45b7`: PandaSet 로컬 518×294/1fps 영상의 앞6프레임, submap_size3/min_disparity0/max_loops0. 실제 VGGT 2개 서브맵·고유6키프레임(중첩포함7관측), 원본 PCD799486점, ROAD6/6프레임 모두 유효3D 관측, 입력 키프레임 누락0. 생성~90.50초. 이 개발 초기 실험에서 단계 번호를 개수로 표시하던 문제와 ROAD 완료 count 초기화를 발견해 수정했다. 기존 결과는 유지했다.
+- 최종 실제 Chrome 검증 `evidence/browser_live_v3_20261108_01/browser.json`: 브라우저 파일 입력 선택으로 새 run `video_20261108T173307_231634000` 생성. 지도4→6 고유프레임, 서브맵1→2, ROAD1→6 순차 증가. RGB/3D/BEV 이미지 로딩, 생성 중 Search disabled, live ROAD 표면, 최종 V3 title/검색 활성화/기본 전구간 범위/검색 결과 선택을 모두 통과했다. JS 예외0. selected/live_road/completed/car_search PNG와 시간별 samples.json을 보존했다. 이 검증 브라우저는 SwiftShader를 사용했으며 하드웨어 렌더 FPS 측정이 아니다.
+- 최종 소량 실험 생성104.96초(모델 로딩·실제 추론·도로·하늘·MP4 준비·작업 뷰 전환 포함). VGGT 결과는 2서브맵·PCD799486점·6고유키프레임·drop0이며, 최종 선택 프레임의 누적 ROAD 표시36000점. 생성 후 실제 `car` 전구간 검색은6/6프레임,55.96초,2D116건/유효3D104건. 이 수는 여러 프레임의 중복 관측이며 고유 차량 수나 정답 recall/precision을 뜻하지 않는다. 기존 검색 코드를 통한 실제 SAM3 추론이며 mock 결과가 아니다.
+- 새 회귀8개: 미완성 JSONL/미완료 스냅샷 배제, 완료 접두부와 원본 보존, 업로드 경로/확장자·동시 생성·고유 폴더, 잘못된 처리 설정, 소유 자식만 취소 및 취소 업로드 보호. 최종 전체145 passed/25.71초, 기존 Dash deprecation warning1. Python compile/HTML JavaScript `node --check`/`git diff --check` 통과. 그래프를 갱신했다.
+- 한계: 실시간은 **완료된 서브맵·분할 결과를 순차 표시**하는 뜻이다. 모든 원본 프레임의 30/60fps 추론은 아니며 선택되지 않은 중간 프레임의 road를 계산하지 않는다. 생성 도중에는 새 결과 도착 시 최신 프레임으로 이동하고 마지막에 최종 run으로 뷰를 한 번 재연결한다. 중지 작업의 추론 재개는 지원하지 않으며 결과 보존 후 새 생성/완료된 지도 열기를 사용한다. 검증은 짧은6프레임이며 긴 영상의 처리시간·지도정확도·도로주행성은 별도 검증이 필요하다.
+- 최종 재시작/복원 검증 `evidence/browser_live_v3_20261108_01/restore.json`: V3 서버 재시작 후 완료 작업 ID로 같은 실제 run을 다시 열고 ROAD 표시·원본 영상 미디어·V3 title·검색 가능 상태를 확인했다. 8100/8101/8102/8103 모두 HTTP 접속 및 선택 화면 V3 링크 확인. 복원 전후 원본 events.jsonl/poses.txt/poses_points.pcd SHA256이 같았다. 최종 운영 V3에는 이6프레임 검증 지도를 열어두었으며 새 영상을 선택해 새 run을 생성할 수 있다.
+
+## V3 영상 선택 비활성 및 MOV 상하 반전 수정 — 2026-11-08
+
+- 사용자 실제 영상 `duke_status.mov`의 기존 전체 작업은 ROAD 처리 중이었고, poll이 file input을 disabled로 만들었다. label은 활성 버튼 모양을 유지하여 클릭해도 아무 반응이 없었다. 이전 검증은 DOM.setFileInputFiles를 사용해 이 클릭 경로를 놓쳤다. 명시적인 영상 선택 button → 동기 input.click으로 바꾸고 처리 중에도 다음 영상 선택은 허용했다. 새 추론 시작만 완료/중지까지 비활성화하며 안내 문구를 표시한다. 파일 창 취소 시 기존 선택을 유지하고 같은 파일 재선택도 가능하다.
+- RGB 반전의 실제 원인: 해당 MOV의 Display Matrix rotation=-180, OpenCV AVFoundation ORIENTATION_META=180/AUTO=0. 기존 VideoFileCamera가 표시 회전을 적용하지 않아 RGB·깊이·SLAM 전체가 뒤집힌 입력에서 계산됐다. 추론 전 metadata의90/180/270도를 한 번 적용한다. backend auto rotation이 켜진 경우 추가 회전을 피한다. 원본 영상/기존 결과는 수정하지 않는다. 새 생성의 키프레임·깊이·검색·브라우저 원본 재생의 방향이 일치한다.
+- 자유 탐색 overview는 고정 world -Y 대신 기록 카메라의 up/forward/right로 위쪽 방향과 시점을 구성한다. rolled camera에서도 horizon 위/forward 뒤에 위치하는 회귀 검증을 추가했다. V1 표시 코드는 변경하지 않았다.
+- 실제 FFmpeg display-matrix90/180/270 MOV fixture를 생성해 VideoFileCamera의 결과와 FFmpeg autorotate PNG의 shape/픽셀을 비교하는3개 테스트 추가. 회전된 카메라 overview1개 추가. 최종 전체149 passed/30.25초, 기존 Dash warning1. JS node --check 및 diff-check 통과.
+- 실제 사용자 MOV의 방향 보정 소량 재추론: `logs/demo_v3_jobs/live_20261108T104656_694854fa`, 실제 run `video_20261108T184700_282397000`. 앞6프레임/서브맵3/이동기준0/루프0, MPS 2서브맵·PCD233500점·ROAD6프레임 검사·약94.07초. `evidence/browser_live_v3_rotation_20261108_01`: 정상 방향 RGB·3D를 스크린샷으로 확인, 생성 중 검색 잠금/완료 활성화/실제 car 검색 선택/JS 예외0. 이 장면의 road 검사는6프레임 완료했지만 유효 road 표면이 없으므로 도로 존재를 주장하지 않는다.
+- 기존 사용자 전체 작업 `video_20261108T181003_605025000`은 중단하지 않고 완료됐다(305입력/95키프레임/12서브맵,약831.53초). 이 결과와 원본 MOV는 보존했다. 기존 전체 결과는 반전 입력으로 추론했으므로 화면만 뒤집어 기하·마스크를 섞지 않고, 정상 방향의 전체 지도가 필요하면 원본을 새로 생성해야 한다. 현재 V3에는 보정된6프레임 검증 run을 열어두었다.
+- `evidence/v3_picker_orientation_20261108_01`: 실제 버튼 mousePressed/mouseReleased → Page.fileChooserOpened 이벤트 → YouTube clip.mp4 선택까지 검증. 이전의 DOM 강제 파일 지정만으로 버튼 클릭 성공을 추정하지 않는다. 원본 raw 프레임과 보정 프레임을 별도 증거 JPG로 보존했다.
+- 처리 중 UI 상태에서도 실제 chooser 이벤트/선택 성공, input·선택 버튼 enabled 및 생성 시작 disabled를 동시에 확인했다(`picker_busy.json`). 자유 탐색 Fit map 스크린샷 `free_upright.png` 확인 후 RGB Reset으로 복귀했다. 새 페이지는 서버 재시작 없이 정적 HTML을 다시 읽으므로 기존 탭은 새로고침하면 영상 선택 수정이 적용된다.
+
+## 문서 전체 인계 갱신 및 V4 실시간 객체 지도 조사·계획 — 2026-11-08 UTC
+
+- 사용자 요청: 지금까지의 작업을 다음 세션에 이어갈 수 있도록 문서를 갱신하고, 지도를 생성하면서 미리 정의한 객체를 찾는 방법을 최신 자료와 함께 검토해 `26.11.09.VGGT_SLAM.Plan.html`에 정리했다. 요청 파일명은11-09지만 실제 clock 기준일은11-08UTC이며 그 차이를 문서에 명시했다. V4 구현·새 모델 설치·다운로드·원격 worker 생성은 하지 않았다.
+- 새 `docs/SESSION_HANDOFF.md`에 읽는 순서·복사 가능한 재개 프롬프트·branch/origin/HEAD/미커밋·서버·데이터·실행 중job·코드 연결·회전보정·삭제목록 보존·검증 근거·다음 R0를 정리했다. `CURRENT_STATUS.md`에 구현/실증/계획 및 한계를 분리하고 `INDEX.md`로 문서별 역할을 연결했다.
+- README/AGENTS/10-30 계획·프롬프트와 데모 가이드·버전·V3·UI·결과·인수·초기 코드 리뷰·PandaSet/KITTI360/YouTube 보고서를 갱신했다. 과거 수치와 초기 미완료 기록은 역사로 보존하고 최신 상태로 연결해 재시작 시 혼동을 줄였다. 기존 단계나 모델 실험을 처음부터 다시 수행하지 않는다.
+- 공식 코드·문서·저자 논문/프로젝트41개를 검토했다. VGGT-SLAM/SceneVGGT/ConceptGraphs/ConceptFusion,YOLO26/YOLOE-26/YOLO-World,ByteTrack,EdgeTAM/CoreML,SAM2/SAM3.1,DART/DARTF,PIDNet,Stream/Fast/Infinite/XStream/RetrieveVGGT,HorizonStream/SceneBound,DA3/VDA,MASt3R-SLAM/CUT3R,VGGT-Segmentor,S2Tok,LingBot-Map/MetricTrail,최신RT-DETR-World까지 적용 범위와 공개·장치 조건을 구분했다. 검색 결과 요약의 날짜를 그대로 쓰지 않고 arXiv 수정일·공식 release를 확인했다. 조사 원장 `docs/research/2026-11-09_realtime_object_mapping.md`.
+- 권고: 기존 VGGT-SLAM 유지 → 단계별 계측 → 상주 semantic worker/새 완료 프레임만 → 고정 대상 경량 detector 또는 사전 vocabulary YOLOE → ByteTrack/선택 프레임 mask → 동일frame의깊이 준비후local anchor3D승격 → 최신 H로 재투영. ROAD/sky는별도경량 semantic 경로,CPU SAM3는희소정밀 fallback. 병목이남으면CUDA worker 또는 streaming geometry adapter를분리비교한다. 2D트랙ID를3D고유객체ID로오인하지않고동적객체를정적맵에영구융합하지않는다.
+- HTML에는 architecture diagram·모델역할필터·실시간처리예산계산기·R0–R6단계/후보수락기준·41개직접출처검색·모바일/인쇄CSS를넣었다. 입력FPS/표시FPS/실제추론처리량/관측결과나이를분리한다. 목표 수치는측정결과로채우지않았다. 외부CDN/폰트없이 로컬파일로동작한다.
+- 환경 read-only 재확인: branch `vggt_slam_map`, origin SSH `git@github.com:hyunjaeKang/VGGT-SLAM.git`, HEAD9a0e7ba 이후미커밋유지. sandbox doctor는mps=false였으나권한밖동일doctor에서MPS=true/cuda=false. 기본venv의SAM3=false를분리환경검색실패로판단하지않는다.
+- 사용자가이번세션전시작한 새90초V3 job `live_20261108T115826_4ffce9d7` / run `video_20261108T195829_755817000`은문서작성중에도진행됐다. 기존server/worker를종료하거나무거운전체테스트·새모델추론을추가하지않았다. 정확한조회시각과변동카운트는`docs/research/handoff_snapshot_20261108.json`에남기고완료판정은다음세션에실제job/저장으로확인한다.
+- 문서 검증: 모든HTML id중복/내부anchor/로컬파일링크를검사하고출처41행과외부runtime의존성0을확인했다. JavaScript `node --check`, `git diff --check` 통과. 실제격리Chrome `evidence/plan_review_20261108_01/validation.json`: PC/390px모바일가로넘침없음,모델역할필터·출처검색·예산초과경고·초기계산기·JS예외0 모두통과. desktop/mobile/architecture스크린샷확인. 실제runtime시험이아니라문서의표시·상호작용검증이다.
+- 시간계약도계획서에명시했다: 실시간replay는stream monotonic origin에PTS상대시간을대응시키고,offline은ingest→result latency를따로보고한다. 서로다른장치의monotonic clock이나절대walltime·상대PTS를직접빼지않는다.
+
+
+## V3 8103 사용자 요청 상태 점검 — 2026-11-08 22:35 UTC
+
+- 서버8103상태API/8104frame·smoothAPI/실제파일/프로세스를읽었다. 서버·worker는종료하거나재시작하지않았다. 샌드박스내localhost연결실패는권한밖재조회로정상응답을확인했다.
+- 사용자90초job `live_20261108T115826_4ffce9d7` / run `video_20261108T195829_755817000`: decoded2700,고유키프레임2196,submaps275,drop0. 실제VGGT처리종료·manifest completed·poses/PCD저장확인. PCD227654920점/3642478901bytes(약3.39GiB), capture_wall3112.99초(약51분53초),submap p50/p95 11.07/15.98초.
+- V3 job은아직state=road이며일반Search disabled. 최종275단계의ROAD worker는1091/2196고유프레임완료(약49.7%)이며status수정과관측파일생성이계속된다. 최근11개새관측간격중앙7.79초. 남은1105프레임을동일속도로단순계산하면약2시간23분이며완료시각보장은아니다. 앞선단계의검사를캐시재사용하므로이전총경과시간만으로잔여시간을추정하지않는다.
+- 8104는최신지도프레임2469/2470(중첩포함),source2698/89.93초,600000표시맵점,ROAD누적6492000점,RGB카메라·BEV연결표시를응답했다. 원본MP4캐시는최종전환전이라media=null. ROAD새결과수신시최신프레임으로갱신되는상태이며정지표시는추론중단을뜻하지않는다.
+- 측정당시뷰어PID32354는CPU약98%/RSS약7.7GiB,CPU SAM3 worker PID84681는CPU약250%/RSS약6.5GiB. CPU%는코어합산값이다. 반복CachedRun/ROAD 재구성과CPU분할이경합하며입력disparity10으로과거disparity45실험보다키프레임·서브맵·파일이많다. “웹서버가꺼짐”이아니라무거운ROAD후처리+전체ROAD완료를기다리는V3설계가현재병목이다.
+- 증거: `evidence/live_status_20261108_01/status.json`, `progress.json`, `review_live_8103.py`. 현상검토만수행했으며V4구현·새모델·새추론은시작하지않았다.
+- 추가 품질 신호: inference.log의마지막루프수는252다. 90초고속도로영상에서이연결들이실제재방문인지확인하지않았으므로수용루프수만으로정확도PASS를선언하지않는다. 기존11-06실험은max_loops0/disparity45였으며이번은max_loops1/disparity10이다. 다음품질점검에서loop pair·제약·왜곡·before/after를검토해야한다.
+
+
+## 2026-11-09 Live V4 구현
+
+계획 기반 독립 V4를 추가했다. 실행: `.venv/bin/python demo.py live4 --port 8105 --viewer-port 8106`. 상주 객체 검출·ByteTrack·도로/하늘 분할·정확한 깊이 프레임 결합·생성 중 검색·증분 지도 뷰어를 제공한다. 상세 구현, 증거 및 미달성 목표: [LIVE_V4.md](LIVE_V4.md). 기존 사용자 수정과 run은 보존했다. R5 장시간/GT 및 R6 조건부 엔진 전환은 미완료다.
+
+검증 추가: 전체 회귀 테스트 `163 passed` (59.98초, 샌드박스 밖 재실행), V4 의미/캐시 테스트14개 통과, `git diff --check` 통과. 초기 샌드박스 실행의 OpenMP SHM 오류 및 V4 재검증의 DINO HTTP504는 환경/외부 접근 실패로 분리 기록했다. 최신 브라우저 재검증: evidence/browser_live_v4_20261109_04.
+
+최신 재실행 `live_20261108T234040_da2ad77b`: 실제6프레임/2서브맵/799486점, 도로6/의미6, 객체모델로딩1회 완료. 전체약266초로 앞선82초보다 느렸다. 최신 timing_summary의 객체p95 약3.12초/도로p95 약15.13초/깊이결합p95 약18.53초이므로 실시간 목표 미달이며 속도 개선 완료로 주장하지 않는다. 최신 기능 경로와 전체회귀163개는 구분하여 판단한다.
+
+재검증04는 생성 완료 후 브라우저 검색 확인 중 CDP timeout으로 끝났으므로 전체 PASS가 아니다. 로그에서 발견한 증분 프레임 선택/시간표 갱신 순서 오류를 수정했고, 서브맵 중복 프레임을 V4에서 제거했다. 추가 회귀 포함 의미/캐시 테스트15개 PASS. 완료 지도를 수정된 뷰어로 다시 열었다. 전체163개 PASS 결과는 이 마지막 두 수정 이전이며 이를 구분한다.
+
+정정: 서브맵 겹침은 query playback_index와 일치하도록 보존해야 한다. 중복 제거 시 도로 관측 인덱스가 어긋남을 재열기 검사에서 발견해 제거 변경을 되돌렸고, 인덱스 보존 회귀 테스트로 대체했다. 소스 고유6프레임/뷰어7개 서브맵 관측이다. 시간표 갱신 순서 수정은 유지한다.
+
+최종 재열기 API 확인: viewer_version=live-v4, frame_count=7(고유소스6+겹침1), camera_available=true, road_points=6000, BEV connectivity cells1630/edges2277. 의미/인덱스 테스트15개 PASS(2.85초). localhost8105/8106 실행 유지.
+
+재열기 브라우저 공통 검사02는 기존 검사기의 `displayed` 상태 텍스트 대기에서 시간 초과했다. API 재열기 응답은 정상이나 브라우저 전체 수용 PASS로 간주하지 않는다. 후속: V4 상태 계약에 맞춘 검사 및 최신 증분 갱신 E2E, R5 장시간·GT 검증, 처리 지연 최적화.
+
+
+## 2026-11-09 · V5 VGGT-SLAM 전용 + KITTI 영상 + eli5 설명서
+
+- 사용자 요청에 따라 V4 작업을 보존하고 새 V5 controller8107/viewer8108/jobs_root logs/demo_v5_jobs 추가. SEM/ROAD/sky worker0, VGGT깊이·색상점군·자세·서브맵·루프/그래프·저장·뷰어 유지. 루프1기본,0일때만DINO/SALAD로딩/embedding생략.
+- V5실제입력너비224/322/378/518,14배수높이/crop/padding/픽셀중심변환계약. 기존버전기본518보존. 로컬VGGT mmap/weights_only/assign 로딩,로컬DINO TorchHub경로,CPU4/OpenCV1,표시preview10000점/기본200k/CPUprojection960x540으로제한. 원시PCD저장에는표시상한미적용.
+- 원본KITTI508~1855전체1348장→134.8초 및 V2선택226장→22.6초 H264MP4(1408x376/10fps). source_manifest와ffprobe카운트/SHA256기록. logs/demo_inputs/kitti_closed_loop_508_1855_20261109/. 원본timestamp미사용10fps가정,선택영상시간압축. 원본과V2결과/사용자삭제쿼리보존.
+- 모델비교 evidence/v5_resolution_20261109_01: 동일KITTI4장MPS,3회씩(첫회제외2회중앙값),5181.979초/3781.252초/3221.559초/2241.206초.378약1.58x모델속도,작을수록항상빠르지않음.깊이유한/양수100%이나GT정확도아님. V4동시부하있음.
+- 브라우저실제6프레임/서브맵3/이동0/루프1: evidence/browser_live_v5_20261109_01(378,21.05초,194480점,2서브맵), evidence/browser_live_v5_518_20261109_01(518,22.38초). 업로드/해상도/카메라/생성완료/worker0/JS예외0 PASS. 두번째는생성중3뷰도PASS. 첫번째생성중화면검사미포착을PASS로추정하지않음. 전체시간향상약6%,V4타데이터실험과배수비교안함. 루프검출0개/전체폐루프미평가.
+- 전체회귀174 passed/11.46초,Dashwarning1. V5추가10개. 기존mapping/recording/video controls7개도PASS. `git diff --check` 확인.
+- eli5스킬로 USER_GUIDE.html/md/pdf 작성: 버전목적/실행명령/조작/재생vs계산중지/KITTI경로/해상도비용/상대지도한계. HTML목적필터/모바일/인쇄PDF 제공. docs/INDEX,README,CURRENT_STATUS,SESSION_HANDOFF,DEMO_VERSIONS,AGENTS 최신범위갱신.
+- 세션시작V3사용자90초작업은completed/ROAD2196확인. 다른V4사용자작업진행중을읽었고중지하지않음. V5자체와버전선택8100만업데이트하여재시작.
+- 다음검증: 전체226/1348프레임루프ON/OFF,해상도별독립GT궤적/정합,장시간메모리. 이소량시험은실시간30fps/전체폐루프정확도를보증하지않는다.
+
+- 최종 조작 API검사 evidence/v5_actions_20261109_01: 프레임이동/자유카메라/Reset/BEV줌·패닝·Reset/재생후정지/378실제격자/검색·도로0/버전선택링크/설명서서빙 모두PASS. 설명서브라우저 evidence/v5_guide_20261109_01:5개버전/목적필터/실행안내펼치기/모바일넘침없음/JS예외0 PASS. PDF614KiB 생성. 첫 설명서검사는 접힌V4명령의innerText검사때문에실패했고 실제summary를펼치는동작으로보완해재검증했다.
+
+추가실증: V5너비322/루프0/3프레임/1서브맵 run `video_20261109T182600_236195000`,60858점,약12.67초. DINO/SALAD를로딩하지않는경로로완료했다. `evidence/v5_resolution_20261109_01/correspondence_322.json`: 첫프레임19755점을깊이·K·저장투영행렬로재구성해PCD와비교,XYZ최대오차0/RGB불일치0/원본전처리RGB오차0. legacy오프라인검증기의execution_args/카메라행렬파일가정을비디오config/after스냅샷fallback으로확장하고실제검증했다. 최초CLI --run인자착오 및legacy계약오류 후 수정·재실행PASS; GT정확도판정은아니다.
+
+
+## 2026-11-09 · V5 재생이6프레임으로끝나는원인확인
+
+8107/api/live read-only확인: 현재열린job live_20261109T093557_8f32eb46은앞6프레임시험지도(max_frames6/고유지도6/submap2),원본22.6초. V5의최대지원프레임이6이라는뜻이아니며 기본max_frames0은전체처리다. 현재설정과기존run설정을혼동하지않도록 작업options의실제제한을상단에‘부분처리지도·앞6프레임제한’으로표시한다. 기존6프레임지도는보존했고새전체추론은시작하지않았다. 전체선택영상은max_frames0/min_disparity0으로새로생성해야226장의지도를재생할수있다.
+
+
+## 2026-11-09 · 사용자 V5 전체 KITTI 완료/루프 품질 진단
+
+- 8107현재job live_20261109T110040_ad530df7 /run video_20261109T190043_925571000은 completed. 전체1348입력/1348고유키프레임/169서브맵/426.91초/46298495점. 설정378/submap8/disparity0/maxloops1/maxframes0. 현재8108은마지막source1347/134.7초를표시하므로6프레임제한이나초반지도표시문제가아님.
+- 실제loop후보92,검증수락84,그래프loop_constraint_added84. 수락중78개는source시간차8~30프레임(0.8~3초)이하근접관측,장거리6개는1311~1319프레임차로마지막과시작부연결. 수락건수가모두독립재방문/정확한제약이라는뜻은아니다. 최근서브맵1개만제외하는기존검색구조를확인했다.
+- 최신poses를원본KITTI ID로+507매핑(1..1348→508..1855),GT1276개매칭,단일ProperSim3사후적합ATE RMSE113.895860691m. V2원실행226선택/518/submap16은217개매칭ATE9.948557765m. 조건이달라해상도하나의인과효과로비교하지않는다. 영상전프레임/작은서브맵/낮은해상도·근접제약등이달라졌다. 원시궤적점프도커서전역정합품질실패로판정한다.
+- 근거 evidence/v5_closed_loop_review_20261109_01/{summary.json,loop_pairs.json,estimated_original_kitti_ids.txt,evaluation/trajectory_metrics.json,평가그림}. 기존결과/사용자화면/추론서버보존,새추론시작안함. 후속은시간근접후보제외·키프레임선택·표준해상도/서브맵조건의통제실험및GT평가. 단순히더기다리거나수락임계값을완화해해결된다고안내하지않음.
+
+
+## 2026-11-09 · V5 루프 품질 복구 실험 시작
+
+- 사용자후속요청으로최근source-video10초이내후보를검색전에마스킹하는V5옵션min_loop_seconds추가. 기본기존GraphMap경로는0(비활성),V5신규CLI/API만10초.프레임시간은videoPTS기록에서조회하고없으면failclosed. 가까운best후보를사후에버리지않고더오래된후보를검색한다.
+- V5 UI에루프품질우선설정(518/submap16/movement45/loop1/gap10/maxframes0)과최소시간간격입력추가. 이미선별된226장비교실험에서는movement0으로같은선택순서를보존한다. 시간압축선택영상의10초는원본주행10초가아님.
+- 회귀 tests/test_slam5.py+test_large_map_io.py 17passed/18.98초. 전체회귀및실제226장실험진행. 증거 evidence/v5_loop_recovery_20261109_01/inference.log. 기존1348장실패run/사용자데이터보존.
+
+- 후속실제실험완료: video_20261109T193118_668535000/226장/15단계/13186136점/CLI geometry84.32초. 1829→508,1855→541의V2동일재방문2쌍수락. GT217매칭/Sim3적합ATE12.56179m. 실패전체1348장113.89586m보다개선됐으나조건동시변경으로시간필터단독효과는미분리. 기존V2PNG9.94856m와도완전히동일하지않다. summary.json과evaluation기록.
+- V5완료job이런타임history에즉시반영되지않던문제를update시갱신으로수정하고회귀추가. 종료된V5만재시작하여새지도등록live_20261109T113118_loop_quality를열었다.다른버전/원본/실패결과보존. 초기17개PASS,전체177개PASS/11.77초,history추가후V5테스트14개PASS. 최종전체검사후수치추가예정.
+
+- 최종전체회귀178 passed/10.88초(Dashwarning1). 개선지도브라우저검사 browser_checks.json:마지막source225/카메라/geometry-only/전체보기/JS예외0 PASS, completed_overview.png. GT궤적비교그림에서주경로·재방문형태를확인했으나측량정확도로보장하지않는다. 현재8107은새품질결과,내부8108마지막프레임·자유전체보기로표시.
+
+
+## 2026-11-09 · V5 Chase View / RGB 갱신 개선
+
+- 사용자요청:자유3D의과도한확대대신RGB카메라뒤에서따라가는Chase버튼,RGB갱신오류확인. V5전용수정,V1~V4/원본지도보존.
+- camera-relative위치=-forward*거리+up*0.35거리,진행방향앞을바라보며이동/회전추적. 기록카메라이동중앙값으로상대스케일을정하고거리배율0.5~8 제공,월드up고정없음. RGB Reset/Chase/자유모드를분리,재생중보간camera20Hz사용. Chase근거리clipping/점크기는local이동스케일기준으로조정.
+- V5재생시계는server-monotonic하나로고정. 오래된video_clock메시지가전체지도를되감지않도록무시. RGB는별도컨트롤러로분리하여BEV/3D JPEG동시수신실패에묶이지않고,원본디코딩실패·지연시최신RGB JPEG로대체. 세대변경seek는한번만하고디코딩중반복currentTime지정으로프레임준비를방해하지않도록보완.
+- Chase수학6개PASS/0.26초(뒤/위/진행방향,임의월드회전시up유지,스케일변환,이상거리거부). 전체184passed/18.04초는추가near/pointsize·seek완료대기미세보완전이며후속브라우저로검증중.
+- 첫브라우저01는NumPy bool결과저장오류,02는새generation확인전재시작샘플을취해반복재생판정실패. 실패증거보존. 02에서RGBseek/픽셀변화/Chase이동/legacyclock무시/오류시JPEG갱신/Reset·자유복귀/JS예외0확인. 03은새generation·native디코딩준비확인후재검증.
+
+- 03브라우저검사전체PASS: 정지RGB/native seek(1.9→7.6초),재생픽셀변화,Chaseoffset/이동,지연video_clock되감기방지,끝에서재시작native0.14→1.66초+픽셀변화,RGB오류강제시JPEG변화,Reset/free모드,Chase버튼pressed,JS예외0. viewport1216×328.64로3D뷰경계안에서실제canvas크기도확인했다. near clipping/local점크기보완이후캡처는03에저장. Chase상태문구의불필요한20Hz재전송도같은값검사로제거.
+
+- 최종전체회귀184passed/10.77초. 동일품질지도의뷰어를최종코드로재열었고원래보던부근frame34로복귀·Chase활성화. 기존지도/원본불변,재추론없음.
+
+
+## 2026-11-09 · 전체1348장 조건 재검증 / V5 선택 검색 복원
+
+- 사용자요청에따라전체1348장을모두키프레임으로넣는518/submap16/gap10/disparity0/maxframes0/loop1새실험시작. evidence/v5_full1348_quality_20261109_01/inference.log. 기존실패/226개선결과보존. 결과확정전성공을주장하지않음.
+- V5는생성속도비교를위해검색을숨겼었으나완료후on-demand검색탭/current기본/SAM3실행,RGBmask·box/3Dmask/BEVmask·box/Clear복원. 생성중상주semantic모델없음. 영상RGB위에오버레이가필요할때nativevideo대신annotatedJPEG표시,Chase선택을검색결과선택시유지하도록보완.
+- 일반요건·전체입력vs전체키프레임·조건별실험해석은CLOSED_LOOP_GUIDE.md. VGGT-SLAM/ORB-SLAM원논문확인. 10초는보편요건이아닌데모설정임을명시.
+
+- 검색복원실제브라우저검사PASS:현재RGB car1장/SAM3 CPU20.62초/2D9/유효3D4,결과RGBJPEG표시·RGB/BEVmask/box토글·Clear·JS예외0. evidence/v5_search_restore_20261109_01. 전체회귀184passed/17.07초. 생성코어run_os=False와상주semantic worker0은유지.
+
+- 전체1348장모두키프레임실험완료 run video_20261109T212129_410269000:518/16/시간필터10/이동0,526.42초,후보5/수락4(모두시작-마지막장거리),GT1276매칭사후Sim3 ATE59.9954m. 이전113.90m보다는개선이나정합품질해결로보지않음.
+- 이어서전체1348입력+자동키프레임선택실험 run video_20261109T213652_654365000:동일518/16/10초,이동80,decode1348/지도224/submaps14/12883120점/80.06초. 후보3/수락1,GT214매칭ATE11.5583m. 원본프레임ID는poses행ID+507로정확히대응,기준없는10개는제외. evidence/v5_full_input_keyframes_20261109_01. 전체입력은모두읽고그중지도에쓸사진을선택한다는구분확인.
+- 두실험을새V5작업목록에등록하고기존모든결과보존. 새권장‘KITTI 폐루프 설정’은이영상에서검증한518/16/이동80/간격10(다른영상보편값아님).
+- 검색복원02는같은car를새frame141에서새검색한뒤기존frame140결과를잘못재사용하지않음도검증. 실제왼쪽RGB픽셀과서버annotatedJPEG의완전일치,RGB/BEV토글/Clear/JS예외0 PASS. 01 screenshot은새JPEG도착전에촬영됐지만서버RGB파일에는실제마스크/박스확인;02에서표시픽셀까지기다리도록보완.
+- V5상태search_ready와완료후검색안내를업데이트하고V5컨트롤러만재시작. 새full-input224지도를기본열기. V1~V4·원본·사용자검색삭제목록보존. 안내서HTML/MD를최신기능으로수정,PDF재생성예정.
+
+- 최신 V5 전용 재생 helper 추가: 완료된영상은decoded video PTS로그끝까지RGB를재생하고마지막추정키프레임이후에는카메라를유지한다. 현재전체입력run에서마지막추정pose134.5초/마지막RGB134.7초구분. 진행중지도는미완료프레임을공개하지않도록기존키프레임끝만사용한다. 단위검증포함전체185passed/10.60초. 첫시도는존재하지않는test_smooth_runtime.py경로지정으로테스트수집실패했고전체검사로재실행완료.
+- 새full-input지도브라우저확인:마지막source1345/3D카메라/전체보기/끝RGB시각134.7초/Search탭/JS예외0 PASS. 입력source1346/1347에는새3D추정이없으며이는키프레임선택설명과일치한다.
+
+
+## 2026-11-09 · Saved Object 모델 및 Search scope 표시
+
+- 공통 query_label에 실제 저장된 모델명(SAM3 / RF-DETR / YOLOE / YOLO26 / YOLO11)과 Search scope(전체 / 현재 RGB / 표본 / PE 후보 / 생성 중), 검사 프레임 수, 유효 3D 관측 수를 함께 표시한다. 예: `car · SAM3 · 전체 224장 · 3D관측 18건 · 123456`.
+- SAM3 기존 search.model 문자열도 인식한다. 모델/범위 기록 없는 과거 결과는 `모델 미기록` / `범위 미기록`으로 표시하며 추측하지 않는다. 기존 저장 파일·삭제 목록은 수정하지 않았다.
+- 새 SAM3 검색과 V4 resident 검색은 backend를 명시 저장한다. Road는 SegFormer로 구분한다. RF-DETR 표시는 메타데이터 지원이며 RF-DETR 엔진 설치/연결을 뜻하지 않는다.
+- 검증: 5모델×5범위 25조합 및 과거 SAM3/메타데이터 누락 확인 PASS. `tests/test_demo_camera_search.py tests/test_live4_semantics.py`:23passed. 공통 함수를 사용하는 V1/V2/V4/V5 목록에 다음 뷰어 시작 시 반영된다. 실행 중 V5는 동일 완료작업 live_20261109T133652_full_keyframes를 /api/open으로 다시 열어 새 코드 적용을 요청했다(지도 재추론 없음).
+
+
+## 2026-11-09 · V5 검색 모델 선택
+
+V5 우측 `검색 · Search` 탭의 Query 위에 `Search model`을 추가했다. SAM3(기본)/YOLOE/YOLO26/YOLO11은 실제 선택 엔진으로 검색한다. RF-DETR은 엔진·가중치 미설치로 `준비 필요` 표시, 선택 후 검색 시 명확하게 안내하고 다른 모델로 대체하지 않는다. 모델을 바꾸면 지원 클래스·자유텍스트 여부·RGB/3D/BEV Mask와Box·Search scope 안내가 바뀐다. YOLO26/11은 COCO 학습클래스만, YOLOE/SAM3은 텍스트 대상 검색이다. Road 전체 표면 처리는 별도이며 일반 YOLO 고정클래스 검색은 road/printer를 지원하지 않는다.
+
+검색 worker는 --backend(기본sam3)로 분기한다. SAM3 의존성은 해당 분기에서만 import하며 기존 V1~V4 호출은 기본 유지. YOLO 계열은 .venv-v4와 로컬 가중치, PersistentDetector CPU를 사용한다. 한 이미지의 여러 검색어는 추론을 공유하며 클래스별 마스크를 분리한다. 캐시 identity에 backend/가중치hash/classes/confidence/size를 넣어 모델 간 캐시 혼용을 막는다. 저장 결과는 실제 backend/model과 scope를 기록하며 기존 query_label에서 표시한다.
+
+실제 같은 KITTI 현재프레임(playback34) car검색:YOLO26/11/YOLOE 모두 completed,각2D1/유효3D1. `evidence/v5_search_models_20261109_01/results.json` 및 모델별log. 전체회귀187passed/31.48초. V5 동일 완료작업을 다시 열어 메뉴 적용; 재추론 없음. RF-DETR 실제추론과 새 모델간 정확도·속도우열은 검증하지 않았다. graft build 갱신.
+
+- 실제 Chrome 검증 PASS: Search model 메뉴/5모델 옵션/SAM3 안내/YOLO26 선택 후 COCO 안내 전환/Search scope/JS예외0. 증거 browser_checks.json 및 search_models.png.
+
+
+## 2026-11-09 · RF-DETR-Seg 실제 연결
+
+V5 Search model의 RF-DETR 준비필요 상태를 실제 RF-DETR-Seg Nano 검색으로 대체했다. 별도 `.venv-rfdetr`/rfdetr1.12.0/Torch2.15.0 환경, 공식 COCO Seg Nano 가중치(134545398bytes,공식MD5통과),CPU/312입력/threshold0.3. 기존 SLAM/YOLO/SAM3 환경은 변경하지 않았다. 선택기능:현재/표본/전수/PE후보,RGB마스크·박스,깊이기반3D/BEV,저장모델명·scope,Clear/선택삭제. 공식COCO클래스ID로 car/person 등을구분하고 printer/road등미지원은모델로딩전안내. 다중검색어는프레임추론공유,모델버전/가중치hash/클래스/임계값을캐시identity에포함한다.
+
+실제 KITTI playback34/source256 car검색:2D마스크2/유효3D1,worker기록6.657초(패키지설치·다운로드제외). 전체회귀188passed/25.27초. 증거 evidence/v5_rfdetr_20261109_01의requirements.txt/model_identity.json/search_status.json/inference.log. 사용법·설치재현 docs/RFDETR_SEARCH.md. 기존현재완료run을/api/open으로재열기,지도재추론없음. 전체구간정확도·고유3D객체수·다른모델대비우열·실시간성은미검증.
+
+- RF-DETR 실제 Chrome 최종 PASS: 모델선택/기능안내/새검색/backend=rfdetr/유효3D/저장 RF-DETR·현재RGB범위/결과선택/JS예외0. `evidence/v5_rfdetr_20261109_01/browser_checks.json`, `rfdetr_search.png`. 최초 검증은 SAM3초기값을가정한선택자 및 input값을innerText로검사해실패,현재선택허용·input.value검사로수정후통과(제품검색실패아님).
+
+
+## 2026-11-09 · YOLO26 RGB 표시 누락 수정
+
+사용자 실제 YOLO26 전수결과 search_1794270417840836000은224개고유프레임/2D639관측이있었다. 마지막playback236은검출0,235는검출1. (1) V5브라우저가재생중에는선택검색/RGB토글을무시하고원본MP4만표시하던조건을수정했다. 이제선택검색+RGB Mask또는Box ON이면재생중에도주석JPEG를표시한다. 이는지도키프레임갱신속도이며모든원본비디오프레임을새분할하지않는다. 두RGB토글OFF또는Clear이면원본영상표시로복귀한다. (2) 저장검색선택/전체관측복귀시검출없는마지막사진대신마스크있는마지막관측을연다. 전체관측의3D표시범위는유지한다. 현재프레임에검출이없는경우RGB는비어있으며다른사진의마스크를겹치지않는다.
+
+전체회귀188passed/27.07초,JS문법검사PASS. 기존사용자전수검색·삭제목록·지도보존. V5같은완료작업재열기로새코드적용,지도재계산없음.
+
+- 추가원인:전수검색은서브맵overlap을제외하지만타임라인은중복프레임을포함한다. 실제source256은관측index33에저장되고현재index34도동일사진이었다. RGB오버레이가index만비교해표시를놓침. V5는현재source_frame_id도전달해같은원본관측을재사용하고다른원본에는적용하지않도록수정. 중복동일사진/다른사진미적용회귀추가,query_display5passed.
+
+- 최종전체189passed/25.98초. 실제Chrome검증PASS:사용자YOLO26전체결과선택시검출있는235프레임열기/RGB토글에따른실제JPEG픽셀변화/재생중annotatedRGB모드/프레임갱신/JS예외0. evidence/v5_yolo_rgb_20261109_01/browser_checks.json 및 yolo_playing_rgb.png. 초기브라우저검증은전수에서제외된overlap34사진과고정대기시간을사용해실패했고,동일source재사용회귀및상태대기후최종PASS. 기존검색을재사용했으며재검색·지도재생성없음.
+
+
+## 2026-11-09 · Search 비활성화 고착 복구
+
+실제 현재완료지도에서RF-DETR검색 search_1794270739076919000은20/24프레임에서KeyboardInterrupt로중단됐지만status.running/worker_pid80927이남았다. ps로PID부재확인. V5는시작시running상태만으로검색을재개감시하고프로세스없음을확인하지않아Search가영구잠겼다.
+
+search_lifecycle를추가해저장된workerPID생존과명령/작업폴더일치(PID재사용방지)를확인한다. 종료작업은원본interrupted_status.json을보존하고failed/InterruptedWorker로전환한다. 재연결watcher에도검사,직접시작한worker는status가있어도process.poll로종료감지한다. 권한부족은종료로단정하지않는다. 감시종료버튼조건은allow_search도존중한다. 기존query결과/로그/지도/삭제목록보존,실행프로세스종료신호없음.
+
+동일완료V5지도를재열어복구했고실제Chrome에서Search활성/새RF-DETR검색완료/유효3D/저장모델·범위/완료후Search재활성/JS예외0 PASS. evidence/v5_search_unlock_20261109_01/browser_checks.json,rfdetr_search.png,original_status.json. 회귀추가:종료PID복구·원본보존·PID재사용·정상실행작업유지. 최초전체테스트185passed/6failed는Macsubprocess비정상종료로관련항목재검사중이며전체성공을주장하지않는다.
+
+- 종료검색복구 및 최초실패항목대상재검사26passed/21.89초. 실제RF-DETR브라우저검색정상완료후버튼다시활성확인. 전체회귀재실행결과는full_tests.log확인.
+
+- 전체회귀재실행: 191 passed, 1 warning in 25.56s (evidence/v5_search_unlock_20261109_01/full_tests.log).
+
+
+## 2026-11-09 · 고정 클래스 모델 전체 객체 및 Saved Objects 개선
+
+RF-DETR/YOLO26/YOLO11 선택 시 `전체 클래스 검출` 기본ON,Query입력숨김/미사용. OFF면기존특정클래스Query검색. SAM3/YOLOE는기존텍스트검색유지. 전체클래스는현재RGB/전구간표본/전구간전수지원,텍스트PE후보는이모드에서제외한다. 모든종류를반드시찾는다는뜻이아니며해당모델의학습클래스에서임계값을넘긴검출을모두보여준다.
+
+worker --all-classes는YOLO모델names/RF공식COCO목록을사용하고프레임당단한번추론한후검출된종류만마스크/깊이/3D로저장한다. 80종음성결과를매프레임쓰기않고검출없는프레임은빈관측하나로검사coverage보존. 클래스명은개별detection과관측에저장,RGB마스크/박스에종류명표시. 모델별/클래스별캐시분리,기존car검색은보존하며전체객체로소급변경하지않는다.
+
+Saved Objects 폴더:모델필터/객체명검색/최신순목록/전체객체종수·2D수라벨/선택결과종류별RGB검출·유효3D표/Result frame(2D만있어도선택가능)/선택삭제/Clear. RGB검출은깊이부족으로3D없어도표시한다. 관측수는고유객체수가아니다.
+
+실제동일KITTI표본4장:YOLO26=2종(car8,motorcycle1),2D9/3D7;YOLO11=3종(car10,motorcycle2,potted plant2),2D14/3D12;RF-DETR=4종(car8,motorcycle1,person1,truck2),2D12/3D10. evidence/v5_all_objects_20261109_01/results.json/모델별log. 단순표본으로정확도우열을주장하지않는다. 전체회귀192passed/27.92초(tests.log). 기존완료지도동일작업재열기로적용,원본/사용자검색삭제목록/이전결과보존.
+
+
+## 2026-11-09 · RGB/3D/BEV 종류별 Mask 색상 및 Legend
+
+object_colors.py의공통팔레트로같은객체종류는모델/프레임/뷰와무관하게같은색사용(car하늘색/person노랑/truck주황/motorcycle보라/plant초록,다른종류는이름기반결정적색). 개별인스턴스ID색이아닌클래스색이다. RGB는종류별반투명마스크/박스/이름표,3D는RoadLayer.world_colored의정확한깊이점+현재snapshot변환,BEV는동일점색의투영. RGB시점CPU래스터/재생GPU/자유3D의Viser점군모두의미점색을받는다. 모델자체의가짜3D를만들지않고유효깊이만표시한다.
+
+세뷰에반투명Legend를추가하고선택검색에서검출된종류/색/관측수를표시한다. Clear/검색선택해제시Legend도제거된다. 3D/RGB/BEV Mask토글유지. GPU의미packet키에점색도포함하여색만바뀌어도캐시갱신. BEV의mask_colors는선택인자로기존V1~V4호출보존;레거시이름없는박스는이전빨강유지.
+
+회귀194passed/25.40초(final_tests.log). RGB두클래스픽셀/Legend팔레트/BEV색혼합/GPU실제packet색/색변경캐시갱신검사추가. 실제3모델전체클래스표본검사는이전항목참조. 새코드로동일V5완료지도재열기,지도재생성없음.
+
+- 최종Chrome PASS:고정모델전체클래스기본ON/YOLO26새검색24장5종/유효3D/저장모델·scope/세뷰Legend·종류별다른색/3D마스크점·BEV마스크/저장필터·종류표/완료후Search재활성/JS예외0. evidence/v5_all_objects_20261109_01/browser_checks.json,all_objects.png. 초기브라우저검증은Legend도착대기·이전scope·이전선택결과를고려하지않아실패했고,선택결과ID와실DOM도착을기다려최종PASS. selected_query_id메타데이터추가,저장필터변경은render_lock으로직렬화. V1~V4 RGB기존색상은opt-in class_colors=False로보존하고V5만종류색활성.
+
+
+## 2026-11-09 · V5 3D Mask / 3D Box 독립 토글
+
+3D상단에3D Box ON버튼추가,Mask/Box는별도상태·기본ON. 기존mask_3d가3D박스까지숨기던조건을box_3d로분리. 오른쪽지도탭체크박스/API액션/렌더signature/상태라벨동기화. CPU RGB시점래스터/GPU/자유Viser박스는같은projected_boxes목록으로독립제어. 기존모델검색·저장데이터보존,같은완료지도재열기로적용.
+
+- 전체회귀194passed/25.50초. 초기실제버튼검사에서Box액션이panel_live5허용목록에빠져400을반환함을발견해box_3d추가수정. 수정후V5/색상관련17passed/17.89초. 두표시의기본ON및독립토글은브라우저checks.json에서검증한다.
+
+- 최종실제Chrome PASS:두버튼기본ON/마스크점과박스모두표시/Mask OFF에도Box유지/Box OFF에도Mask유지/JS예외0. 검증후둘다ON복원. evidence/v5_3d_toggles_20261109_01/checks.json 및 3d_toggles.png. 기존저장검색재사용,새검색·지도재생성없음.
+
+
+## 2026-11-10 · V5 상단 메뉴 숨기기/보이기
+
+3D뷰상단메뉴를숨기고복원하는독립버튼추가. 메뉴전체(ViewReset/Chase/자유탐색/Mask·Box/재생·프레임/뷰크기등)를숨겨도왼쪽위의복원버튼은남는다. 오른쪽패널숨김과독립,RGB/BEV영역유지,localStorage(vggt-v5-top-menu-hidden)에선택상태보존. aria-controls/expanded 및 hidden스타일적용. HTML은요청시파일을읽으므로서버재시작/지도재생성없으며브라우저새로고침으로반영.
+
+- 실제Chrome PASS:초기표시/메뉴숨김/복원버튼계속표시/RGB·BEV유지/새로고침후숨김유지/다시표시/JS예외0. evidence/v5_top_menu_20261110_01/checks.json 및 menu_hidden.png/menu_shown.png.
+
+
+## 2026-11-10 · 영상 선택/지도 생성 영역 숨기기
+
+8107컨트롤러헤더에영상설정숨기기/보이기버튼추가. 스크린샷의영상선택·생성/중지·이전지도·해상도·처리설정과상세상태행을함께접는다. 접힌상태에도헤더에간단한단계/경과시간과복원버튼유지. flex레이아웃으로줄어든영역만큼지도workspace높이확장,localStorage(vggt-v5-generation-hidden)상태보존. 3D뷰자체상단메뉴/오른쪽패널토글과독립적이며실행작업/선택파일/입력값은숨김으로변경하지않는다. HTML파일요청시읽기,서버재시작없음.
+
+- 실제Chrome PASS:초기표시/전체영역숨김/복원버튼유지/지도높이확장/간단한상태유지/새로고침상태보존/복원/JS예외0. evidence/v5_generation_menu_20261110_01/checks.json,generation_hidden.png,generation_shown.png.
+
+
+## 2026-11-10 · 데모 변경 커밋 준비
+
+macOS .DS_Store를.gitignore에추가(하위폴더포함). 누적V3~V5/다중모델검색/전체클래스/색상Legend/독립3D토글/메뉴숨김/문서·검증자료를커밋대상으로확인했다. 관련없는TerraScene은보존하고커밋제외. 입력영상·모델·실행run·가상환경은기존ignore유지. 검증증거의작은JSON/log는문서참조가깨지지않도록명시포함한다.
+
+- 커밋전전체회귀194passed/31.27초. .DS_Store는루트/하위폴더모두ignore확인. 소스/문서공백검사통과;원본실패검증log의출력공백은증거보존을위해유지. 커밋대상280개파일,TerraScene/.DS_Store제외확인.

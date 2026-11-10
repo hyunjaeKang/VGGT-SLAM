@@ -21,6 +21,7 @@ class RoadLayer:
         self.coverage = query.get('search', {}).get('inspected_frames', 0)
         self.total_frames = query.get('search', {}).get('total_frames', 0)
         self.groups = []
+        self.group_classes=[]
         base = run.path / Path(query['_asset_path']).parent
         snapshot = query['snapshot']
         with np.load(run.path/'snapshots'/str(snapshot['step'])/(snapshot['phase']+'.npz')) as data:
@@ -52,6 +53,7 @@ class RoadLayer:
                          observation['confidence_threshold'], rgb, per_frame)
             if len(points):
                 self.groups.append((index, node, points))
+                self.group_classes.append(observation.get('prompt') or observation.get('query','object'))
         self.point_count = sum(len(g[2]) for g in self.groups)
         self._snapshot_key = None
         self._world_groups = []
@@ -62,7 +64,8 @@ class RoadLayer:
             with np.load(run.path/'snapshots'/str(step)/(phase+'.npz')) as data:
                 matrices = {int(n): h for n, h in zip(data['node_ids'], data['homographies'])}
             self._world_groups = []
-            for index, node, points in self.groups:
+            self._world_classes=[]
+            for (index, node, points),name in zip(self.groups,getattr(self,'group_classes',['road']*len(self.groups))):
                 if node not in matrices:
                     continue
                 h = matrices[node]
@@ -71,9 +74,18 @@ class RoadLayer:
                     xyz = q[:, :3] / q[:, 3:]
                 xyz = xyz[np.isfinite(xyz).all(axis=1)].astype(np.float32)
                 self._world_groups.append((index, xyz))
+                self._world_classes.append(name)
             self._snapshot_key = key
         parts = [pts for index, pts in self._world_groups if index <= frame_index and (only_frame is None or index == only_frame)]
         return np.concatenate(parts) if parts else np.empty((0, 3), np.float32)
+
+    def world_colored(self, run, step, phase, frame_index, only_frame=None):
+        from vggt_slam.demo.object_colors import class_color
+        points=self.world(run,step,phase,frame_index,only_frame)
+        parts=[np.tile(class_color(name),(len(pts),1)) for (index,pts),name in zip(self._world_groups,self._world_classes)
+               if index<=frame_index and (only_frame is None or index==only_frame)]
+        colors=np.concatenate(parts).astype(np.uint8) if parts else np.empty((0,3),np.uint8)
+        return points,colors
 
 
 def connectivity_grid(points, plane='XZ', cells=128):

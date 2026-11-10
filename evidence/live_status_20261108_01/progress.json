@@ -1,0 +1,40 @@
+{
+  "at": "2026-11-08T22:35:24.494251+00:00",
+  "job": {
+    "state": "road",
+    "decoded_frames": 2700,
+    "map_frames": 2196,
+    "steps": 275,
+    "road_frames": 1091,
+    "search_ready": false
+  },
+  "current_road": {
+    "state": "running",
+    "message": "SAM3 1092/2196 · frame 1274 · road",
+    "mode": "all",
+    "query": "road",
+    "worker_pid": 84681,
+    "partial_result": "evidence/query_jobs/road/partial_result.json",
+    "completed_frames": 1091,
+    "total_frames": 2196,
+    "mask_count": 1473,
+    "valid_boxes": 1471
+  },
+  "recent_result_interval_seconds": [
+    7.598905324935913,
+    7.836483716964722,
+    7.802387475967407,
+    8.08558201789856,
+    7.516636848449707,
+    7.93629002571106,
+    7.462813854217529,
+    8.064876556396484,
+    7.394829034805298,
+    7.717214345932007,
+    7.787600517272949
+  ],
+  "recent_median_seconds": 7.787600517272949,
+  "remaining_estimate_seconds": 8605.298571586609,
+  "manifest_status": "completed",
+  "elapsed_job_seconds": 9417.776056051254
+}

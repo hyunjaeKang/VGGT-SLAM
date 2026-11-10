@@ -1,0 +1,123 @@
+[
+  {
+    "state": "loading",
+    "decoded_frames": 0,
+    "map_frames": 0,
+    "steps": 0,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 3,
+    "at": 1794163617.9794629
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 6,
+    "map_frames": 4,
+    "steps": 1,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 3,
+    "at": 1794163633.082277
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 6,
+    "map_frames": 4,
+    "steps": 1,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794163635.761662
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794163637.454654
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 1,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794163654.490293
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 2,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794163662.4905221
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 3,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794163670.980225
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 4,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794163679.1554072
+  },
+  {
+    "state": "road",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 5,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794163698.8599832
+  },
+  {
+    "state": "finalizing",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 6,
+    "search_ready": false,
+    "viewer_ready": true,
+    "viewer_revision": 4,
+    "at": 1794163706.811834
+  },
+  {
+    "state": "completed",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 6,
+    "search_ready": true,
+    "viewer_ready": true,
+    "viewer_revision": 5,
+    "at": 1794163712.479806
+  }
+]

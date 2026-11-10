@@ -1,0 +1,56 @@
+[
+  {
+    "backend": "yolo26",
+    "returncode": 0,
+    "status": {
+      "state": "completed",
+      "message": "검색 완료 · 1/224 프레임 · 2D 1건 / 3D 1건",
+      "mode": "current",
+      "query": "car",
+      "worker_pid": 2673,
+      "result": "evidence/query_jobs/yolo26_1794268106042163000/result.json",
+      "valid_boxes": 1,
+      "mask_count": 1,
+      "attempted_frames": 1,
+      "total_frames": 224,
+      "elapsed_seconds": 0.41537170798983425
+    },
+    "output": "logs/demo_runs/video_20261109T213652_654365000/evidence/query_jobs/yolo26_1794268106042163000"
+  },
+  {
+    "backend": "yolo11",
+    "returncode": 0,
+    "status": {
+      "state": "completed",
+      "message": "검색 완료 · 1/224 프레임 · 2D 1건 / 3D 1건",
+      "mode": "current",
+      "query": "car",
+      "worker_pid": 2751,
+      "result": "evidence/query_jobs/yolo11_1794268107896239000/result.json",
+      "valid_boxes": 1,
+      "mask_count": 1,
+      "attempted_frames": 1,
+      "total_frames": 224,
+      "elapsed_seconds": 0.36308879195712507
+    },
+    "output": "logs/demo_runs/video_20261109T213652_654365000/evidence/query_jobs/yolo11_1794268107896239000"
+  },
+  {
+    "backend": "yoloe",
+    "returncode": 0,
+    "status": {
+      "state": "completed",
+      "message": "검색 완료 · 1/224 프레임 · 2D 1건 / 3D 1건",
+      "mode": "current",
+      "query": "car",
+      "worker_pid": 2824,
+      "result": "evidence/query_jobs/yoloe_1794268109742137000/result.json",
+      "valid_boxes": 1,
+      "mask_count": 1,
+      "attempted_frames": 1,
+      "total_frames": 224,
+      "elapsed_seconds": 0.731657583033666
+    },
+    "output": "logs/demo_runs/video_20261109T213652_654365000/evidence/query_jobs/yoloe_1794268109742137000"
+  }
+]

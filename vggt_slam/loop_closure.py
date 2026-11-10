@@ -89,7 +89,8 @@ class ImageRetrieval:
         matches_queue = LoopMatchQueue(max_size=max_loop_closures)
         query_id = 0
         for query_vector in submap.get_all_retrieval_vectors():
-            best_score, best_submap_id, best_frame_id = map.retrieve_best_score_frame(query_vector, submap.get_id(), ignore_last_submap=True)
+            temporal = {"query_path": submap.get_img_names_at_index(query_id)} if getattr(map, "loop_min_seconds", 0.) > 0 else {}
+            best_score, best_submap_id, best_frame_id = map.retrieve_best_score_frame(query_vector, submap.get_id(), ignore_last_submap=True, **temporal)
             if best_score < max_similarity_thres:
                 new_match_data = LoopMatch(best_score, submap.get_id(), query_id, best_submap_id, best_frame_id)
                 matches_queue.add(new_match_data)

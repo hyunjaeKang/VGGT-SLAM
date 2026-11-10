@@ -1,0 +1,180 @@
+{
+  "url": "http://127.0.0.1:8107",
+  "video": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_inputs/kitti_closed_loop_508_1855_20261109/kitti_closed_loop_v2_selected_10fps.mp4",
+  "job": {
+    "id": "live_20261109T093557_8f32eb46",
+    "folder": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v5_jobs/live_20261109T093557_8f32eb46",
+    "filename": "kitti_closed_loop_v2_selected_10fps.mp4",
+    "input": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_v5_jobs/live_20261109T093557_8f32eb46/input.mp4",
+    "created_at": 1794245757.35045,
+    "state": "completed",
+    "message": "V5 VGGT-SLAM 완료 · 3D / RGB / BEV",
+    "options": {
+      "submap_size": 3,
+      "max_frames": 6,
+      "min_disparity": 0,
+      "max_loops": 1,
+      "image_size": 378,
+      "cpu_threads": 4
+    },
+    "run": "/Users/hyunjae.kang/2026_opensrc/VGGT_SLAM/vggt_slam_map/logs/demo_runs/video_20261109T173559_890644000",
+    "decoded_frames": 6,
+    "map_frames": 6,
+    "steps": 2,
+    "road_frames": 0,
+    "viewer_ready": true,
+    "viewer_revision": 2,
+    "search_ready": false,
+    "updated_at": 1794245778.438074,
+    "version": "slam-v5",
+    "semantic_enabled": false,
+    "probe": {
+      "width": 1408,
+      "height": 376,
+      "fps": 10,
+      "duration": 22.6
+    },
+    "elapsed_seconds": 21.054619541973807
+  },
+  "checks": {
+    "file_picker": true,
+    "completed_counts": true,
+    "no_semantic_workers": true,
+    "v5_title": true,
+    "camera_available": true,
+    "geometry_only": true,
+    "true_model_width": true,
+    "loop_option_kept": true,
+    "javascript_exceptions": true
+  },
+  "samples": [
+    {
+      "state": "loading",
+      "decoded_frames": 0,
+      "map_frames": 0,
+      "steps": 0,
+      "road_frames": 0,
+      "semantic_frames": null,
+      "model_loads": null,
+      "search_ready": false,
+      "viewer_ready": false,
+      "viewer_revision": 0,
+      "at": 1794245758.3527281
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 4,
+      "map_frames": 4,
+      "steps": 1,
+      "road_frames": 0,
+      "semantic_frames": null,
+      "model_loads": null,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794245775.407254
+    },
+    {
+      "state": "inference",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 0,
+      "semantic_frames": null,
+      "model_loads": null,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 1,
+      "at": 1794245777.0142238
+    },
+    {
+      "state": "completed",
+      "decoded_frames": 6,
+      "map_frames": 6,
+      "steps": 2,
+      "road_frames": 0,
+      "semantic_frames": null,
+      "model_loads": null,
+      "search_ready": false,
+      "viewer_ready": true,
+      "viewer_revision": 2,
+      "at": 1794245780.1101298
+    }
+  ],
+  "final_meta": {
+    "viewer_version": "slam-v5",
+    "quality_mode": "high",
+    "selected_query": false,
+    "render_seconds": 0.05241579096764326,
+    "chunk_uploads": 1,
+    "scene_point_count": 10000,
+    "playback_quality": "자동",
+    "frame_index": 0,
+    "frame_count": 7,
+    "source_frame_id": "0",
+    "timestamp_label": "0.00 s",
+    "playing": false,
+    "follow_rgb": true,
+    "camera_available": true,
+    "aspect": 3.857142857142857,
+    "road_points": 0,
+    "road_visible": false,
+    "bev_mode": "표면 지도",
+    "connectivity": null,
+    "bev_pan": [
+      0,
+      0
+    ],
+    "mask_bev": false,
+    "box_bev": false,
+    "box_rgb": false,
+    "bev_box_count": 0,
+    "bev_zoom": 1,
+    "bev_trajectory": true,
+    "mask_3d": false,
+    "mask_rgb": false,
+    "point_count": 10000,
+    "bev_plane": "XZ",
+    "raster": {
+      "output_shape_hw": [
+        249,
+        960
+      ],
+      "antialias": 1,
+      "projected_points": 19916,
+      "occupied_pixels": 47769,
+      "shape_hw": [
+        98,
+        378
+      ],
+      "projection": [
+        [
+          179.1689453125,
+          0,
+          189,
+          0
+        ],
+        [
+          0,
+          201.1147003173828,
+          49,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    "camera_position": [
+      0,
+      0,
+      0
+    ],
+    "version": 2,
+    "viser_port": 58559
+  },
+  "javascript_exceptions": []
+}

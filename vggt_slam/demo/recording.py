@@ -62,7 +62,7 @@ class Recorder:
         if len(set(map(str, ids))) != count or not 0 <= overlap_count <= count:
             raise ValueError("invalid frame IDs or overlap count")
         paths = [item.get("source") if isinstance(item, dict) else None for item in frame_ids]
-        mappings = crop_mappings(paths, images.shape[2:]) if all(paths) else [None] * count
+        mappings = crop_mappings(paths, images.shape[2:], target_size=images.shape[-1]) if all(paths) else [None] * count
         submap = self.run_dir / "submaps" / str(int(submap_id))
         submap.mkdir(parents=True, exist_ok=False)
         self.event("submap_created", submap_id=int(submap_id), payload={"frame_count": count})

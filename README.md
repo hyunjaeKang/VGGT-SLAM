@@ -1,3 +1,9 @@
+> **로컬 데모 최신 안내 — 2026-11-08**
+>
+> [문서 목차](docs/INDEX.md) · [다음 세션 인계](docs/SESSION_HANDOFF.md) · [현재 구현/실증 상태](docs/CURRENT_STATUS.md) · [V1/V2/V3 선택](docs/DEMO_VERSIONS.md) · [Live V3 사용법](docs/LIVE_V3.md) · [지도 생성 중 객체 탐색 계획](26.11.09.VGGT_SLAM.Plan.html)
+>
+> V3: ` .venv/bin/python demo.py live --port 8103 --viewer-port 8104 ` → <http://localhost:8103>. 파일에서 실제 VGGT 지도를 생성하고 CPU ROAD를 순차 반영하며 완료 후 검색합니다. 영상 선택·MOV 회전 보정을 포함한 최신 기존 코드 검증은149개 통과입니다. 새 V4의 동시 객체 추적은 조사/설계 단계입니다. 아래 원본 README의 RealSense/CUDA 안내와 이 로컬 Mac 비디오 데모의 검증 범위를 구분하세요.
+
 <div align="center">
   <h1>VGGT-SLAM 2.0</h1>
 
@@ -309,3 +315,17 @@ If our code is helpful, please cite our papers as follows:
 }
 ```
 
+
+
+### Live V4
+
+계획 기반 생성 중 객체 검색 데모: `.venv/bin/python demo.py live4 --port 8105 --viewer-port 8106`. [실행·검증·한계](docs/LIVE_V4.md).
+
+
+### V1~V5 사용자 설명서와 SLAM V5
+
+[쉬운 HTML 설명서](docs/USER_GUIDE.html) · [PDF](docs/USER_GUIDE.pdf) · [Markdown](docs/USER_GUIDE.md).
+
+지도 생성 전용: `.venv/bin/python demo.py live5 --port 8107 --viewer-port 8108` → http://localhost:8107. 설명서는 http://localhost:8107/guide. [실제 해상도 최적화·KITTI 테스트 영상·검증](docs/LIVE_V5.md).
+
+V5후속: 지도완료후선택객체검색과RGB/3D/BEV마스크·박스를지원합니다. 원본전체1348장입력/자동224키프레임선택의폐루프실증과일반요건은 [CLOSED_LOOP_GUIDE.md](docs/CLOSED_LOOP_GUIDE.md)를참조하세요.

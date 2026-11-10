@@ -1,0 +1,57 @@
+{
+  "checks": {
+    "last_source_frame": true,
+    "v5_viewer": true,
+    "camera_available": true,
+    "overview": true,
+    "full_rgb_tail": true,
+    "search_tab": true,
+    "no_js_exceptions": true
+  },
+  "meta": {
+    "viewer_version": "slam-v5",
+    "quality_mode": "high",
+    "selected_query": false,
+    "render_seconds": 0.08829295902978629,
+    "chunk_uploads": 238,
+    "scene_point_count": 200000,
+    "playback_quality": "\uc790\ub3d9",
+    "frame_index": 236,
+    "frame_count": 237,
+    "source_frame_id": "1345",
+    "timestamp_label": "134.50 s",
+    "playing": false,
+    "follow_rgb": false,
+    "view_mode": "free",
+    "chase_distance": 0.10117318492733951,
+    "camera_available": true,
+    "aspect": 3.7,
+    "road_points": 0,
+    "road_visible": false,
+    "bev_mode": "\ud45c\uba74 \uc9c0\ub3c4",
+    "connectivity": null,
+    "bev_pan": [
+      0.0,
+      0.0
+    ],
+    "mask_bev": false,
+    "box_bev": false,
+    "box_rgb": true,
+    "bev_box_count": 0,
+    "bev_zoom": 1.0,
+    "bev_trajectory": true,
+    "mask_3d": true,
+    "mask_rgb": true,
+    "point_count": 200000,
+    "bev_plane": "XZ",
+    "raster": {},
+    "camera_position": [
+      -0.0022094443608252053,
+      -0.0018060834660191013,
+      0.1984655443805896
+    ],
+    "version": 11,
+    "viser_port": 59517
+  },
+  "errors": []
+}

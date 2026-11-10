@@ -1,3 +1,6 @@
+<!-- session-context: 2026-11-08 -->
+> **현재 상태 안내 (2026-11-08):** 이 문서의 과거 실험·수치·코드 리뷰는 당시 범위의 기록입니다. 최신 구현·버전·검증은 [CURRENT_STATUS.md](CURRENT_STATUS.md), 다음 세션의 실행 순서는 [SESSION_HANDOFF.md](SESSION_HANDOFF.md), 지도 생성 중 객체 탐색 설계는 [HTML 계획서](../26.11.09.VGGT_SLAM.Plan.html)를 먼저 확인하세요. V4는 아직 미구현입니다.
+
 # KITTI-360 0000 실행 결과
 
 요청한 `/Users/hyunjae.kang/Downloads/2013_05_28_drive_0000_sync`의 이미지로 전체 시퀀스를 처리했다. 3D 점군, 카메라 궤적, RGB BEV, 표면 높이 및 표면 등고선을 저장했다. **이번 설정은 장거리 전역 정합에 실패했다. 결과는 기능 시연·오류 분석용이며 정확한 도로 지도나 지형도로 사용할 수 없다.**

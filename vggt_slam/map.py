@@ -70,7 +70,15 @@ class GraphMap:
             raise ValueError("No semantic embeddings are available in the map")
         return overall_best_score, overall_best_submap_id, overall_best_frame_index
     
-    def retrieve_best_score_frame(self, query_vector, current_submap_id, ignore_last_submap=True):
+    def retrieve_best_score_frame(self, query_vector, current_submap_id, ignore_last_submap=True, query_path=None):
+        min_seconds = getattr(self, "loop_min_seconds", 0.)
+        records = getattr(self, "loop_frame_records", {})
+        query_time = None
+        if min_seconds > 0:
+            from pathlib import Path
+            query_time = records.get(str(Path(query_path).resolve()), {}).get("timestamp") if query_path else None
+            if query_time is None or not np.isfinite(query_time):
+                raise ValueError("Temporal loop exclusion requires a finite query timestamp")
         overall_best_score = 1000
         overall_best_submap_id = 0
         overall_best_frame_index = 0
@@ -91,6 +99,13 @@ class GraphMap:
                 if len(submap_embeddings) == 0:
                     continue
                 scores = torch.linalg.vector_norm(submap_embeddings - query_vector, dim=1)
+                if min_seconds > 0:
+                    eligible = []
+                    for i in range(len(scores)):
+                        path = str(Path(submap.get_img_names_at_index(i)).resolve())
+                        timestamp = records.get(path, {}).get("timestamp")
+                        eligible.append(timestamp is not None and np.isfinite(timestamp) and abs(query_time - timestamp) >= min_seconds)
+                    scores = scores.masked_fill(~torch.tensor(eligible, dtype=torch.bool, device=scores.device), float('inf'))
                 best_score, best_score_id = torch.min(scores, dim=0)
                 best_score = best_score.item()
                 best_score_id = best_score_id.item()

@@ -1,0 +1,8 @@
+{
+  "selected": "clip.mp4",
+  "inputEnabled": true,
+  "buttonEnabled": true,
+  "hint": "현재 작업 중 · 다음 영상 선택 가능 / 생성은 완료·중지 후",
+  "startDisabled": true,
+  "real_chooser_opened": true
+}

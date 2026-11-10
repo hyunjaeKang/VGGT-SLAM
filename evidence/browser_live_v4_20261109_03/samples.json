@@ -1,0 +1,28 @@
+[
+  {
+    "state": "loading",
+    "decoded_frames": 0,
+    "map_frames": 0,
+    "steps": 0,
+    "road_frames": 0,
+    "semantic_frames": 0,
+    "model_loads": 0,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "at": 1794209803.7719522
+  },
+  {
+    "state": "failed",
+    "decoded_frames": 0,
+    "map_frames": 0,
+    "steps": 0,
+    "road_frames": 0,
+    "semantic_frames": 0,
+    "model_loads": 1,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "at": 1794209826.3461561
+  }
+]

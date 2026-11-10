@@ -1,0 +1,41 @@
+[
+  {
+    "state": "loading",
+    "decoded_frames": 0,
+    "map_frames": 0,
+    "steps": 0,
+    "road_frames": 0,
+    "semantic_frames": 0,
+    "model_loads": 0,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "at": 1794206242.063602
+  },
+  {
+    "state": "inference",
+    "decoded_frames": 6,
+    "map_frames": 4,
+    "steps": 1,
+    "road_frames": 0,
+    "semantic_frames": 0,
+    "model_loads": 1,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "at": 1794206290.474079
+  },
+  {
+    "state": "failed",
+    "decoded_frames": 6,
+    "map_frames": 4,
+    "steps": 1,
+    "road_frames": 0,
+    "semantic_frames": 0,
+    "model_loads": 1,
+    "search_ready": false,
+    "viewer_ready": false,
+    "viewer_revision": 0,
+    "at": 1794206294.504481
+  }
+]

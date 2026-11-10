@@ -1,0 +1,42 @@
+{
+  "mobileclip2_b.ts": {
+    "bytes": 253794476,
+    "sha256": "35d7f213e4d75f38514e4656ad3cb91158bd33e3805d8ac349f23b186f66982f"
+  },
+  "yoloe-26s-seg.pt": {
+    "bytes": 31072171,
+    "sha256": "48f24206bc8680d60cbbfa296b0140da849669b9515058b72f5a945142df0654"
+  },
+  "yoloe-driving-printer-frozen.pt": {
+    "bytes": 31088767,
+    "sha256": "e0cd3c46d7fee312e6df4acb16cdefa2293cea68e2fe1ca760ebda9ba0350989"
+  },
+  "yolo11n-seg.pt": {
+    "bytes": 6182636,
+    "sha256": "55ed65c56c91713d23e8402371c6c49a6fd84f257f7dce452e8d70e41dcbe152"
+  },
+  "yolo26n-seg.pt": {
+    "bytes": 6719965,
+    "sha256": "361fbfabab285c3237700b6bb91d7ecfa602cd945fffda8dbe1242829b71e73f"
+  },
+  "yolo26n-seg.mlpackage/Manifest.json": {
+    "bytes": 617,
+    "sha256": "122ec27f7543b126294fca7fe1872ee51a05e359e5d5c0008284463ee23fe116"
+  },
+  "segformer-b0-cityscapes/config.json": {
+    "bytes": 1680,
+    "sha256": "649ba4afbaa11ee730b14ad5e31bd50f2e2d5be661a291e31a91512510dba8d9"
+  },
+  "segformer-b0-cityscapes/pytorch_model.bin": {
+    "bytes": 14957601,
+    "sha256": "027ed78d8ff9c535df5a66361c92b9673cca3cb923cbeb8c5802385b6b93194c"
+  },
+  "segformer-b0-cityscapes/preprocessor_config.json": {
+    "bytes": 272,
+    "sha256": "d96ab2cb112985c19d5ea32f1d1f2369104fc78b1379f5ce26e33ca8646202a7"
+  },
+  "yolo26n-seg.mlpackage/Data/com.apple.CoreML/weights/weight.bin": {
+    "bytes": 5512384,
+    "sha256": "81863a6503294d06063a3320de0a45d543d62b9a3d11009c8d54f5d626abd2a0"
+  }
+}
