@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-11-04",
+  "model_executed": false,
+  "visual_browser_tested": false,
+  "tests": [
+    {
+      "kind": "core",
+      "tests": [
+        {
+          "name": "Open passage: concrete route is collision-free and stays in known cells",
+          "status": "passed"
+        },
+        {
+          "name": "A wall changes reachability and separates free-space components",
+          "status": "passed"
+        },
+        {
+          "name": "Unknown is blocked by default and provisional traversal is explicit",
+          "status": "passed"
+        },
+        {
+          "name": "Larger footprint never opens cells blocked for the smaller footprint",
+          "status": "passed"
+        },
+        {
+          "name": "Diagonal corner cutting is rejected",
+          "status": "passed"
+        },
+        {
+          "name": "Backward replay restores unknown rather than retaining future observations",
+          "status": "passed"
+        },
+        {
+          "name": "Path endpoints and invalid coordinates are handled deterministically",
+          "status": "passed"
+        },
+        {
+          "name": "Synthetic geometry is deterministic, finite and independent of video",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "kind": "interface-state",
+      "visual_browser_tested": false,
+      "tests": [
+        {
+          "name": "Initial interface has computed map and explicit synthetic metadata",
+          "status": "passed"
+        },
+        {
+          "name": "Scenario selection updates map, components and failure reason",
+          "status": "passed"
+        },
+        {
+          "name": "Playback, seeking and layers invoke state transitions",
+          "status": "passed"
+        },
+        {
+          "name": "Footprint and height controls update state and labels",
+          "status": "passed"
+        },
+        {
+          "name": "Start/goal mode, swap and object filter are wired",
+          "status": "passed"
+        },
+        {
+          "name": "Help and export dialogs open with truthful provenance",
+          "status": "passed"
+        },
+        {
+          "name": "Local video remains explicitly disconnected from synthetic reconstruction",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

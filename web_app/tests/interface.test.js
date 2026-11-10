@@ -1,0 +1,29 @@
+/* A DOM/canvas stub validates handlers and state transitions. It is not visual browser QA. */
+'use strict';
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const html=fs.readFileSync(__dirname+'/../dist/index.html','utf8');
+class Element{
+ constructor(id,cls=''){this.id=id;this.value='';this.textContent='';this.dataset={};this.style={};this.attrs={};this.checked=false;this.disabled=false;this.listeners={};this.children=[];this.tagName='DIV';const set=new Set(cls.split(/\s+/));this.classList={add:x=>set.add(x),remove:x=>set.delete(x),contains:x=>set.has(x),toggle:(x,b)=>{const v=b===undefined?!set.has(x):b;v?set.add(x):set.delete(x);return v}};}
+ set innerHTML(s){this._html=s;if(this.id==='object-list')this.children=[...s.matchAll(/data-object="([^"]+)"/g)].map(m=>{const e=new Element(m[1]);e.dataset.object=m[1];return e});if(this.id==='modal-content')for(const m of s.matchAll(/id="([^"]+)"/g))elements[m[1]]=new Element(m[1]);}
+ get innerHTML(){return this._html||''}
+ setAttribute(k,v){this.attrs[k]=v}removeAttribute(k){delete this.attrs[k]}
+ getBoundingClientRect(){return {width:this.id==='scene'?700:450,height:this.id==='voxels'?167:300,left:0,top:0}}
+ getContext(){return ctx}addEventListener(k,v){this.listeners[k]=v}setPointerCapture(){}scrollIntoView(){}focus(){document.activeElement=this}querySelectorAll(){return [elements['modal-close']]}click(){if(this.onclick)this.onclick({target:this})}play(){this.paused=false;return Promise.resolve()}pause(){this.paused=true}
+}
+const noop=()=>{};const gradient={addColorStop:noop};const ctx=new Proxy({createLinearGradient:()=>gradient,createRadialGradient:()=>gradient,measureText:t=>({width:t.length*6})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>{o[k]=v;return true}});
+const elements={};for(const m of html.matchAll(/<[^>]+\sid="([^"]+)"[^>]*>/g)){const tag=m[0],cl=tag.match(/class="([^"]+)"/);const e=elements[m[1]]=new Element(m[1],cl?cl[1]:'');const val=tag.match(/value="([^"]+)"/);if(val)e.value=val[1];}
+const tab=(mode)=>{const x=new Element(mode);x.dataset.mode=mode;return x};const sceneTabs=['rgb','semantic','height'].map(tab),mapTabs=['occupancy','cost','connectivity'].map(tab);
+const document={activeElement:null,getElementById:id=>elements[id],querySelectorAll:s=>s==='#scene-tabs button'?sceneTabs:s==='#map-tabs button'?mapTabs:s==='[data-object]'?elements['object-list'].children:[],addEventListener:noop,createElement:()=>new Element('created')};
+const window={devicePixelRatio:1,addEventListener:noop,scrollTo:noop};
+const sandbox={TerraCore:require('../dist/core.js'),document,window,URL:{createObjectURL:()=> 'blob:local-test',revokeObjectURL:noop},Blob,requestAnimationFrame:noop,setTimeout:()=>1,clearTimeout:noop,console};
+vm.runInNewContext(fs.readFileSync(__dirname+'/../dist/app.js','utf8'),sandbox,{filename:'app.js'});
+const get=()=>window.TerraScenePreview.getState();const route=()=>window.TerraScenePreview.getRoute();const results=[];
+function test(name,fn){fn();results.push({name,status:'passed'})}
+test('Initial interface has computed map and explicit synthetic metadata',()=>{assert.equal(get().synthetic,true);assert.equal(get().inference_connected,false);assert.ok(route().path.length);assert.equal(elements['stat-route'].textContent,'Connected')});
+test('Scenario selection updates map, components and failure reason',()=>{elements.scenario.onchange({target:{value:'blocked'}});assert.equal(get().blocked,true);assert.equal(route().path.length,0);assert.equal(elements.components.textContent,2);elements.scenario.onchange({target:{value:'open'}});assert.ok(route().path.length)});
+test('Playback, seeking and layers invoke state transitions',()=>{elements.play.click();assert.equal(get().playing,true);elements.play.click();assert.equal(get().playing,false);elements.timeline.oninput({target:{value:'0'}});assert.equal(get().time,0);assert.equal(route().path.length,0);elements.timeline.oninput({target:{value:'52'}});mapTabs[2].onclick();assert.equal(get().mapMode,'connectivity');sceneTabs[1].onclick();assert.equal(get().sceneMode,'semantic')});
+test('Footprint and height controls update state and labels',()=>{elements.radius.oninput({target:{value:'1.4'}});assert.equal(get().radius,1.4);elements.height.oninput({target:{value:'2.5'}});assert.equal(get().height,2.5);assert.equal(elements['height-value'].textContent,'2.5 m')});
+test('Start/goal mode, swap and object filter are wired',()=>{elements['set-start'].click();assert.equal(get().set,'start');const old=get().start;elements.swap.click();assert.deepEqual(Array.from(get().goal),Array.from(old));elements.search.value='zzzz';elements.search.oninput();assert.ok(elements['object-list'].innerHTML.includes('없습니다'));elements.search.value='';elements.search.oninput()});
+test('Help and export dialogs open with truthful provenance',()=>{elements.help.click();assert.equal(elements.modal.classList.contains('hide'),false);assert.ok(elements['modal-content'].innerHTML.includes('SLAM'));elements['modal-close'].click();assert.equal(elements.modal.classList.contains('hide'),true);elements.export.click();assert.ok(elements['modal-content'].innerHTML.includes('synthetic=true'));assert.equal(typeof elements['export-json'].onclick,'function');elements['export-json'].click();elements['export-ply'].click()});
+test('Local video remains explicitly disconnected from synthetic reconstruction',()=>{elements.file.onchange({target:{files:[{name:'example.mp4'}]}});elements['local-video'].duration=60;elements['local-video'].onloadedmetadata();assert.equal(get().local,true);assert.equal(get().inference_connected,false);assert.ok(elements['data-notice'].textContent.includes('무관한'));elements.scenario.onchange({target:{value:'open'}});assert.equal(get().local,false);assert.equal(get().duration,90)});
+console.log(JSON.stringify({kind:'interface-state',visual_browser_tested:false,tests:results},null,2));

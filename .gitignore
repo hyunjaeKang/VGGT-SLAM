@@ -188,3 +188,6 @@ skyseg.onnx
 
 # macOS Finder metadata
 .DS_Store
+
+# Generated web prototype deliverables
+/web_app/deliverables/

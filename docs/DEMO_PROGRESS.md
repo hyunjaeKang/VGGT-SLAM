@@ -715,3 +715,8 @@ object_colors.py의공통팔레트로같은객체종류는모델/프레임/뷰�
 macOS .DS_Store를.gitignore에추가(하위폴더포함). 누적V3~V5/다중모델검색/전체클래스/색상Legend/독립3D토글/메뉴숨김/문서·검증자료를커밋대상으로확인했다. 관련없는TerraScene은보존하고커밋제외. 입력영상·모델·실행run·가상환경은기존ignore유지. 검증증거의작은JSON/log는문서참조가깨지지않도록명시포함한다.
 
 - 커밋전전체회귀194passed/31.27초. .DS_Store는루트/하위폴더모두ignore확인. 소스/문서공백검사통과;원본실패검증log의출력공백은증거보존을위해유지. 커밋대상280개파일,TerraScene/.DS_Store제외확인.
+
+
+## 2026-11-10 · web_app 폴더 등록
+
+사용자요청으로미추적TerraScene/을web_app/으로이름변경하고시제품전체12파일을커밋대상으로추가했다. TerraScene브랜드/독립HTML파일명은보존했다. package_deliverables.py의이전/workspace고정출력을프로젝트내deliverables로변경하고ZIP루트는web_app으로맞췄다. 산출물폴더ignore추가. 기존validation.json/HTML내용보존,dist필수파일은전역ignore에도명시stage. 검증:Node문법2개/core8개/interface7개PASS,Python문법PASS,임시복사본패키징ZIP12항목/web_app루트PASS. 원본사용자산출물을재생성하지않았다.
