@@ -720,3 +720,10 @@ macOS .DS_Store를.gitignore에추가(하위폴더포함). 누적V3~V5/다중모
 ## 2026-11-10 · web_app 폴더 등록
 
 사용자요청으로미추적TerraScene/을web_app/으로이름변경하고시제품전체12파일을커밋대상으로추가했다. TerraScene브랜드/독립HTML파일명은보존했다. package_deliverables.py의이전/workspace고정출력을프로젝트내deliverables로변경하고ZIP루트는web_app으로맞췄다. 산출물폴더ignore추가. 기존validation.json/HTML내용보존,dist필수파일은전역ignore에도명시stage. 검증:Node문법2개/core8개/interface7개PASS,Python문법PASS,임시복사본패키징ZIP12항목/web_app루트PASS. 원본사용자산출물을재생성하지않았다.
+
+
+## 2026-11-10 · web_app 영어·한국어 병기
+
+사용자확인범위는web_app화면·도움말·README. 버튼/패널/상태/범례/시나리오/캔버스객체이름/오류·알림/영상열기/내보내기/접근성문구를영어·한국어동시표시로변경. 한국어객체검색지원,수치·시간·단위/파일명/코드식별자/기계용내보내기스키마유지. README도양언어로작성. 개발계획서본문과V5앱은범위밖이라보존했다. 긴문구는줄바꿈을지원하고단일HTMLUI도갱신.
+
+기존core8/interface7(양언어연결상태·한국어객체필터검사보완)PASS,Node문법PASS,패키징PASS. 실제Chrome데스크톱1600/모바일390가로넘침없음/한국어객체검색/양언어도움말·오류·내보내기/단일HTML로드/JS예외0. 표시문구영문단독감사결과0개(브랜드·수치·단위제외). evidence/web_app_bilingual_20261110_01/의checks.json,visible_text_audit.json,desktop.png,mobile.png,help.png. 시나리오옵션은양언어가한줄에보이도록간결하게정리했다.
